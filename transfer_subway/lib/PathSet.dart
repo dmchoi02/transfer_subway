@@ -19,8 +19,8 @@ class _PathSetPageState extends State<PathSetPage> {
         padding: EdgeInsets.only(
           top: 50.0, // 위 패딩
           bottom: 30.0, // 아래 패딩
-          left: 40.0, // 왼쪽 패딩
-          right: 40.0, // 오른쪽 패딩
+          left: 20.0, // 왼쪽 패딩
+          right: 20.0, // 오른쪽 패딩
         ),
         child: Column(
           children: [
@@ -38,7 +38,7 @@ class _PathSetPageState extends State<PathSetPage> {
                     left: 20.0, // 왼쪽 패딩
                     right: 20.0,
                   ),
-                  width: 312.0,
+                  width: 352.0,
                   height: 50.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -75,7 +75,7 @@ class _PathSetPageState extends State<PathSetPage> {
                 left: 20.0, // 왼쪽 패딩
                 right: 20.0,
               ),
-              width: 312.0,
+              width: 352.0,
               height: 50.0,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
@@ -105,7 +105,7 @@ class _PathSetPageState extends State<PathSetPage> {
 
             //3번째 행
             Container(
-              width: 312.0,
+              width: 352.0,
               height: 460.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(

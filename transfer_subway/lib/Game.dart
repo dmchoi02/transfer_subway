@@ -16,8 +16,8 @@ class _GamePageState extends State<GamePage> {
         padding: EdgeInsets.only(
           top: 50.0, // 위 패딩
           bottom: 30.0, // 아래 패딩
-          left: 40.0, // 왼쪽 패딩
-          right: 40.0, // 오른쪽 패딩
+          left: 20.0, // 왼쪽 패딩
+          right: 20.0, // 오른쪽 패딩
         ),
         child: Column(
           children: [
@@ -26,7 +26,7 @@ class _GamePageState extends State<GamePage> {
                 left: 20.0, // 왼쪽 패딩
                 right: 20.0,
               ),
-              width: 312.0,
+              width: 352.0,
               height: 638,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(

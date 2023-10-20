@@ -2,8 +2,8 @@
 import 'imports.dart';
 
 // 화면의 사이즈는 392x783 고정 (기존 figma 디자인 360 x 800이라서 코딩시 조절이 필요함)
-// 가로 여백은 40, 여백 사이 컨테이너는 312로 고정
-// 세로 여백은 위50, 아래30 그대로하고 맨아래 컨테이너만 17 줄이기(자세한건 main.dart 컨테이너 사이즈 보면서 확인)
+// size는 조정하지 마세용 (추후에 디자인 수정 예정)
+//
 // 안드로이드 에뮬레이터 실행시 1080x2240 5.6인치로 설정
 // 변수 이름은 상수를 제외하고 모두 낙타 표기법(Camel Case) 사용 ex. printImage, printAll
 
@@ -63,8 +63,8 @@ class _MyAppState extends State<MyApp> {
           padding: EdgeInsets.only(
             top: 50.0, // 위 패딩
             bottom: 30.0, // 아래 패딩
-            left: 40.0, // 왼쪽 패딩
-            right: 40.0, // 오른쪽 패딩
+            left: 20.0, // 왼쪽 패딩
+            right: 20.0, // 오른쪽 패딩
           ),
           child: Column(
             children: [
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                     left: 20.0,
                     right: 20.0,
                   ),
-                  width: 312.0, // 가로 길이
+                  width: 352.0, // 가로 길이
                   height: 50.0, // 세로 길이
 
                   // 박스 스타일 설정
@@ -126,7 +126,7 @@ class _MyAppState extends State<MyApp> {
                   left: 20.0,
                   right: 20.0,
                 ),
-                width: 312.0,
+                width: 352.0,
                 height: 108.0,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
@@ -162,7 +162,7 @@ class _MyAppState extends State<MyApp> {
 
               // 3번째 박스
               Container(
-                width: 312.0,
+                width: 352.0,
                 height: 460.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
