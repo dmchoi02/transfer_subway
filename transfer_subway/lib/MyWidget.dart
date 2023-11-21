@@ -7,7 +7,7 @@ Widget offPathView = Container(
     right: 20.0,
   ),
   width: 352.0,
-  height: 108.0,
+  //height: 108.0,
   child: Row(
     mainAxisAlignment: MainAxisAlignment.center, // 수직 가운데 정렬
     children: [
@@ -122,3 +122,45 @@ PageRouteBuilder pageRoute(int newIndex) {
     },
   );
 }
+
+//직접 만든 Appbar 위젯
+Widget myAppbar = Container(
+  width: 393,
+  height: 125,
+  padding: EdgeInsets.only(
+    left: 20.0,
+    right: 20.0,
+  ),
+  color: AppColor.blueColor,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Icon(
+        Icons.cloudy_snowing,
+        size: 32,
+        color: Colors.white,
+      ),
+      Expanded(
+        child: Container(
+          child: Stack(
+            children: [
+              Positioned(
+                left: 70, // 텍스트를 왼쪽으로 70픽셀 이동
+                top: 38,
+                child: Text(
+                  "Hello, 환승철",
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontFamily: "Font",
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+);

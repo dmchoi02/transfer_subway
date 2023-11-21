@@ -10,7 +10,9 @@ import 'imports.dart';
 // 기본 컬러 모음집 사용할 때는 ex. AppColor.mainColor
 class AppColor {
   static const Color mainColor = Color.fromARGB(255, 149, 148, 148); // 기본 색상
-  static const Color selectedColor = Color(0xFF2B79C2);
+  static const Color selectedColor = Color(0xFF2B79C2); // 선택을 강조하는 파랑색
+  static const Color blueColor = Color(0xFF475FF3); // 앱바에 사용되는 색깔
+  static const Color backgroundColor = Color(0xFFE9E9E9); // 기본 회색 배경
 }
 
 // 이미지 할당은 아래 변수를 이용 ex. images + "이미지 이름"
@@ -58,125 +60,122 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        //backgroundColor: Color(0xFFDBDEE2),
-        body: Padding(
-          padding: EdgeInsets.only(
-            top: 50.0, // 위 패딩
-            bottom: 30.0, // 아래 패딩
-            left: 20.0, // 왼쪽 패딩
-            right: 20.0, // 오른쪽 패딩
-          ),
-          child: Column(
-            children: [
-              // 1번째 박스
-              GestureDetector(
-                onTap: () {
-                  // 클릭 시 길찾기 페이지로 이동
-                  Navigator.push(context, pageRoute(4));
-                },
-                child: Container(
-                  padding: EdgeInsets.only(
-                    left: 20.0,
-                    right: 20.0,
-                  ),
-                  width: 352.0, // 가로 길이
-                  height: 50.0, // 세로 길이
+        backgroundColor: AppColor.backgroundColor,
+        body: Stack(
+          children: [
+            myAppbar, //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+            Padding(
+              padding: EdgeInsets.only(
+                top: 90.0, // 위 패딩
+                left: 20.0, // 왼쪽 패딩
+                right: 20.0, // 오른쪽 패딩
+              ),
+              child: Column(
+                children: [
+                  // 1번째 박스
+                  GestureDetector(
+                    onTap: () {
+                      // 클릭 시 길찾기 페이지로 이동
+                      Navigator.push(context, pageRoute(4));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                      ),
+                      width: 352.0, // 가로 길이
+                      height: 55.0, // 세로 길이
 
-                  // 박스 스타일 설정
-                  decoration: BoxDecoration(
-                    // 모서리 둥글게 만들기
-
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30.0), // 왼쪽 위 30도
-                      topRight: Radius.circular(30.0), // 오른쪽 위 30도
+                      // 박스 스타일 설정
+                      decoration: BoxDecoration(
+                        // 색 설정, 모서리 둥글게 만들기
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "경로 검색",
+                              // 텍스트 스타일 설정
+                              style: TextStyle(
+                                fontSize: 15.0, // 글꼴 크기
+                                fontFamily: "Font", // 폰트
+                                fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
+                                color: AppColor.mainColor, // 글씨 색깔
+                              ),
+                            ),
+                          ),
+                          Image.asset(images + 'search.png',
+                              width: 28, height: 28), // 이미지 불러오기
+                        ],
+                      ),
                     ),
-                    // 테두리 검정
-                    border: Border.all(color: Colors.black),
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "경로 검색",
-                          // 텍스트 스타일 설정
-                          style: TextStyle(
-                            fontSize: 15.0, // 글꼴 크기
-                            fontFamily: "Font", // 폰트
-                            fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
-                            color: AppColor.mainColor, // 글씨 색깔
+
+                  // 각 박스 사이에 여백을 준다.
+                  SizedBox(
+                    height: 10.0,
+                  ),
+
+                  // 2번재 박스
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                    ),
+                    width: 352.0,
+                    height: 110.0,
+                    decoration: BoxDecoration(
+                      // 모서리 둥글게 만들기
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "자연재해로 인해\n3, 6호선 현재 운행 중단",
+                            // 스타일 설정
+                            style: TextStyle(
+                              fontSize: 15.0, // 글꼴 크기
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
+                              color: AppColor.mainColor,
+                            ),
                           ),
                         ),
-                      ),
-                      Image.asset(images + 'search.png',
-                          width: 28, height: 28), // 이미지 불러오기
-                    ],
-                  ),
-                ),
-              ),
-
-              // 각 박스 사이에 여백을 준다.
-              SizedBox(
-                height: 10.0,
-              ),
-
-              // 2번재 박스
-              Container(
-                // 배경색을 하얀색으로 설정
-                padding: EdgeInsets.only(
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                width: 352.0,
-                height: 108.0,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
-
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "자연재해로 인해\n3, 6호선 현재 운행 중단",
-                        // 스타일 설정
-                        style: TextStyle(
-                          fontSize: 15.0, // 글꼴 크기
-                          fontFamily: "Font",
-                          fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
-                          color: AppColor.mainColor,
-                        ),
-                      ),
+                        Icon(
+                          Icons.cloudy_snowing,
+                          size: 31, // 아이콘 크기
+                          color: AppColor.mainColor, // 아이콘 색상
+                        )
+                      ],
                     ),
-                    Icon(
-                      Icons.cloudy_snowing,
-                      size: 31, // 아이콘 크기
-                      color: AppColor.mainColor, // 아이콘 색상
-                    )
-                  ],
-                ),
-              ),
-
-              // 각 박스 사이에 여백을 준다.
-              SizedBox(
-                height: 10.0,
-              ),
-
-              // 3번째 박스
-              Container(
-                width: 352.0,
-                height: 460.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
                   ),
-                  border: Border.all(color: Colors.black),
-                ),
-                child:
-                    // 조건에 따라서 위젯을 가져온다
-                    (isPathSet) ? onPathView : offPathView,
+
+                  // 각 박스 사이에 여백을 준다.
+                  SizedBox(
+                    height: 10.0,
+                  ),
+
+                  // 3번째 박스
+                  Container(
+                    width: 352.0,
+                    height: 430.0,
+                    decoration: BoxDecoration(
+                      // 모서리 둥글게 만들기
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    ),
+                    child:
+                        // 조건에 따라서 위젯을 가져온다
+                        (isPathSet) ? onPathView : offPathView,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
 
         // 바텀 네비게이션바
