@@ -37,14 +37,41 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  child: Text(
-                    "지도 화면",
-                    // 스타일 설정
-                    style: TextStyle(
-                        fontSize: 15.0, // 글꼴 크기
-                        fontFamily: "Font",
-                        fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                        color: AppColor.mainColor),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 5.0, top: 10.0), // 왼쪽, 위 여백 조정
+                          child: Text(
+                            "노선도",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 7.0), // 왼쪽 여백 조정
+                          child: Text(
+                            "호선을 확인하세요!",
+                            // 스타일 설정
+                            style: TextStyle(
+                              fontSize: 15.0, // 글꼴 크기
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
+                              color: AppColor.mainColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

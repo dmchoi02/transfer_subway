@@ -37,14 +37,42 @@ class _SettingsPageState extends State<SettingsPage> {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  child: Text(
-                    "설정 화면",
-                    // 스타일 설정
-                    style: TextStyle(
-                        fontSize: 15.0, // 글꼴 크기
-                        fontFamily: "Font",
-                        fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                        color: AppColor.mainColor),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 5.0, top: 10.0), // 왼쪽, 위 여백 조정
+                          child: Text(
+                            "설정",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        //설정 밑에 글씨 필요한 경우 사용하세요. 필요없으면 해당 위젯 지워주세요
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 7.0), // 왼쪽 여백 조정
+                          child: Text(
+                            "",
+                            // 스타일 설정
+                            style: TextStyle(
+                              fontSize: 15.0, // 글꼴 크기
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
+                              color: AppColor.mainColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

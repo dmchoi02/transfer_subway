@@ -37,14 +37,41 @@ class _BadgesPageState extends State<BadgesPage> {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  child: Text(
-                    "뱃지 화면",
-                    // 스타일 설정
-                    style: TextStyle(
-                        fontSize: 15.0, // 글꼴 크기
-                        fontFamily: "Font",
-                        fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                        color: AppColor.mainColor),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 5.0, top: 10.0), // 왼쪽, 위 여백 조정
+                          child: Text(
+                            "칭호",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 7.0), // 왼쪽 여백 조정
+                          child: Text(
+                            "아래와 같은 칭호를 가지고 있습니다!",
+                            // 스타일 설정
+                            style: TextStyle(
+                              fontSize: 15.0, // 글꼴 크기
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
+                              color: AppColor.mainColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

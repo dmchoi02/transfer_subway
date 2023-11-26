@@ -13,6 +13,7 @@ class AppColor {
   static const Color selectedColor = Color(0xFF2B79C2); // 선택을 강조하는 파랑색
   static const Color blueColor = Color(0xFF475FF3); // 앱바에 사용되는 색깔
   static const Color backgroundColor = Color(0xFFE9E9E9); // 기본 회색 배경
+  static const Color blackColor = Color.fromARGB(200, 0, 0, 0);
 }
 
 // 이미지 할당은 아래 변수를 이용 ex. images + "이미지 이름"
@@ -51,8 +52,8 @@ class _MyAppState extends State<MyApp> {
     Size screenSize = MediaQuery.of(context).size;
     double screenWidth = screenSize.width;
     double screenHeight = screenSize.height;
-    print(screenWidth); // 현재 가로 사이즈
-    print(screenHeight); // 현재 세로 사이즈
+    //print(screenWidth); // 현재 가로 사이즈
+    //print(screenHeight); // 현재 세로 사이즈
 
     // 위에 상태바 없애기
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -129,27 +130,42 @@ class _MyAppState extends State<MyApp> {
                     decoration: BoxDecoration(
                       // 모서리 둥글게 만들기
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     ),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Text(
-                            "자연재해로 인해\n3, 6호선 현재 운행 중단",
-                            // 스타일 설정
-                            style: TextStyle(
-                              fontSize: 15.0, // 글꼴 크기
-                              fontFamily: "Font",
-                              fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
-                              color: AppColor.mainColor,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 5.0, top: 10.0), // 왼쪽 여백 조정
+                            child: Text(
+                              "공지",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Font",
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.blackColor,
+                              ),
                             ),
                           ),
                         ),
-                        Icon(
-                          Icons.cloudy_snowing,
-                          size: 31, // 아이콘 크기
-                          color: AppColor.mainColor, // 아이콘 색상
-                        )
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              "자연재해로 인해\n3, 6호선 현재 운행 중단",
+                              // 스타일 설정
+                              style: TextStyle(
+                                fontSize: 15.0, // 글꼴 크기
+                                fontFamily: "Font",
+                                fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
+                                color: AppColor.blackColor,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -166,7 +182,7 @@ class _MyAppState extends State<MyApp> {
                     decoration: BoxDecoration(
                       // 모서리 둥글게 만들기
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     ),
                     child:
                         // 조건에 따라서 위젯을 가져온다

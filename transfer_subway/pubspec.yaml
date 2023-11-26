@@ -61,9 +61,13 @@ flutter:
       fonts:
         - asset: assets/fonts/malgun.ttf
         - asset: assets/fonts/malgunbd.ttf
-       # - asset: assets/fonts/malgunsl.ttf
+
+    - family: hand
+      fonts:
+        - asset: assets/fonts/Playball-Regular.ttf
   assets:
     - assets/images/search.png
+    - assets/images/outlined_bookmarks.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

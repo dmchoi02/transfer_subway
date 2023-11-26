@@ -8,16 +8,38 @@ Widget offPathView = Container(
   ),
   width: 352.0,
   //height: 108.0,
-  child: Row(
+  child: Column(
     mainAxisAlignment: MainAxisAlignment.center, // 수직 가운데 정렬
     children: [
-      Text(
-        "현재 길찾기 정보가 없습니다.\n경로를 검색하세요.",
-        textAlign: TextAlign.center, // 수평 가운데 정렬
-        style: TextStyle(
-          fontSize: 15.0, // 글꼴 크기
-          fontFamily: "Font",
-          color: AppColor.mainColor,
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: EdgeInsets.only(left: 5.0, top: 10.0), // 왼쪽 여백 조정
+          child: Text(
+            "경로 안내",
+            style: TextStyle(
+              fontSize: 20.0,
+              fontFamily: "Font",
+              fontWeight: FontWeight.bold,
+              color: AppColor.blackColor,
+            ),
+          ),
+        ),
+      ),
+      Expanded(
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            "현재 길찾기 정보가 없습니다.\n경로를 검색하세요.",
+            // 스타일 설정
+            style: TextStyle(
+              fontSize: 15.0, // 글꼴 크기
+              fontFamily: "Font",
+              fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
+              color: AppColor.mainColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     ],
@@ -145,14 +167,14 @@ Widget myAppbar = Container(
           child: Stack(
             children: [
               Positioned(
-                left: 70, // 텍스트를 왼쪽으로 70픽셀 이동
+                left: 85, // 텍스트를 왼쪽으로 픽셀 이동
                 top: 38,
                 child: Text(
                   "Hello, 환승철",
                   style: TextStyle(
-                    fontSize: 22.0,
-                    fontFamily: "Font",
-                    fontWeight: FontWeight.bold,
+                    fontSize: 23.0,
+                    fontFamily: "hand",
+                    //fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
