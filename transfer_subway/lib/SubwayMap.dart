@@ -16,7 +16,7 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
       backgroundColor: AppColor.backgroundColor,
       body: Stack(
         children: [
-          myAppbar, //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+          getMyAppbar(), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
           Padding(
             padding: EdgeInsets.only(
               top: 90.0, // 위 패딩

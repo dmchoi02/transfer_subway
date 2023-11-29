@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'imports.dart';
 
 //메인 페이지 길 입력 안됐을 때 위젯
@@ -96,10 +98,11 @@ class BottomNavBar extends StatelessWidget {
 }
 
 //페이지 이동(슬라이드 방식)하는 위젯
-PageRouteBuilder pageRoute(int newIndex) {
+PageRouteBuilder pageRoute(int newIndex, [int? backIndex]) {
   const curve = Curves.easeInOut;
   Offset begin;
-
+  //print(newIndex);
+  //print(currentIndex);
   //인덱스에 맞게 화면 슬라이드 방식을 설정한다.
   if (newIndex == PATH_SET) {
     begin = Offset(0.0, 1.0); //위로 슬라이딩
@@ -145,44 +148,61 @@ PageRouteBuilder pageRoute(int newIndex) {
   );
 }
 
-//직접 만든 Appbar 위젯
-Widget myAppbar = Container(
-  width: 393,
-  height: 125,
-  padding: EdgeInsets.only(
-    left: 20.0,
-    right: 20.0,
-  ),
-  color: AppColor.blueColor,
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Icon(
-        Icons.cloudy_snowing,
-        size: 32,
-        color: Colors.white,
-      ),
-      Expanded(
-        child: Container(
-          child: Stack(
-            children: [
-              Positioned(
-                left: 85, // 텍스트를 왼쪽으로 픽셀 이동
-                top: 38,
-                child: Text(
-                  "Hello, 환승철",
-                  style: TextStyle(
-                    fontSize: 23.0,
-                    fontFamily: "hand",
-                    //fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
+// 직접 만든 Appbar 위젯
+Widget getMyAppbar() {
+  return Container(
+    width: 393,
+    height: 125,
+    padding: EdgeInsets.only(
+      left: 20.0,
+      right: 20.0,
+    ),
+    color: AppColor.blueColor,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Icon(
+            Icons.cloudy_snowing,
+            size: 32,
+            color: Colors.white,
           ),
         ),
-      ),
-    ],
-  ),
-);
+        Expanded(
+          child: Container(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 85, // 텍스트를 왼쪽으로 픽셀 이동
+                    top: 38,
+                    child: Text(
+                      "Hello, 환승철",
+                      style: TextStyle(
+                        fontSize: 23.0,
+                        fontFamily: "hand",
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/*
+class Global {
+  //전역 변수
+  static bool onPathOrPathInput = false; //경로 입력 또는 경로 안내 창에서만 true
+  static String departureValue = "";
+  static String destinationValue = "";
+
+}
+*/

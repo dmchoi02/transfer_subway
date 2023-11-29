@@ -1,5 +1,5 @@
 // toast메시지를 띄우는 페이지
-// 기존 패키지는 부족한 기능이 있어서 직접 만들어서 사용
+// 기존 TOAST 패키지는 부족한 기능이 있어서 직접 만들어서 사용
 
 import 'imports.dart';
 
@@ -17,10 +17,10 @@ class ToastWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(12.0),
           decoration: BoxDecoration(
             color: AppColor.blueColor,
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(20.0),
           ),
           child: Text(
             message,

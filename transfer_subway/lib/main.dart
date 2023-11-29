@@ -13,7 +13,7 @@ class AppColor {
   static const Color selectedColor = Color(0xFF2B79C2); // 선택을 강조하는 파랑색
   static const Color blueColor = Color(0xFF475FF3); // 앱바에 사용되는 색깔
   static const Color backgroundColor = Color(0xFFE9E9E9); // 기본 회색 배경
-  static const Color blackColor = Color.fromARGB(200, 0, 0, 0);
+  static const Color blackColor = Color.fromARGB(220, 0, 0, 0);
 }
 
 // 이미지 할당은 아래 변수를 이용 ex. images + "이미지 이름"
@@ -64,7 +64,8 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: AppColor.backgroundColor,
         body: Stack(
           children: [
-            myAppbar, //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+            getMyAppbar(),
+            //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
             Padding(
               padding: EdgeInsets.only(
                 top: 90.0, // 위 패딩
