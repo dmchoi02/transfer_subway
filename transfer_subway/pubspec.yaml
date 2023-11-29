@@ -106,5 +106,7 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 flutter_native_splash:
-  color: "#f5cb42"
-  image: assets/images/splash.png
+  background_image: assets/images/splash.png  #안드로이드 12 미만에서는 온전한 스플래시 이미지를 배경으로 출력
+  android_12:
+    image: assets/images/icon.png #안드로이드 12 이상부터는 정책변경으로 인한 스플래시 불가, 아이콘 출력으로 변경. 따라서 아이콘 변경 후 지정
+    color: "#475ff3"  #환승철 앱바와 같은 색상
