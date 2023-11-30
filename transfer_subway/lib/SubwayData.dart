@@ -85,7 +85,7 @@ class Subways {
           },
           '119': {
             //환승역 - 9호선 종속
-            'name': '구일(동양미래대)',
+            'name': '구일',
             'nearbyShops': ['CU'],
           },
           '120': {
@@ -212,7 +212,7 @@ class Subways {
             'nearbyShops': ['세븐일레븐'],
           },
           '308': {
-            'name': '경복궁(정부서울청사)',
+            'name': '경복궁',
             'nearbyShops': ['세븐일레븐'],
           },
           '401': {
@@ -238,28 +238,28 @@ class Subways {
           },
           '406': {
             //환승역 - 9호선,4호선 종속
-            'name': '성신여대입구(돈암)',
+            'name': '성신여대입구',
             'nearbyShops': ['CU'],
           },
           '407': {
-            'name': '한성대입구(삼선교)',
+            'name': '한성대입구',
             'nearbyShops': ['세븐일레븐'],
           },
           '408': {
-            'name': '혜화(서울대학교병원)',
+            'name': '혜화',
             'nearbyShops': ['CU'],
           },
           '409': {
             //환승역 - 8호선 종속
-            'name': '명동(우리금융타운)',
+            'name': '명동',
             'nearbyShops': ['CU'],
           },
           '410': {
-            'name': '회현(남대문시장)',
+            'name': '회현',
             'nearbyShops': ['GS25'],
           },
           '411': {
-            'name': '숙대입구(갈월)',
+            'name': '숙대입구',
             'nearbyShops': ['세븐일레븐'],
           },
           '412': {
@@ -267,23 +267,23 @@ class Subways {
             'nearbyShops': ['CU'],
           },
           '413': {
-            'name': '신용산(아모레퍼시픽)',
+            'name': '신용산',
             'nearbyShops': ['이마트24'],
           },
           '414': {
-            'name': '이촌(국립중앙박물관)',
+            'name': '이촌',
             'nearbyShops': ['CU'],
           },
           '415': {
-            'name': '동작(현충원)',
+            'name': '동작',
             'nearbyShops': ['미니스톱'],
           },
           '416': {
-            'name': '총신대입구(이수)',
+            'name': '총신대입구',
             'nearbyShops': ['이마트24'],
           },
           '417': {
-            'name': '사단(대항병원)',
+            'name': '사단',
             'nearbyShops': ['GS25'],
           },
           '501': {
@@ -304,11 +304,11 @@ class Subways {
             'nearbyShops': ['이마트24'],
           },
           '505': {
-            'name': '마곡(홈앤쇼핑)',
+            'name': '마곡',
             'nearbyShops': ['CU'],
           },
           '506': {
-            'name': '발산(에스앤유서울병원)',
+            'name': '발산',
             'nearbyShops': ['CU'],
           },
           '507': {
@@ -325,7 +325,7 @@ class Subways {
             'nearbyShops': ['CU'],
           },
           '603': {
-            'name': '신정(은행정)',
+            'name': '신정',
             'nearbyShops': ['이마트24'],
           },
           '604': {
@@ -334,7 +334,7 @@ class Subways {
           },
           '605': {
             //환승역 - 9호선 종속
-            'name': '오목교(목동운동장앞)',
+            'name': '오목교',
             'nearbyShops': ['세븐일레븐'],
           },
           '606': {
@@ -355,7 +355,7 @@ class Subways {
             'nearbyShops': ['이마트24'],
           },
           '610': {
-            'name': '여의도(신한투자증권)',
+            'name': '여의도',
             'nearbyShops': ['GS25'],
           },
           '611': {
@@ -376,15 +376,15 @@ class Subways {
             'nearbyShops': ['미니스톱'],
           },
           '615': {
-            'name': '충정로(경기대입구)',
+            'name': '충정로',
             'nearbyShops': ['GS25'],
           },
           '616': {
-            'name': '서대문(강북삼성병원)',
+            'name': '서대문',
             'nearbyShops': ['GS25'],
           },
           '617': {
-            'name': '광화문(세종문화회관)',
+            'name': '광화문',
             'nearbyShops': ['이마트24'],
           },
           '618': {
@@ -428,7 +428,7 @@ class Subways {
           },
           '705': {
             //환승역 - 8호선 종속
-            'name': '부천시장(부천아트센터)',
+            'name': '부천시장',
             'nearbyShops': ['CU'],
           },
           '706': {
@@ -444,11 +444,11 @@ class Subways {
             'nearbyShops': ['세븐일레븐'],
           },
           '802': {
-            'name': '남한산성입구(성남법원-검찰청)',
+            'name': '남한산성입구',
             'nearbyShops': ['세븐일레븐'],
           },
           '803': {
-            'name': '단대오거리(신구대학교)',
+            'name': '단대오거리',
             'nearbyShops': ['CU'],
           },
           '804': {
@@ -464,11 +464,11 @@ class Subways {
             'nearbyShops': ['CU'],
           },
           '901': {
-            'name': '기흥(백남준아트센터)',
+            'name': '기흥',
             'nearbyShops': ['세븐일레븐'],
           },
           '902': {
-            'name': '상갈(루터대학교)',
+            'name': '상갈',
             'nearbyShops': ['CU'],
           },
           '903': {
@@ -476,7 +476,7 @@ class Subways {
             'nearbyShops': ['CU'],
           },
           '904': {
-            'name': '영통(경희대)',
+            'name': '영통',
             'nearbyShops': ['GS25'],
           },
           '905': {
@@ -511,5 +511,14 @@ class Subways {
       return false;
     }
     return double.tryParse(s) != null;
+  }
+
+  String getKeyFromName(String stationName) {
+    for (var entry in stations.entries) {
+      if (entry.value['name'] == stationName) {
+        return entry.key;
+      }
+    }
+    return '';
   }
 }
