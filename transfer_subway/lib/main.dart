@@ -20,7 +20,6 @@ class AppColor {
 String images = 'assets/images/';
 
 // 기본 초기화 변수들(앱을 처음 킬 때 세팅되어야하는 변수는 여기다 작성)
-bool isPathSet = false; // 길찾기 정보 입력이 안되어있는 걸로 세팅
 int currentIndex = 1; //기본 초기 화면은 홈화면 index인 1로 세팅
 
 //각 페이지 인덱스 상수로 선언
@@ -54,7 +53,7 @@ class _MyAppState extends State<MyApp> {
     double screenHeight = screenSize.height;
     //print(screenWidth); // 현재 가로 사이즈
     //print(screenHeight); // 현재 세로 사이즈
-
+    Widget onPathview = onPathView();
     // 위에 상태바 없애기
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
@@ -115,59 +114,60 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
 
-                  // 각 박스 사이에 여백을 준다.
-                  SizedBox(
-                    height: 10.0,
-                  ),
-
                   // 2번재 박스
-                  Container(
-                    padding: EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                    ),
-                    width: 352.0,
-                    height: 110.0,
-                    decoration: BoxDecoration(
-                      // 모서리 둥글게 만들기
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    ),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                left: 5.0, top: 10.0), // 왼쪽 여백 조정
-                            child: Text(
-                              "공지",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Font",
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.blackColor,
+                  Visibility(
+                    visible: !Global.getIsPathSet(),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Container(
+                        padding: EdgeInsets.only(
+                          left: 20.0,
+                          right: 20.0,
+                        ),
+                        width: 352.0,
+                        height: 110.0,
+                        decoration: BoxDecoration(
+                          // 모서리 둥글게 만들기
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        ),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 5.0, top: 10.0), // 왼쪽 여백 조정
+                                child: Text(
+                                  "공지",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontFamily: "Font",
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Text(
-                              "자연재해로 인해\n3, 6호선 현재 운행 중단",
-                              // 스타일 설정
-                              style: TextStyle(
-                                fontSize: 15.0, // 글꼴 크기
-                                fontFamily: "Font",
-                                fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
-                                color: AppColor.blackColor,
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.topCenter,
+                                child: Text(
+                                  "자연재해로 인해\n3, 6호선 현재 운행 중단",
+                                  // 스타일 설정
+                                  style: TextStyle(
+                                    fontSize: 15.0, // 글꼴 크기
+                                    fontFamily: "Font",
+                                    fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
+                                    color: AppColor.blackColor,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
 
@@ -179,15 +179,12 @@ class _MyAppState extends State<MyApp> {
                   // 3번째 박스
                   Container(
                     width: 352.0,
-                    height: 407,
+                    height: !Global.getIsPathSet() ? 407 : 527, // 조건에 따라 높이 설정
                     decoration: BoxDecoration(
-                      // 모서리 둥글게 만들기
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     ),
-                    child:
-                        // 조건에 따라서 위젯을 가져온다
-                        (isPathSet) ? onPathView : offPathView,
+                    child: (Global.getIsPathSet()) ? onPathview : offPathView,
                   ),
                 ],
               ),

@@ -7,6 +7,8 @@ import 'imports.dart';
 class Global {
   static List<String> _searchList = [];
   static List<String> searchHistory = [];
+
+  static bool isPathSet = false; //경로 입력이 됐는지 구분하는 변수
 // 검색기록들의 즐겨찾기 아이콘에 대한 상태
 // false는 아이콘이 꺼져있는 것을 의미한다.
   static List<bool> isBookmarkedList = [];
@@ -29,5 +31,13 @@ class Global {
 
   static List<bool> getIsBookmarkedList() {
     return isBookmarkedList;
+  }
+
+  static bool getIsPathSet() {
+    return isPathSet;
+  }
+
+  static void setIsPathSet(bool val) {
+    isPathSet = val;
   }
 }

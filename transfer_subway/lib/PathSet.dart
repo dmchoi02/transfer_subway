@@ -698,16 +698,23 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                 color: AppColor.blueColor, // 아이콘 색상 설정
               ),
               onPressed: () {
-                // 버튼을 눌렀을 때 다른 페이지로 이동
-                // 예외로 돌아갈 때는 슬라이드를 사용하지 않는다.
-                if (isGuideClicked.contains(true)) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyApp()),
-                  );
-                } else {
-                  myShowToast(context, "경로 안내를 클릭하세요!");
-                }
+                setState(() {
+                  // 버튼을 눌렀을 때 다른 페이지로 이동
+                  // 예외로 돌아갈 때는 슬라이드를 사용하지 않는다.
+                  print("현재 셋패스값 : ");
+                  print(Global.getIsPathSet());
+                  Global.setIsPathSet(true); //패스 설정이 완료된 걸로 바꿈
+                  print("셋 실생후 현재 셋패스값 : ");
+                  print(Global.getIsPathSet());
+                  if (isGuideClicked.contains(true)) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyApp()),
+                    );
+                  } else {
+                    myShowToast(context, "경로 안내를 클릭하세요!");
+                  }
+                });
               },
             ),
           ],
@@ -810,6 +817,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     // Pigeon code
+    Global.setIsPathSet(false); //화면을 그리는 상태에서는 경로 설정이 안되어 있음
     if (focusCnt != 2) {
       FocusScope.of(context).unfocus();
       focusCnt++;
