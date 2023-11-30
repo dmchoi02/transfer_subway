@@ -6,32 +6,10 @@ import 'imports.dart';
 
 class Global {
   static List<String> _searchList = [];
-  static List<String> searchHistory = [
-    '158 -> 343',
-    '검색 기록 2',
-    '검색 기록 3',
-    '158 -> 343',
-    '158 -> 343',
-    '검색 기록 2',
-    '검색 기록 3',
-    '158 -> 343',
-    '검색 기록 3',
-    '158 -> 343'
-  ];
+  static List<String> searchHistory = [];
 // 검색기록들의 즐겨찾기 아이콘에 대한 상태
 // false는 아이콘이 꺼져있는 것을 의미한다.
-  static List<bool> isBookmarkedList = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
+  static List<bool> isBookmarkedList = [];
 
   static List<String> getSearchList() {
     return _searchList;
