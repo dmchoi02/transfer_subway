@@ -494,6 +494,22 @@ class Subways {
   }
 
   List<String> getMatchingStations(String query) {
-    return stations.keys.where((key) => key.startsWith(query)).toList();
+    if (_isNumeric(query)) {
+      // 숫자로 이루어진 문자열인 경우
+      return stations.keys.where((key) => key.startsWith(query)).toList();
+    } else {
+      // 텍스트인 경우
+      return stations.values
+          .where((station) => station['name'].startsWith(query))
+          .map((station) => station['name'] as String)
+          .toList();
+    }
+  }
+
+  bool _isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
   }
 }

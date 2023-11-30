@@ -712,6 +712,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                             } else if (WhatIsNowController == 2) {
                               destinationController.text = _searchList[index];
                             }
+                            WhatIsNowController = 0;
                           });
                         },
                         child: Text(
@@ -855,18 +856,18 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                 child: TextField(
                                   focusNode: departureFocusNode,
                                   readOnly: okInputPath, // 입력 완료인 경우 입력창 클릭 불가
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.text,
                                   controller: departureController,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '출발역을 입력하세요!',
                                     hintStyle: TextStyle(fontSize: 15.0),
                                   ),
-                                  onChanged: (number) {
+                                  onChanged: (text) {
                                     //number를 실시간으로 읽어 searchList를 갱신.
                                     setState(() {
                                       _searchList =
-                                          subways.getMatchingStations(number);
+                                          subways.getMatchingStations(text);
                                     });
                                   },
                                   onEditingComplete: () {
@@ -883,14 +884,12 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                               ),
                             ),
                             Text(
-                              WhatIsNowController == 1 ? "<- 출발역" : "출발역",
+                              "출발역",
                               style: TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: "Font",
                                 fontWeight: FontWeight.bold,
-                                color: WhatIsNowController == 1
-                                    ? AppColor.selectedColor
-                                    : AppColor.blackColor,
+                                color: AppColor.blackColor,
                               ),
                             ),
                           ],
@@ -908,20 +907,20 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                 child: TextField(
                                   focusNode: destinationFocusNode,
                                   readOnly: okInputPath, // 입력 완료인 경우 입력창 클릭 불가
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.text,
                                   controller: destinationController,
-                                  onChanged: (number) {
-                                    //number를 실시간으로 읽어 searchList를 갱신.
-                                    setState(() {
-                                      _searchList =
-                                          subways.getMatchingStations(number);
-                                    });
-                                  },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '도착역을 입력하세요!',
                                     hintStyle: TextStyle(fontSize: 15.0),
                                   ),
+                                  onChanged: (text) {
+                                    //number를 실시간으로 읽어 searchList를 갱신.
+                                    setState(() {
+                                      _searchList =
+                                          subways.getMatchingStations(text);
+                                    });
+                                  },
                                   onEditingComplete: () {
                                     // 사용자가 "확인" 버튼을 누르면 호출될 콜백
                                     _saveValues();
@@ -929,8 +928,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                     WhatIsNowController = 0;
                                   },
                                   onTap: () {
-                                    // TextField가 탭될 때 WhatIsNowController 값을 2로 설정
-                                    WhatIsNowController = 0;
                                     //먼저 선수조치로 0 적용
                                     WhatIsNowController = 2;
                                   },
@@ -938,14 +935,12 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                               ),
                             ),
                             Text(
-                              WhatIsNowController == 2 ? "<- 도착역" : "도착역",
+                              "도착역",
                               style: TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: "Font",
                                 fontWeight: FontWeight.bold,
-                                color: WhatIsNowController == 2
-                                    ? AppColor.selectedColor
-                                    : AppColor.blackColor,
+                                color: AppColor.blackColor,
                               ),
                             ),
                           ],
