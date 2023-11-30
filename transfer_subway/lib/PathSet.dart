@@ -2,6 +2,8 @@
 
 import 'dart:io';
 
+import 'package:transfer_subway/subwaygraph.dart';
+
 import 'imports.dart';
 
 class PathSetPage extends StatefulWidget {
@@ -17,25 +19,13 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
 
   final TextEditingController _filter = TextEditingController();
   final Subways subways = Subways();
-  String _searchText = "";
+  final SubwayGraph graph = SubwayGraph();
   List<String> _searchList = [];
   final departureFocusNode = FocusNode();
   final destinationFocusNode = FocusNode();
   int WhatIsNowController = 0;
-  _PathSetPageState() {
-    _filter.addListener(() {
-      if (_filter.text.isEmpty) {
-        setState(() {
-          _searchText = "";
-          _searchList = [];
-        });
-      } else {
-        setState(() {
-          _searchText = _filter.text;
-        });
-      }
-    });
-  }
+  String departureValue = '';
+  String destinationValue = '';
 
   double containerHeight = 560.0; //초기 컨테이너 높이
   bool okInputPath = false;
@@ -43,12 +33,18 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   int focusCnt = 0;
 
   // 출발지와 도착지 값을 저장하고 화면에서 포커스를 해제합니다.
+
   void _saveValues() {
-    String departureValue = departureController.text;
-    String destinationValue = destinationController.text;
+    if (_isNumeric(departureController.text) == true) {
+      departureValue = departureController.text;
+      destinationValue = destinationController.text;
+    } else {
+      departureValue = subways.getKeyFromName(departureController.text);
+      destinationValue = subways.getKeyFromName(destinationController.text);
+    }
 
     // 여기에서 변수에 저장하거나 다른 로직을 수행할 수 있습니다.
-    print(departureValue);
+    print('출발지: $departureValue');
     print('도착지: $destinationValue');
 
     // 출발지와 도착지 값이 비어있지 않으면 포커스를 해제합니다.
@@ -60,6 +56,14 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     } else {
       myShowToast(context, '모든 경로를 입력해주세요!'); // 하나라도 입력 안된 경우 메시지 출력
     }
+  }
+
+  //해당 텍스트가 숫자인지 이름인지 확인
+  bool _isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
   }
 
   // 위젯의 상태가 초기화될 때 호출되는 메서드
@@ -278,10 +282,17 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   // 거리 안내 위젯
   Widget getGuidePath() {
     print("DD");
+    print("$departureValue");
+    print("$destinationValue");
+    print("DD");
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
       print("작업 수행");
-      // 여기서 필요한 비동기 작업을 수행합니다.
-      Future.delayed(Duration(seconds: 2), () {});
+      var result_time =
+          graph.runDijkstra(departureValue, destinationValue, 'time');
+      var result_cost =
+          graph.runDijkstra(departureValue, destinationValue, 'cost');
+      var result_distance =
+          graph.runDijkstra(departureValue, destinationValue, 'distance');
       // 작업이 완료되면 상태를 변경하여 원하는 위젯을 화면에 불러옵니다.
       return Container(
         padding: EdgeInsets.only(
@@ -381,7 +392,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : 45분",
+                        "총 예상 시간 : ${result_time[destinationValue]?['time'] ?? 'N/A'}",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -399,7 +410,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "거리 : 1500m",
+                        "거리 : ${(result_time[destinationValue]?['distance']) ?? 'N/A'} km",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -417,7 +428,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "비용 : 3,150원",
+                        "비용 : ${result_time[destinationValue]?['cost'] ?? 'N/A'} 원",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -481,7 +492,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : 45분",
+                        "총 예상 시간 : ${result_distance[destinationValue]?['time'] ?? 'N/A'} 초",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -499,7 +510,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "거리 : 1500m",
+                        "거리 : ${result_distance[destinationValue]?['distance'] ?? 'N/A'} km",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -517,7 +528,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "비용 : 3,150원",
+                        "비용 : ${result_distance[destinationValue]?['cost'] ?? 'N/A'} 원",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -581,7 +592,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : 45분",
+                        "총 예상 시간 : ${result_cost[destinationValue]?['time'] ?? 'N/A'} 초",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -599,7 +610,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "거리 : 1500m",
+                        "거리 : ${result_cost[destinationValue]?['distance'] ?? 'N/A'} km",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -617,7 +628,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "비용 : 3,150원",
+                        "비용 : ${result_cost[destinationValue]?['cost'] ?? 'N/A'} 원",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
