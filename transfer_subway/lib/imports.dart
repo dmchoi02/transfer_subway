@@ -6,6 +6,7 @@
 export 'package:flutter/material.dart'; // 기본적인 import
 export 'package:flutter/services.dart'; // 상태바를 없애기 위한 import
 
+export "TransferInfo.dart";
 export "subwaygraph.dart";
 export "SubwayData.dart";
 export "main.dart"; // 메인 페이지
