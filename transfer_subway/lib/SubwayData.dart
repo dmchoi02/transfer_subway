@@ -484,4 +484,16 @@ class Subways {
             'nearbyShops': ['CU'],
           }
         };
+
+  List<String> getStationNames() {
+    return stations.values.map((station) => station['name'] as String).toList();
+  }
+
+  List<String> getStationNumbers() {
+    return stations.keys.toList();
+  }
+
+  List<String> getMatchingStations(String query) {
+    return stations.keys.where((key) => key.startsWith(query)).toList();
+  }
 }

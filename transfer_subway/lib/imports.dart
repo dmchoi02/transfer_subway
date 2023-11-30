@@ -6,6 +6,7 @@
 export 'package:flutter/material.dart'; // 기본적인 import
 export 'package:flutter/services.dart'; // 상태바를 없애기 위한 import
 
+export "SubwayData.dart";
 export "main.dart"; // 메인 페이지
 export 'PathSet.dart'; // 길 입력 페이지
 export 'SubwayMap.dart'; // 노선도 페이지
