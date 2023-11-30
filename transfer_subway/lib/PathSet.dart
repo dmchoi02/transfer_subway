@@ -12,22 +12,58 @@ class PathSetPage extends StatefulWidget {
 }
 
 class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
+  // 팝업을 표시하는 함수
+  void showPopup(String msg) {
+    // 즐겨찾기인 경우의 팝업
+    if (msg == "BookMark") {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return MyBookmarkDialog();
+        },
+      ).then((value) {
+        // 팝업이 닫힌 후의 동작
+        setState(() {
+          // 검색 기록을 다시 가져옴
+          searchHistory = Global.getSearchHistory();
+        });
+      });
+    }
+    //지하철 정보인 경우의 팝업
+    else if (msg == "SubwayInfo") {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return MySubwayInfoDialog();
+        },
+      ).then((value) {
+        // 팝업이 닫힌 후의 동작
+        setState(() {
+          // 검색 기록을 다시 가져옴
+          searchHistory = Global.getSearchHistory();
+        });
+      });
+    }
+  }
+
   TextEditingController departureController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
 
   final TextEditingController _filter = TextEditingController();
   final Subways subways = Subways();
   String _searchText = "";
-  List<String> _searchList = [];
+  List<String> _searchList =
+      Global.getSearchList(); //이렇게 사용하면 필요한 경우 다른 페이지에서도 모두 사용 가능
   final departureFocusNode = FocusNode();
   final destinationFocusNode = FocusNode();
-  int WhatIsNowController = 0;
+  int whatIsNowController = 0;
   _PathSetPageState() {
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
         setState(() {
           _searchText = "";
-          _searchList = [];
+
+          Global.setClearSearchList();
         });
       } else {
         setState(() {
@@ -37,7 +73,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     });
   }
 
-  double containerHeight = 560.0; //초기 컨테이너 높이
   bool okInputPath = false;
   bool onPathOrPathInput = false;
   int focusCnt = 0;
@@ -56,6 +91,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
       FocusScope.of(context).unfocus(); // 두개의 값이 입력되었으므로 키보드 창이 사라짐
       print("호출됨");
       okInputPath = true;
+      print(okInputPath);
       onPathOrPathInput = true;
     } else {
       myShowToast(context, '모든 경로를 입력해주세요!'); // 하나라도 입력 안된 경우 메시지 출력
@@ -80,33 +116,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  // 화면 크기가 변경될 때 호출되는 메서드
-  @override
-  void didChangeMetrics() {
-    // 다음 프레임까지 기다린 후 화면 높이를 조정합니다.
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      _adjustContainerHeight();
-    });
-  }
-
-  // 키보드 상태에 따라 화면의 높이를 조절하는 메서드
-
-  void _adjustContainerHeight() {
-    if (MediaQuery.of(context).viewInsets.bottom > 0) {
-      // 키보드가 올라온 상태일 때의 화면 높이
-      setState(() {
-        containerHeight = 330.0;
-      });
-    } else {
-      // 키보드가 내려간 상태일 때의 화면 높이
-      setState(() {
-        containerHeight = 560.0;
-      });
-    }
-  }
-
-  // 검색기록들의 즐겨찾기 아이콘에 대한 상태
-  // false는 아이콘이 꺼져있는 것을 의미한다.
+  List<bool> isBookmarkedList = Global.getIsBookmarkedList();
+  List<String> searchHistory = Global.getSearchHistory();
+  /*
   List<bool> isBookmarkedList = [
     false,
     false,
@@ -119,6 +131,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     false,
     false,
   ];
+  
   // 검색기록들
   List<String> searchHistory = [
     '158 -> 343',
@@ -132,6 +145,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     '검색 기록 3',
     '158 -> 343',
   ];
+  */
 
   // 거리 안내 클릭 여부
   // 차례대로 최소 (시간, 거리, 비용)을 의미함.
@@ -157,129 +171,141 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
 
   // 최근 검색 기록 위젯
   Widget getSearchHistory() {
-    return Container(
-      padding: EdgeInsets.only(
-        left: 20.0,
-        right: 20.0,
-      ),
-      width: 352.0,
-      height: containerHeight,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-      ),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 5.0,
-                top: 10.0,
-              ),
-              child: Text(
-                "최근 검색 기록",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontFamily: "Font",
-                  fontWeight: FontWeight.bold,
-                  color: AppColor.blackColor,
+    if (MediaQuery.of(context).viewInsets.bottom == 0) {
+      //print("작업 수행");
+      // 여기서 필요한 비동기 작업을 수행합니다.
+      Future.delayed(Duration(seconds: 2), () {});
+      return Container(
+        padding: EdgeInsets.only(
+          left: 20.0,
+          right: 20.0,
+        ),
+        width: 352.0,
+        height: 546,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 5.0,
+                  top: 10.0,
+                ),
+                child: Text(
+                  "최근 검색 기록",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontFamily: "Font",
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.blackColor,
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemExtent: 40,
-              itemCount: searchHistory.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          print("Text clicked at index $index");
-                        },
-                        child: Text(
-                          searchHistory[index],
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontFamily: "Font",
-                            fontWeight: FontWeight.bold,
+            Expanded(
+              child: ListView.builder(
+                itemExtent: 40,
+                itemCount: searchHistory.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            print("Text clicked at index $index");
+                          },
+                          child: Text(
+                            searchHistory[index],
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.mainColor,
+                            ),
+                          ),
+                        ),
+                        //SizedBox(width: 140),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isBookmarkedList[index] =
+                                  !isBookmarkedList[index];
+                            });
+                            if (isBookmarkedList[index]) {
+                              print("Add to bookmarks at index $index");
+                            } else {
+                              print("Remove from bookmarks at index $index");
+                            }
+                          },
+                          child: Icon(
+                            isBookmarkedList[index]
+                                ? Icons.bookmarks
+                                : Icons.bookmarks_outlined,
+                            size: 32,
                             color: AppColor.mainColor,
                           ),
                         ),
+                      ],
+                    ),
+                    onTap: () {
+                      //print("ListTile clicked at index $index");
+                    },
+                  );
+                },
+              ),
+            ),
+            Container(
+              width: 352,
+              height: 70,
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 12,
+                  right: 10,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    showPopup("BookMark"); // 즐겨찾기 팝업 호출
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.collections_bookmark,
+                        size: 32,
+                        color: AppColor.blackColor,
                       ),
-                      //SizedBox(width: 140),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isBookmarkedList[index] = !isBookmarkedList[index];
-                          });
-                          if (isBookmarkedList[index]) {
-                            print("Add to bookmarks at index $index");
-                          } else {
-                            print("Remove from bookmarks at index $index");
-                          }
-                        },
-                        child: Icon(
-                          isBookmarkedList[index]
-                              ? Icons.bookmarks
-                              : Icons.bookmarks_outlined,
-                          size: 32,
+                      Text(
+                        '즐겨찾기',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontFamily: "Font",
+                          fontWeight: FontWeight.bold,
                           color: AppColor.mainColor,
                         ),
                       ),
                     ],
                   ),
-                  onTap: () {
-                    //print("ListTile clicked at index $index");
-                  },
-                );
-              },
-            ),
-          ),
-          Container(
-            width: 352,
-            height: 70,
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                bottom: 12,
-                right: 10,
+                ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.collections_bookmark,
-                    size: 32,
-                    color: AppColor.blackColor,
-                  ),
-                  Text(
-                    '즐겨찾기',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontFamily: "Font",
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.mainColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
+    }
+    return Container();
   }
 
   // 거리 안내 위젯
   Widget getGuidePath() {
-    print("DD");
+    //print("DD");
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
-      print("작업 수행");
+      //print("작업 수행");
       // 여기서 필요한 비동기 작업을 수행합니다.
       Future.delayed(Duration(seconds: 2), () {});
       // 작업이 완료되면 상태를 변경하여 원하는 위젯을 화면에 불러옵니다.
@@ -289,7 +315,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
           right: 20.0,
         ),
         width: 352.0,
-        height: 560,
+        height: 546,
         decoration: BoxDecoration(
           // 모서리 둥글게 만들기
           color: Colors.white,
@@ -633,7 +659,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
             ),
 
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             // 안내 버튼
             IconButton(
@@ -670,7 +696,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
         right: 20.0,
       ),
       width: 352.0,
-      height: containerHeight,
+      height: 250,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -707,12 +733,12 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            if (WhatIsNowController == 1) {
+                            if (whatIsNowController == 1) {
                               departureController.text = _searchList[index];
-                            } else if (WhatIsNowController == 2) {
+                            } else if (whatIsNowController == 2) {
                               destinationController.text = _searchList[index];
                             }
-                            WhatIsNowController = 0;
+                            whatIsNowController = 0;
                           });
                         },
                         child: Text(
@@ -729,7 +755,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         onTap: () {
                           setState(() {
                             //인포 클릭된 경우 동작
-                            isBookmarkedList[index] = !isBookmarkedList[index];
+                            showPopup("SubwayInfo");
                           });
                         },
                         child: Icon(
@@ -747,36 +773,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
               },
             ),
           ),
-          Container(
-            width: 352,
-            height: 70,
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                bottom: 12,
-                right: 10,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.collections_bookmark,
-                    size: 32,
-                    color: AppColor.blackColor,
-                  ),
-                  Text(
-                    '즐겨찾기',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontFamily: "Font",
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.mainColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
         ],
       ),
     );
@@ -802,6 +798,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
             Stack(
               children: [
                 getMyAppbar(), // 직접 만든 Appbar 호출
+                // 쓰레기통 아이콘 표시
+                // 단 경로 입력을 마쳤을 경우에만.
                 Positioned(
                   left: 334,
                   top: 44,
@@ -874,11 +872,11 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                     // 사용자가 "확인" 버튼을 누르면 호출될 콜백
                                     _saveValues();
                                     // 확인 후에 WhatIsNowController 값을 0으로 되돌리기
-                                    WhatIsNowController = 0;
+                                    whatIsNowController = 0;
                                   },
                                   onTap: () {
                                     // TextField가 탭될 때 WhatIsNowController 값을 1로 설정
-                                    WhatIsNowController = 1;
+                                    whatIsNowController = 1;
                                   },
                                 ),
                               ),
@@ -925,11 +923,11 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                     // 사용자가 "확인" 버튼을 누르면 호출될 콜백
                                     _saveValues();
                                     // 확인 후에 WhatIsNowController 값을 0으로 되돌리기 (입력 전 상태로)
-                                    WhatIsNowController = 0;
+                                    whatIsNowController = 0;
                                   },
                                   onTap: () {
                                     //먼저 선수조치로 0 적용
-                                    WhatIsNowController = 2;
+                                    whatIsNowController = 2;
                                   },
                                 ),
                               ),

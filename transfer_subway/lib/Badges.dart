@@ -31,7 +31,7 @@ class _BadgesPageState extends State<BadgesPage> {
                     right: 20.0,
                   ),
                   width: 352.0,
-                  height: 615,
+                  height: 615 - 23,
                   decoration: BoxDecoration(
                     // 모서리 둥글게 만들기
                     color: Colors.white,

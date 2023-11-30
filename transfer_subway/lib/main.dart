@@ -1,7 +1,7 @@
 // 메인 페이지
 import 'imports.dart';
 
-// 화면의 사이즈는 392x783 고정 (기존 figma 디자인 360 x 800이라서 코딩시 조절이 필요함)
+// 화면의 사이즈는 392x783 고정 -> 392 759로 바뀜(기존 figma 디자인 360 x 800이라서 코딩시 조절이 필요함)
 // size는 조정하지 마세용 (추후에 디자인 수정 예정)
 //
 // 안드로이드 에뮬레이터 실행시 1080x2240 5.6인치로 설정
@@ -179,7 +179,7 @@ class _MyAppState extends State<MyApp> {
                   // 3번째 박스
                   Container(
                     width: 352.0,
-                    height: 430.0,
+                    height: 407,
                     decoration: BoxDecoration(
                       // 모서리 둥글게 만들기
                       color: Colors.white,

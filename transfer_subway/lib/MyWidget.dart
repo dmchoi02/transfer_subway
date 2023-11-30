@@ -8,8 +8,6 @@ Widget offPathView = Container(
     left: 20.0, // 왼쪽 패딩
     right: 20.0,
   ),
-  width: 352.0,
-  //height: 108.0,
   child: Column(
     mainAxisAlignment: MainAxisAlignment.center, // 수직 가운데 정렬
     children: [
@@ -196,13 +194,3 @@ Widget getMyAppbar() {
     ),
   );
 }
-
-/*
-class Global {
-  //전역 변수
-  static bool onPathOrPathInput = false; //경로 입력 또는 경로 안내 창에서만 true
-  static String departureValue = "";
-  static String destinationValue = "";
-
-}
-*/
