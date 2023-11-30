@@ -698,6 +698,10 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                 color: AppColor.blueColor, // 아이콘 색상 설정
               ),
               onPressed: () {
+                List<String> pathToNode = result_time[departureValue]['path'];
+                print(pathToNode);
+                // 버튼을 눌렀을 때 다른 페이지로 이동
+                // 예외로 돌아갈 때는 슬라이드를 사용하지 않는다.
                 setState(() {
                   // 버튼을 눌렀을 때 다른 페이지로 이동
                   // 예외로 돌아갈 때는 슬라이드를 사용하지 않는다.
