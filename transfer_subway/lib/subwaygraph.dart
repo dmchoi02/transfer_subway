@@ -512,6 +512,12 @@ class SubwayGraph {
       String startStation, String endStation, String weightType) {
     return Dijkstra.run(this, startStation, endStation, weightType);
   }
+
+  List<String> runfindpath(
+      String startStation, String endStation, String weightType) {
+    return Dijkstra.findShortestPath(
+        adjacencyList, startStation, endStation, weightType);
+  }
 }
 
 class Dijkstra {
@@ -598,5 +604,58 @@ class Dijkstra {
     }
 
     return closestNode;
+  }
+
+  static List<String> findShortestPath(
+      Map<String, Map<String, Map<String, int>>> graph,
+      String startNode,
+      String endNode,
+      String weightType) {
+    var distances = <String, int>{};
+    var predecessors = <String, String>{};
+    var unvisitedNodes = graph.keys.toSet();
+
+    for (var node in graph.keys) {
+      distances[node] = node == startNode ? 0 : 999999;
+    }
+
+    while (unvisitedNodes.isNotEmpty) {
+      var currentNode = _getClosestNode2(distances, unvisitedNodes);
+      unvisitedNodes.remove(currentNode);
+
+      for (var neighbor in graph[currentNode]!.keys) {
+        var weight = graph[currentNode]![neighbor]![weightType]!;
+
+        var totalWeight = distances[currentNode]! + weight;
+
+        if (totalWeight < distances[neighbor]!) {
+          distances[neighbor] = totalWeight;
+          predecessors[neighbor] = currentNode;
+        }
+      }
+    }
+
+    return _getPath2(predecessors, startNode, endNode);
+  }
+
+  static String _getClosestNode2(
+      Map<String, int> distances, Set<String> unvisitedNodes) {
+    return unvisitedNodes.reduce((closestNode, node) =>
+        distances[node]! < distances[closestNode]! ? node : closestNode);
+  }
+
+  static List<String> _getPath2(
+      Map<String, String> predecessors, String startNode, String endNode) {
+    var path = <String>[];
+    var currentNode = endNode;
+
+    while (currentNode != startNode) {
+      path.insert(0, currentNode);
+      currentNode = predecessors[currentNode]!;
+    }
+
+    path.insert(0, startNode);
+
+    return path;
   }
 }

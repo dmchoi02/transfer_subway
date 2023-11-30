@@ -49,6 +49,11 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   TextEditingController departureController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
 
+  List<String> pathToNode = [];
+  List<String> pathToTransferNode = [];
+
+  StationInfo stationInfo = StationInfo();
+
   final TextEditingController _filter = TextEditingController();
   final Subways subways = Subways();
   String _searchText = "";
@@ -711,6 +716,23 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                   print("셋 실생후 현재 셋패스값 : ");
                   print(Global.getIsPathSet());
                   if (isGuideClicked.contains(true)) {
+                    if (isGuideClicked[0] == true) {
+                      pathToNode = graph.runfindpath(
+                          departureValue, destinationValue, 'time');
+                      print('now time');
+                    } else if (isGuideClicked[1] == true) {
+                      pathToNode = graph.runfindpath(
+                          departureValue, destinationValue, 'distance');
+                      print('now distance');
+                    } else if (isGuideClicked[2] == true) {
+                      pathToNode = graph.runfindpath(
+                          departureValue, destinationValue, 'cost');
+                      print('now cost');
+                    }
+                    pathToTransferNode =
+                        stationInfo.getTransferStations(pathToNode);
+                    print('최단경로 : $pathToNode');
+                    print('환승역만 담긴 최소 경로 : $pathToTransferNode');
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => MyApp()),
