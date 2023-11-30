@@ -347,7 +347,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
           right: 20.0,
         ),
         width: 352.0,
-        height: 560,
+        height: 546,
         decoration: BoxDecoration(
           // 모서리 둥글게 만들기
           color: Colors.white,
@@ -690,9 +690,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
               ),
             ),
 
-            SizedBox(
-              height: 10,
-            ),
             // 안내 버튼
             IconButton(
               icon: Icon(
