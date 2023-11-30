@@ -512,4 +512,13 @@ class Subways {
     }
     return double.tryParse(s) != null;
   }
+
+  String getKeyFromName(String stationName) {
+    for (var entry in stations.entries) {
+      if (entry.value['name'] == stationName) {
+        return entry.key;
+      }
+    }
+    return '';
+  }
 }

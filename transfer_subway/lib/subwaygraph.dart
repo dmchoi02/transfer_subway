@@ -1,12 +1,11 @@
 library subway_library;
 
-part 'Dijkstra.dart';
-
-class Subway {
+class SubwayGraph {
+  Dijkstra temp = Dijkstra();
   Map<String, Map<String, Map<String, int>>> adjacencyList;
 
   // 생성자에서 초기 데이터 정의
-  Subway()
+  SubwayGraph()
       : adjacencyList = {
           '101': {
             '102': {'time': 200, 'distance': 500, 'cost': 200},
@@ -512,5 +511,92 @@ class Subway {
   Map<String, dynamic> runDijkstra(
       String startStation, String endStation, String weightType) {
     return Dijkstra.run(this, startStation, endStation, weightType);
+  }
+}
+
+class Dijkstra {
+  static Map<String, dynamic> run(
+      SubwayGraph subway, String startNode, String endNode, String weightType) {
+    var graph = subway.adjacencyList;
+    var distances = <String, Map<String, dynamic>>{};
+    var predecessors = <String, String>{};
+    var visitedNodes = <String>{};
+
+    for (var node in graph.keys) {
+      distances[node] = node == startNode
+          ? {'time': 0, 'distance': 0, 'cost': 0}
+          : {'time': 999999, 'distance': 999999, 'cost': 999999};
+    }
+
+    while (visitedNodes.length < graph.length) {
+      var currentNode = _getClosestNode(distances, visitedNodes, weightType);
+      visitedNodes.add(currentNode);
+
+      for (var neighbor in graph[currentNode]!.keys) {
+        var weights = graph[currentNode]![neighbor]!;
+        var timeWeight = weights['time']!;
+        var distanceWeight = weights['distance']!;
+        var costWeight = weights['cost']!;
+
+        var totalTime = distances[currentNode]!['time']! + timeWeight;
+        var totalDistance =
+            distances[currentNode]!['distance']! + distanceWeight;
+        var totalCost = distances[currentNode]!['cost']! + costWeight;
+
+        if (totalTime < distances[neighbor]!['time']!) {
+          distances[neighbor]!['time'] = totalTime;
+        }
+        if (totalDistance < distances[neighbor]!['distance']!) {
+          distances[neighbor]!['distance'] = totalDistance;
+        }
+        if (totalCost < distances[neighbor]!['cost']!) {
+          distances[neighbor]!['cost'] = totalCost;
+        }
+        if (distances[neighbor]![weightType]! <
+            distances[currentNode]![weightType]!) {
+          predecessors[neighbor] = currentNode;
+        }
+      }
+    }
+
+    var shortestPath = <String, dynamic>{};
+
+    for (var node in graph.keys) {
+      var path = _getPath(predecessors, node);
+      shortestPath[node] = {
+        'time': distances[node]!['time'],
+        'distance': distances[node]!['distance'],
+        'cost': distances[node]!['cost'],
+        'path': path,
+      };
+    }
+
+    return shortestPath;
+  }
+
+  static List<String> _getPath(Map<String, String> predecessors, String node) {
+    var path = <String>[];
+    while (predecessors.containsKey(node)) {
+      path.insert(0, node);
+      node = predecessors[node]!;
+    }
+    path.insert(0, node);
+    return path;
+  }
+
+  static String _getClosestNode(
+      Map<String, dynamic> distances, Set<String> visited, String weightType) {
+    String closestNode = '';
+    int minDistance = double.maxFinite.toInt();
+
+    for (var entry in distances.entries) {
+      if (!visited.contains(entry.key) &&
+          entry.value[weightType] < minDistance) {
+        closestNode = entry.key;
+        minDistance = entry.value[weightType];
+      }
+    }
+
+    return closestNode;
   }
 }
