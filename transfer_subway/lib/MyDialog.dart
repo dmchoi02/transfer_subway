@@ -150,7 +150,9 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
 
 // 역 정보 다이얼로그
 class MySubwayInfoDialog extends StatefulWidget {
-  const MySubwayInfoDialog({Key? key, String? keyword}) : super(key: key);
+  final String? keyword;
+
+  const MySubwayInfoDialog({Key? key, this.keyword}) : super(key: key);
 
   @override
   State<MySubwayInfoDialog> createState() => _MySubwayInfoDialogState();
@@ -159,9 +161,36 @@ class MySubwayInfoDialog extends StatefulWidget {
 class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
   // List<String> searchHistory = Global.getSearchHistory();
   String test = "5번 출구에서 80m";
+  Subways st = Subways();
+  Map<String, dynamic>? target = {};
+  String stationId = '';
+  String _keyword = '';
+  String name = '';
+  List<String> nearbyShops = [];
+  @override
+  void initState() {
+    if (widget.keyword != null) {
+      // widget.keyword가 null이 아닌 경우의 동작
+      _keyword = widget.keyword!;
+    } else {
+      // widget.keyword가 null인 경우의 동작
+    }
+    super.initState();
+    print(widget.keyword);
+    if (int.tryParse(_keyword) != null || double.tryParse(_keyword) != null) {
+      stationId = _keyword;
+    } else {
+      stationId = st.getKeyFromName(_keyword);
+    }
+    // 여기서 keyword를 사용하여 초기화를 수행.
+    target = st.getStation(stationId);
+    name = target?['name'] ?? [];
+    nearbyShops = target?['nearbyShops'] ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {
+    // 여기서 widget.keyword를 사용하여 인수에 접근할 수 있습니다.
     return Dialog(
       // Dialog를 사용하여 화면 전체 크기에 맞추지 않음
 
@@ -190,7 +219,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, top: 5),
                       child: Text(
-                        "역 정보",
+                        "$name역 정보 ($stationId)",
                         style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: "Font",
@@ -237,32 +266,10 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                         height: 10,
                       ),
                       Row(
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            color: Colors.amber,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 60,
-                            height: 60,
-                            color: Colors.amber,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 60,
-                            height: 60,
-                            color: Colors.amber,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                        ],
+                        children: nearbyShops
+                            .map((item) => Image.asset(images + '$item.png',
+                                width: 60, height: 60))
+                            .toList(),
                       ),
                       SizedBox(
                         height: 15,

@@ -513,6 +513,10 @@ class Subways {
     return double.tryParse(s) != null;
   }
 
+  Map<String, dynamic>? getStation(String key) {
+    return stations[key];
+  }
+
   String getKeyFromName(String stationName) {
     if (_isNumeric(stationName) == true) {
       return stationName;

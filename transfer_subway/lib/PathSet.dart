@@ -13,7 +13,7 @@ class PathSetPage extends StatefulWidget {
 
 class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   // 팝업을 표시하는 함수
-  Future<void> showPopup(String msg) async {
+  Future<void> showPopup(String msg, String stationKey) async {
     // 즐겨찾기인 경우의 팝업
     if (msg == "BookMark") {
       await showDialog(
@@ -34,7 +34,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
       await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return MySubwayInfoDialog();
+          return MySubwayInfoDialog(keyword: stationKey); // 'keyword:'를 추가.
         },
       ).then((value) {
         // 팝업이 닫힌 후의 동작
@@ -847,7 +847,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         onTap: () {
                           setState(() {
                             //인포 클릭된 경우 동작
-                            showPopup("SubwayInfo");
+                            String temp = _searchList[index];
+                            showPopup("SubwayInfo", temp);
                           });
                         },
                         child: Icon(
