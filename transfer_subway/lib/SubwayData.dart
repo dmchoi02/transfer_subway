@@ -514,11 +514,15 @@ class Subways {
   }
 
   String getKeyFromName(String stationName) {
-    for (var entry in stations.entries) {
-      if (entry.value['name'] == stationName) {
-        return entry.key;
+    if (_isNumeric(stationName) == true) {
+      return stationName;
+    } else {
+      for (var entry in stations.entries) {
+        if (entry.value['name'] == stationName) {
+          return entry.key;
+        }
       }
+      return '';
     }
-    return '';
   }
 }
