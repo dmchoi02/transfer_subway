@@ -75,48 +75,52 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
                 itemExtent: 40,
                 itemCount: searchHistory.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            print("Text clicked at index $index");
-                          },
-                          child: Text(
-                            searchHistory[index],
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontFamily: "Font",
-                              fontWeight: FontWeight.bold,
+                  if (isBookmarkedList[index]) {
+                    return ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              print("Text clicked at index $index");
+                            },
+                            child: Text(
+                              searchHistory[index],
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontFamily: "Font",
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.mainColor,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isBookmarkedList[index] =
+                                    !isBookmarkedList[index];
+                              });
+                              if (isBookmarkedList[index]) {
+                                print("Add to bookmarks at index $index");
+                              } else {
+                                print("Remove from bookmarks at index $index");
+                              }
+                            },
+                            child: Icon(
+                              isBookmarkedList[index]
+                                  ? Icons.bookmarks
+                                  : Icons.bookmarks_outlined,
+                              size: 30,
                               color: AppColor.mainColor,
                             ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isBookmarkedList[index] =
-                                  !isBookmarkedList[index];
-                            });
-                            if (isBookmarkedList[index]) {
-                              print("Add to bookmarks at index $index");
-                            } else {
-                              print("Remove from bookmarks at index $index");
-                            }
-                          },
-                          child: Icon(
-                            isBookmarkedList[index]
-                                ? Icons.bookmarks
-                                : Icons.bookmarks_outlined,
-                            size: 30,
-                            color: AppColor.mainColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {},
-                  );
+                        ],
+                      ),
+                      onTap: () {},
+                    );
+                  } else {
+                    return Container(); // 또는 null을 반환하거나, 다른 위젯을 반환할 수 있습니다.
+                  }
                 },
               ),
             ),

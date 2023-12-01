@@ -917,7 +917,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                     width: 352.0,
                     height: 100.0,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer, //컬러 수정
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primaryContainer, //컬러 수정
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     ),
                     child: Column(
