@@ -12,8 +12,8 @@ class MyBookmarkDialog extends StatefulWidget {
 class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
   List<String> searchHistory = Global.getSearchHistory(); // 추후 수정해야함
   List<bool> isBookmarkedList = Global.getIsBookmarkedList();
-  String departureValue = Global().departureValue;
-  String destinationValue = Global().destinationValue;
+  String departureValue = Global.getdepartureValue();
+  String destinationValue = Global.getdestinationValue();
   final Subways subways = Subways();
 
   @override

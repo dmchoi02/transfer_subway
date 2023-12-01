@@ -2,18 +2,32 @@
 // 사용할 때는 Global.get함수
 // static이지만 외부에서 접근할 수 없어서 반드시 함수를 통해 접근하세요
 
-import 'imports.dart';
-
 class Global {
   static List<String> _searchList = [];
   static List<String> searchHistory = [];
-  String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
-  String destinationValue = '';
+  static String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
+  static String destinationValue = ''; //도착역의 Key값. 한글은 불가능 하다.
 
   static bool isPathSet = false; //경로 입력이 됐는지 구분하는 변수
 // 검색기록들의 즐겨찾기 아이콘에 대한 상태
 // false는 아이콘이 꺼져있는 것을 의미한다.
   static List<bool> isBookmarkedList = [];
+
+  static String getdepartureValue() {
+    return departureValue;
+  }
+
+  static String getdestinationValue() {
+    return destinationValue;
+  }
+
+  static void setCleardepartureValue() {
+    departureValue = '';
+  }
+
+  static void setCleardestinationValue() {
+    destinationValue = '';
+  }
 
   static List<String> getSearchList() {
     return _searchList;
