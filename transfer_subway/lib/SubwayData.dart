@@ -283,7 +283,7 @@ class Subways {
             'nearbyShops': ['이마트24'],
           },
           '417': {
-            'name': '사단',
+            'name': '사당',
             'nearbyShops': ['GS25'],
           },
           '501': {
@@ -351,7 +351,7 @@ class Subways {
             'nearbyShops': ['미니스톱'],
           },
           '609': {
-            'name': '신길',
+            'name': '수원',
             'nearbyShops': ['이마트24'],
           },
           '610': {
