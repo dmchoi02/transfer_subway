@@ -474,7 +474,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : ${result_time[destinationValue]?['time'] ?? 'N/A'}",
+                        "총 예상 시간 : ${result_time[destinationValue]?['time'] ?? 'N/A'} 초",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
