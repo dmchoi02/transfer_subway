@@ -65,6 +65,27 @@ class _MyAppState extends State<MyApp> {
           children: [
             getMyAppbar(),
             //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+
+            Positioned(
+              left: 334,
+              top: 44,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Global.setIsPathSet(false);
+                  });
+                },
+                child: Visibility(
+                  visible: Global.getIsPathSet(),
+                  child: Icon(
+                    Icons.delete_forever,
+                    size: 35,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+
             Padding(
               padding: EdgeInsets.only(
                 top: 90.0, // 위 패딩
@@ -77,6 +98,7 @@ class _MyAppState extends State<MyApp> {
                   GestureDetector(
                     onTap: () {
                       // 클릭 시 길찾기 페이지로 이동
+
                       Navigator.push(context, pageRoute(4));
                     },
                     child: Container(

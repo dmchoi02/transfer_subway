@@ -41,8 +41,8 @@ class _onPathViewState extends State<onPathView> {
   List<bool> isClickedSubwayList = [false, false, false, false];
 
   //하위 역의 개수
-  List<int> isSubwayLowCntList = [1, 6, 3, 0];
-  // 도착역을 제외하고 만약 바로 환승을 한다면 빈배열로 선언하고 cnt는 1로 적어야함
+  List<int> isSubwayLowCntList = [1, 6 + 1, 3 + 1, 0];
+  // 도착역을 제외하고 만약 바로 환승을 한다면 빈배열로 선언하고 cnt는 +1로 적어야함
   // 즉 무조건 마지막만 0이고 나머지는 최소 1이상 존재함
 
   void setMyHeight(int index) {

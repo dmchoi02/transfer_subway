@@ -832,7 +832,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
       body: GestureDetector(
         onTap: () {
           // 화면을 클릭할 때 키보드 숨기기
-          FocusScope.of(context).unfocus();
+          // FocusScope.of(context).unfocus();
         },
         child: Stack(
           children: [
@@ -1011,7 +1011,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                   ),
 
                   Visibility(
-                    visible: FocusScope.of(context).hasFocus,
+                    visible: FocusScope.of(context).hasFocus && !okInputPath,
                     child: getAutoCompletion(),
                   ),
 
