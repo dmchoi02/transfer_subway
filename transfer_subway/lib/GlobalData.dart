@@ -7,6 +7,8 @@ import 'imports.dart';
 class Global {
   static List<String> _searchList = [];
   static List<String> searchHistory = [];
+  String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
+  String destinationValue = '';
 
   static bool isPathSet = false; //경로 입력이 됐는지 구분하는 변수
 // 검색기록들의 즐겨찾기 아이콘에 대한 상태

@@ -12,9 +12,20 @@ class MyBookmarkDialog extends StatefulWidget {
 class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
   List<String> searchHistory = Global.getSearchHistory(); // 추후 수정해야함
   List<bool> isBookmarkedList = Global.getIsBookmarkedList();
+  String departureValue = Global().departureValue;
+  String destinationValue = Global().destinationValue;
+  final Subways subways = Subways();
 
   @override
   Widget build(BuildContext context) {
+    // 즐겨찾기된 항목만 필터링하여 새로운 리스트를 만듭니다.
+    List<String> bookmarkedItems = [];
+    for (int i = 0; i < searchHistory.length; i++) {
+      if (isBookmarkedList[i]) {
+        bookmarkedItems.add(searchHistory[i]);
+      }
+    }
+
     return Dialog(
       // Dialog를 사용하여 화면 전체 크기에 맞추지 않음
       shape: RoundedRectangleBorder(
@@ -24,7 +35,7 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
         width: 320.0,
         height: 500.0,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
         child: Column(
@@ -73,54 +84,60 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
             Expanded(
               child: ListView.builder(
                 itemExtent: 40,
-                itemCount: searchHistory.length,
+                itemCount: bookmarkedItems.length, // 즐겨찾기된 항목의 수만큼 아이템을 생성합니다.
                 itemBuilder: (context, index) {
-                  if (isBookmarkedList[index]) {
-                    return ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              print("Text clicked at index $index");
-                            },
-                            child: Text(
-                              searchHistory[index],
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontFamily: "Font",
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.mainColor,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isBookmarkedList[index] =
-                                    !isBookmarkedList[index];
-                              });
-                              if (isBookmarkedList[index]) {
-                                print("Add to bookmarks at index $index");
-                              } else {
-                                print("Remove from bookmarks at index $index");
-                              }
-                            },
-                            child: Icon(
-                              isBookmarkedList[index]
-                                  ? Icons.bookmarks
-                                  : Icons.bookmarks_outlined,
-                              size: 30,
+                  return ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            print("Text clicked at index $index");
+                            // query를 ' --> ' 문자열로 분리하여 departureValue와 destinationValue를 가져옵니다.
+                            List<String> values =
+                                bookmarkedItems[index].split(' --> ');
+                            departureValue = subways.getKeyFromName(values[0]);
+                            destinationValue =
+                                subways.getKeyFromName(values[1]);
+                            print(values);
+                            Navigator.pop(context, values);
+                          },
+                          child: Text(
+                            bookmarkedItems[index], // 즐겨찾기된 항목을 표시합니다.
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
                               color: AppColor.mainColor,
                             ),
                           ),
-                        ],
-                      ),
-                      onTap: () {},
-                    );
-                  } else {
-                    return Container(); // 또는 null을 반환하거나, 다른 위젯을 반환할 수 있습니다.
-                  }
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // 즐겨찾기 상태를 변경합니다.
+                            int originalIndex =
+                                searchHistory.indexOf(bookmarkedItems[index]);
+                            setState(() {
+                              isBookmarkedList[originalIndex] =
+                                  !isBookmarkedList[originalIndex];
+                            });
+                            if (isBookmarkedList[originalIndex]) {
+                              print("Add to bookmarks at index $originalIndex");
+                            } else {
+                              print(
+                                  "Remove from bookmarks at index $originalIndex");
+                            }
+                          },
+                          child: Icon(
+                            Icons.bookmarks,
+                            size: 30,
+                            color: AppColor.mainColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onTap: () {},
+                  );
                 },
               ),
             ),
