@@ -6,7 +6,7 @@ class Subways {
           '101': {
             //환승역 - 2호선 종속
             'name': '청량리',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['1', '200']
           },
           '102': {
@@ -22,7 +22,7 @@ class Subways {
           '104': {
             //환승역 - 4호선 종속
             'name': '동묘앞',
-            'nearbyShops': ['이마트24'],
+            'nearbyShops': ['이마트24', '올리브영'],
             'infoToStation': ['3', '120']
           },
           '105': {
@@ -43,13 +43,13 @@ class Subways {
           },
           '108': {
             'name': '종각',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['6', '300']
           },
           '109': {
             //환승역 - 5호선 종속
             'name': '시청',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['3', '30']
           },
           '110': {
@@ -71,7 +71,7 @@ class Subways {
           '113': {
             //환승역 - 8호선 종속
             'name': '노량진',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['2', '230']
           },
           '114': {
@@ -93,7 +93,7 @@ class Subways {
           },
           '117': {
             'name': '신도림',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['4', '160']
           },
           '118': {
@@ -109,7 +109,7 @@ class Subways {
           },
           '120': {
             'name': '개봉',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['3', '60']
           },
           '121': {
@@ -121,7 +121,7 @@ class Subways {
           '122': {
             //환승역 - 5호선 종속
             'name': '온수',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['3', '120']
           },
           '123': {
@@ -132,7 +132,7 @@ class Subways {
           },
           '201': {
             'name': '을지로입구',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['4', '200']
           },
           '202': {
@@ -158,7 +158,7 @@ class Subways {
           },
           '206': {
             'name': '상왕십리',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['1', '60']
           },
           '207': {
@@ -180,7 +180,7 @@ class Subways {
           },
           '210': {
             'name': '성수',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['4', '60']
           },
           '211': {
@@ -196,7 +196,7 @@ class Subways {
           },
           '213': {
             'name': '강변',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['3', '120']
           },
           '214': {
@@ -207,7 +207,7 @@ class Subways {
           },
           '215': {
             'name': '잠실',
-            'nearbyShops': ['미니스톱'],
+            'nearbyShops': ['롯데월드', '미니스톱', '올리브영'],
             'infoToStation': ['7', '40']
           },
           '216': {
@@ -228,7 +228,7 @@ class Subways {
           },
           '302': {
             'name': '연신내',
-            'nearbyShops': ['미니스톱'],
+            'nearbyShops': ['미니스톱', '올리브영'],
             'infoToStation': ['2', '140']
           },
           '303': {
@@ -244,7 +244,7 @@ class Subways {
           },
           '305': {
             'name': '홍제',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['4', '25']
           },
           '306': {
@@ -260,7 +260,7 @@ class Subways {
           },
           '308': {
             'name': '경복궁',
-            'nearbyShops': ['세븐일레븐'],
+            'nearbyShops': ['세븐일레븐', '올리브영'],
             'infoToStation': ['3', '225']
           },
           '401': {
@@ -281,7 +281,7 @@ class Subways {
           },
           '404': {
             'name': '미아사거리',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['1', '530']
           },
           '405': {
@@ -302,7 +302,7 @@ class Subways {
           },
           '408': {
             'name': '혜화',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['2', '160']
           },
           '409': {
@@ -318,7 +318,7 @@ class Subways {
           },
           '411': {
             'name': '숙대입구',
-            'nearbyShops': ['세븐일레븐'],
+            'nearbyShops': ['세븐일레븐', '올리브영'],
             'infoToStation': ['5', '200']
           },
           '412': {
@@ -333,7 +333,7 @@ class Subways {
           },
           '414': {
             'name': '이촌',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['2', '220']
           },
           '415': {
@@ -348,7 +348,7 @@ class Subways {
           },
           '417': {
             'name': '사당',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['5', '140']
           },
           '501': {
@@ -364,7 +364,7 @@ class Subways {
           '503': {
             //환승역 - 7호선 종속
             'name': '김포공항',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['2', '150']
           },
           '504': {
@@ -379,7 +379,7 @@ class Subways {
           },
           '506': {
             'name': '발산',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['1', '120']
           },
           '507': {
@@ -390,7 +390,7 @@ class Subways {
           '601': {
             //환승역 - 7호선 종속
             'name': '화곡',
-            'nearbyShops': ['세븐일레븐'],
+            'nearbyShops': ['세븐일레븐', '올리브영'],
             'infoToStation': ['7', '60']
           },
           '602': {
@@ -400,12 +400,12 @@ class Subways {
           },
           '603': {
             'name': '신정',
-            'nearbyShops': ['이마트24'],
+            'nearbyShops': ['이마트24', '올리브영'],
             'infoToStation': ['4', '230']
           },
           '604': {
             'name': '목동',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['4', '50']
           },
           '605': {
@@ -421,7 +421,7 @@ class Subways {
           },
           '607': {
             'name': '영등포구청',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['8', '120']
           },
           '608': {
@@ -437,7 +437,7 @@ class Subways {
           },
           '610': {
             'name': '여의도',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['1', '90']
           },
           '611': {
@@ -447,7 +447,7 @@ class Subways {
           },
           '612': {
             'name': '마포',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['2', '130']
           },
           '613': {
@@ -463,7 +463,7 @@ class Subways {
           },
           '615': {
             'name': '충정로',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['6', '230']
           },
           '616': {
@@ -484,7 +484,7 @@ class Subways {
           },
           '619': {
             'name': '신금호',
-            'nearbyShops': ['세븐일레븐'],
+            'nearbyShops': ['세븐일레븐', '올리브영'],
             'infoToStation': ['6', '70']
           },
           '620': {
@@ -500,7 +500,7 @@ class Subways {
           },
           '622': {
             'name': '답십리',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['7', '110']
           },
           '701': {
@@ -516,7 +516,7 @@ class Subways {
           },
           '703': {
             'name': '춘의',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['4', '220']
           },
           '704': {
@@ -542,7 +542,7 @@ class Subways {
           },
           '801': {
             'name': '산성',
-            'nearbyShops': ['세븐일레븐'],
+            'nearbyShops': ['세븐일레븐', '올리브영'],
             'infoToStation': ['6', '120']
           },
           '802': {
@@ -562,7 +562,7 @@ class Subways {
           },
           '805': {
             'name': '수진',
-            'nearbyShops': ['GS25'],
+            'nearbyShops': ['GS25', '올리브영'],
             'infoToStation': ['2', '110']
           },
           '806': {
@@ -582,7 +582,7 @@ class Subways {
           },
           '903': {
             'name': '청명',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['1', '80']
           },
           '904': {
@@ -592,7 +592,7 @@ class Subways {
           },
           '905': {
             'name': '망포',
-            'nearbyShops': ['CU'],
+            'nearbyShops': ['CU', '올리브영'],
             'infoToStation': ['3', '110']
           }
         };
