@@ -13,10 +13,10 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
-          getMyAppbar(), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+          getMyAppbar(context), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
           Padding(
             padding: EdgeInsets.only(
               top: 90.0, // 위 패딩
@@ -34,7 +34,7 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
                   height: 592,
                   decoration: BoxDecoration(
                     // 모서리 둥글게 만들기
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
                   child: Column(
@@ -50,7 +50,7 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
                               fontSize: 20.0,
                               fontFamily: "Font",
                               fontWeight: FontWeight.bold,
-                              color: AppColor.blackColor,
+                              //color: AppColor.blackColor,
                             ),
                           ),
                         ),

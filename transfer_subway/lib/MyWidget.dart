@@ -83,7 +83,7 @@ class _onPathViewState extends State<onPathView> {
                     fontSize: 15.0,
                     fontFamily: "Font",
                     fontWeight: FontWeight.bold,
-                    color: AppColor.blackColor,
+                    //color: AppColor.blackColor,
                   ),
                 ),
               ],
@@ -136,7 +136,7 @@ class _onPathViewState extends State<onPathView> {
                               ? Icons.expand_more
                               : Icons.expand_less,
                           size: 25,
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -212,7 +212,7 @@ class _onPathViewState extends State<onPathView> {
                       fontSize: 20.0,
                       fontFamily: "Font",
                       fontWeight: FontWeight.bold,
-                      color: AppColor.blackColor,
+                      //color: AppColor.blackColor,
                     ),
                   ),
                   SizedBox(
@@ -303,7 +303,7 @@ class _onPathViewState extends State<onPathView> {
                               fontSize: 18.0,
                               fontFamily: "Font",
                               fontWeight: FontWeight.bold,
-                              color: AppColor.blackColor,
+                              //color: AppColor.blackColor,
                             ),
                           ),
                         ),
@@ -315,7 +315,7 @@ class _onPathViewState extends State<onPathView> {
                               fontSize: 15.0,
                               fontFamily: "Font",
                               fontWeight: FontWeight.bold,
-                              color: AppColor.blackColor,
+                              //color: AppColor.blackColor,
                             ),
                           ),
                         ),
@@ -351,7 +351,7 @@ Widget offPathView = Container(
               fontSize: 20.0,
               fontFamily: "Font",
               fontWeight: FontWeight.bold,
-              color: AppColor.blackColor,
+              //color: AppColor.blackColor,
             ),
           ),
         ),
@@ -472,7 +472,7 @@ PageRouteBuilder pageRoute(int newIndex, [int? backIndex]) {
 }
 
 // 직접 만든 Appbar 위젯
-Widget getMyAppbar() {
+Widget getMyAppbar(BuildContext context) {
   return Container(
     width: 393,
     height: 125,
@@ -480,7 +480,7 @@ Widget getMyAppbar() {
       left: 20.0,
       right: 20.0,
     ),
-    color: AppColor.blueColor,
+    color: Theme.of(context).colorScheme.secondaryContainer,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

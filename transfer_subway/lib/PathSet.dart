@@ -218,7 +218,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
         width: 352.0,
         height: 546,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primaryContainer, //컬러 수정
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
         child: Column(
@@ -236,7 +236,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                     fontSize: 20.0,
                     fontFamily: "Font",
                     fontWeight: FontWeight.bold,
-                    color: AppColor.blackColor,
+                    //color: AppColor.blackColor,
                   ),
                 ),
               ),
@@ -322,7 +322,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                       Icon(
                         Icons.collections_bookmark,
                         size: 32,
-                        color: AppColor.blackColor,
+                        //color: AppColor.blackColor,
                       ),
                       Text(
                         '즐겨찾기',
@@ -368,7 +368,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
         height: 546,
         decoration: BoxDecoration(
           // 모서리 둥글게 만들기
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primaryContainer, //컬러 수정
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
         child: Column(
@@ -386,7 +386,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                     fontSize: 20.0,
                     fontFamily: "Font",
                     fontWeight: FontWeight.bold,
-                    color: AppColor.blackColor,
+                    //color: AppColor.blackColor,
                   ),
                 ),
               ),
@@ -442,7 +442,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 18.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -463,7 +463,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -481,7 +481,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -499,7 +499,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -542,7 +542,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 18.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -563,7 +563,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -581,7 +581,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -599,7 +599,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -642,7 +642,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 18.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -663,7 +663,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -681,7 +681,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -699,7 +699,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                           fontSize: 15.0, // 글꼴 크기
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
-                          color: AppColor.blackColor,
+                          //color: AppColor.blackColor,
                         ),
                       ),
                     ),
@@ -773,7 +773,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
       width: 352.0,
       height: 250,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primaryContainer, //컬러 수정
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
       ),
       child: Column(
@@ -791,7 +791,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                   fontSize: 20.0,
                   fontFamily: "Font",
                   fontWeight: FontWeight.bold,
-                  color: AppColor.blackColor,
+                  //color: AppColor.blackColor,
                 ),
               ),
             ),
@@ -863,7 +863,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
       print("호출됨됨");
     }
     return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor, // 컬러 수정
       body: GestureDetector(
         onTap: () {
           // 화면을 클릭할 때 키보드 숨기기
@@ -873,7 +873,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
           children: [
             Stack(
               children: [
-                getMyAppbar(), // 직접 만든 Appbar 호출
+                getMyAppbar(context), // 직접 만든 Appbar 호출
                 // 쓰레기통 아이콘 표시
                 // 단 경로 입력을 마쳤을 경우에만.
                 Positioned(
@@ -917,7 +917,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                     width: 352.0,
                     height: 100.0,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primaryContainer, //컬러 수정
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     ),
                     child: Column(
@@ -963,7 +963,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                 fontSize: 15.0,
                                 fontFamily: "Font",
                                 fontWeight: FontWeight.bold,
-                                color: AppColor.blackColor,
+                                //color: AppColor.blackColor,
                               ),
                             ),
                           ],
@@ -1014,7 +1014,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                 fontSize: 15.0,
                                 fontFamily: "Font",
                                 fontWeight: FontWeight.bold,
-                                color: AppColor.blackColor,
+                                //color: AppColor.blackColor,
                               ),
                             ),
                           ],

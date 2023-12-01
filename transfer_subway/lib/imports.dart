@@ -19,3 +19,9 @@ export 'MyWidget.dart'; // 여러번 사용되는 or 직접 만든 위젯은 여
 export 'MyToast.dart'; // 사용자에게 메시지를 띄울때 사용하는 페이지
 export 'MyDialog.dart'; // 팝업창
 export "GlobalData.dart"; //전역 데이터 관리
+
+
+export 'package:transfer_subway/Theme.dart'; //테마 커스텀
+export 'package:transfer_subway/ThemeProvider.dart'; //테마 provider
+export 'package:shared_preferences/shared_preferences.dart'; //shared_preference 기기 내부에 데이터 저장하는 패키지 - 다크모드 관련
+export 'package:provider/provider.dart'; // provider 패키지 - 다크모드 관련

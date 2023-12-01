@@ -32,7 +32,7 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: AppColor.blueColor,
+                color: Theme.of(context).colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0)),
@@ -50,7 +50,7 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
                           fontSize: 20.0,
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          //color: Colors.white,
                         ),
                       ),
                     ),
@@ -59,7 +59,7 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
                       child: IconButton(
                         icon: Icon(Icons.close),
                         iconSize: 32,
-                        color: Colors.white,
+                        //color: Colors.white,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -156,7 +156,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: AppColor.blueColor,
+                color: Theme.of(context).colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0)),
@@ -174,7 +174,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                           fontSize: 20.0,
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          //color: Colors.white,
                         ),
                       ),
                     ),
@@ -183,7 +183,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                       child: IconButton(
                         icon: Icon(Icons.close),
                         iconSize: 32,
-                        color: Colors.white,
+                        //color: Colors.white,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

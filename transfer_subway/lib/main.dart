@@ -14,6 +14,8 @@ class AppColor {
   static const Color blueColor = Color(0xFF475FF3); // 앱바에 사용되는 색깔
   static const Color backgroundColor = Color(0xFFE9E9E9); // 기본 회색 배경
   static const Color blackColor = Color.fromARGB(220, 0, 0, 0);
+
+  static const Color navyColor = Color.fromARGB(255, 62, 68, 107); //다크모드 앱바 색깔
 }
 
 // 이미지 할당은 아래 변수를 이용 ex. images + "이미지 이름"
@@ -30,12 +32,71 @@ const int SETTINGS_PAGE = 3;
 const int PATH_SET = 4;
 const int GMAE_PAGE = 5;
 
-void main() => runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: MyApp(),
-      ),
+// void main() => runApp(
+//       MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         home: MyApp(),
+//       ),
+//     );
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  // shared_preferences 초기화.
+  final prefs = await SharedPreferences.getInstance();
+  
+  // ThemeMode값 초기화. 기본값은 light로 정했습니다.
+  ThemeMode themeMode = ThemeMode.light;
+  
+  // 저장된 테마모드 가져오기.
+  final String? savedThemeMode = prefs.getString('themeMode');
+  
+  // 기존 themeMode 설정을 안해놨을 경우(null) 시작 테마를 light로 지정합니다.
+  // savedThemeMode가 null이 아닐 경우 저장된 테마모드에 따라 themeMode를 설정합니다.
+  if (savedThemeMode == null) {
+    themeMode = ThemeMode.light;
+  } else if (savedThemeMode == "light") {
+    themeMode = ThemeMode.light;
+  } else if (savedThemeMode == "dark") {
+    themeMode = ThemeMode.dark;
+  }
+
+// 설정된, 또는 불러온 테마모드를 MyApp에 넘겨줍니다.
+  runApp(MyStatelessApp(themeMode: themeMode));
+}
+
+class MyStatelessApp extends StatelessWidget {
+  
+  final themeMode;
+  const MyStatelessApp({
+    Key? key,
+    required this.themeMode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+  	// Provider 사용.
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+        	// 어플리케이션이 실행되면서 Provider를 적용할 때 불러온 테마모드를 ThemeProvider에 넘겨줍니다.
+            create: (_) => ThemeProvider(initThemeMode: themeMode)),
+      ],
+      builder: (context, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          // lib/theme.dart 에서 작성한 테마를 사용합니다.
+          theme: MyThemes.light,
+          darkTheme: MyThemes.dark,
+          
+     	    //ThemeProvider에서 현재 테마 모드를 불러옵니다.
+          themeMode: Provider.of<ThemeProvider>(context).themeMode,
+          home: const MyApp(),
+        );
+      }
     );
+  }
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -59,11 +120,14 @@ class _MyAppState extends State<MyApp> {
         overlays: [SystemUiOverlay.bottom]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: MyThemes.light,
+      darkTheme: MyThemes.dark,
+      themeMode: Provider.of<ThemeProvider>(context).themeMode,
       home: Scaffold(
-        backgroundColor: AppColor.backgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Stack(
           children: [
-            getMyAppbar(),
+            getMyAppbar(context),
             //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
 
             Positioned(
@@ -112,7 +176,7 @@ class _MyAppState extends State<MyApp> {
                       // 박스 스타일 설정
                       decoration: BoxDecoration(
                         // 색 설정, 모서리 둥글게 만들기
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                       ),
                       child: Row(
@@ -150,7 +214,7 @@ class _MyAppState extends State<MyApp> {
                         height: 110.0,
                         decoration: BoxDecoration(
                           // 모서리 둥글게 만들기
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
                         child: Column(
@@ -166,7 +230,7 @@ class _MyAppState extends State<MyApp> {
                                     fontSize: 20.0,
                                     fontFamily: "Font",
                                     fontWeight: FontWeight.bold,
-                                    color: AppColor.blackColor,
+                                    //color: AppColor.blackColor,
                                   ),
                                 ),
                               ),
@@ -181,7 +245,7 @@ class _MyAppState extends State<MyApp> {
                                     fontSize: 15.0, // 글꼴 크기
                                     fontFamily: "Font",
                                     fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
-                                    color: AppColor.blackColor,
+                                    //color: AppColor.blackColor,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -203,7 +267,7 @@ class _MyAppState extends State<MyApp> {
                     width: 352.0,
                     height: !Global.getIsPathSet() ? 407 : 527, // 조건에 따라 높이 설정
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     ),
                     child: (Global.getIsPathSet()) ? onPathview : offPathView,
