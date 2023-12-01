@@ -160,13 +160,14 @@ class MySubwayInfoDialog extends StatefulWidget {
 
 class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
   // List<String> searchHistory = Global.getSearchHistory();
-  String test = "5번 출구에서 80m";
-  Subways st = Subways();
-  Map<String, dynamic>? target = {};
-  String stationId = '';
-  String _keyword = '';
-  String name = '';
-  List<String> nearbyShops = [];
+  Subways st = Subways(); //지하철 정보 정적데이터
+  Map<String, dynamic>? target = {}; //호출된 역의 맵
+  String stationId = ''; //호출된 역의 키
+  String _keyword = ''; //호출된 키워드. widjet에서 얻어온걸 적용한다.
+  String name = ''; //호출된 역의 이름
+  List<String> nearbyShops = []; //호출된 역의 상가
+  String infoX = ''; //호출된 역의 가까운 정류장으로 가는 출구
+  String infoY = ''; //호출된 역의 가까운 정류장으로 가는 출구로 나와서 가야하는 거리
   @override
   void initState() {
     if (widget.keyword != null) {
@@ -186,6 +187,8 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
     target = st.getStation(stationId);
     name = target?['name'] ?? [];
     nearbyShops = target?['nearbyShops'] ?? [];
+    infoX = target?['infoToStation'][0] ?? [];
+    infoY = target?['infoToStation'][1] ?? [];
   }
 
   @override
@@ -224,9 +227,9 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                           Text(
                             "A.K.A $stationId",
                             style: TextStyle(
-                              fontSize: 10.0, // 글꼴 크기를 조정하여 텍스트를 작게 만듭니다.
-                              fontFamily: "Font", // 폰트
-                              fontWeight: FontWeight.bold, //볼드
+                              fontSize: 10.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
@@ -290,7 +293,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "근처 정류장 : " + test,
+                          "근처 정류장 : " + infoX + "번 출구에서 " + infoY + "m",
                           // 텍스트 스타일 설정
                           style: TextStyle(
                             fontSize: 15.0, // 글꼴 크기
