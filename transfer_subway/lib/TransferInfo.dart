@@ -342,8 +342,7 @@ class StationInfo {
           }
         };
 
-  List<String> getTransferStations(List<String> path,
-      Map<String, Map<String, Map<String, dynamic>>> adjacencyList) {
+  List<String> getTransferStations(List<String> path) {
     List<String> transferStations = [];
 
     for (int i = 1; i < path.length - 1; i++) {
@@ -355,8 +354,17 @@ class StationInfo {
       List<String> prevStationLines = info[prevStation]!['line'];
       List<String> nextStationLines = info[nextStation]!['line'];
 
-      if (!stationLines.any((line) => prevStationLines.contains(line)) ||
-          !stationLines.any((line) => nextStationLines.contains(line))) {
+      List<String> commonLinesWithPrevStation = stationLines
+          .where((line) => prevStationLines.contains(line))
+          .toList();
+      List<String> commonLinesWithNextStation = stationLines
+          .where((line) => nextStationLines.contains(line))
+          .toList();
+
+      if (commonLinesWithPrevStation.isEmpty ||
+          commonLinesWithNextStation.isEmpty ||
+          !commonLinesWithPrevStation
+              .any((line) => commonLinesWithNextStation.contains(line))) {
         transferStations.add(station);
       }
     }

@@ -49,6 +49,11 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   TextEditingController departureController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
 
+  List<String> pathToNode = [];
+  List<String> pathToTransferNode = [];
+
+  StationInfo stationInfo = StationInfo();
+
   final TextEditingController _filter = TextEditingController();
   final Subways subways = Subways();
   String _searchText = "";
@@ -83,7 +88,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
 
   // 출발지와 도착지 값을 저장하고 화면에서 포커스를 해제합니다.
   void _saveValues() {
-    if (_isNumeric(departureController.text) == true) {
+    if (_isNumeric(departureController.text) == true &&
+        _isNumeric(destinationController.text) == true) {
       departureValue = departureController.text;
       destinationValue = destinationController.text;
     } else {
@@ -97,9 +103,12 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
 
     void onSearch(String query) {
       // 검색 기능을 구현하는 코드...
-      isBookmarkedList.insert(0, false);
-      // 검색어를 검색 기록에 추가
-      searchHistory.insert(0, query);
+      // 검색어가 이미 검색 기록에 있는지 확인
+      if (!searchHistory.contains(query)) {
+        isBookmarkedList.insert(0, false);
+        // 검색어를 검색 기록에 추가
+        searchHistory.insert(0, query);
+      }
     }
 
     // 출발지와 도착지 값이 비어있지 않으면 포커스를 해제합니다.
@@ -244,6 +253,15 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         GestureDetector(
                           onTap: () {
                             print("Text clicked at index $index");
+                            // query를 ' --> ' 문자열로 분리하여 departureValue와 destinationValue를 가져옵니다.
+                            List<String> values =
+                                searchHistory[index].split(' --> ');
+                            departureController.text = values[0];
+                            destinationController.text = values[1];
+                            departureValue = subways.getKeyFromName(values[0]);
+                            destinationValue =
+                                subways.getKeyFromName(values[1]);
+                            destinationFocusNode.requestFocus();
                           },
                           child: Text(
                             searchHistory[index],
@@ -711,6 +729,23 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                   print("셋 실생후 현재 셋패스값 : ");
                   print(Global.getIsPathSet());
                   if (isGuideClicked.contains(true)) {
+                    if (isGuideClicked[0] == true) {
+                      pathToNode = graph.runfindpath(
+                          departureValue, destinationValue, 'time');
+                      print('now time');
+                    } else if (isGuideClicked[1] == true) {
+                      pathToNode = graph.runfindpath(
+                          departureValue, destinationValue, 'distance');
+                      print('now distance');
+                    } else if (isGuideClicked[2] == true) {
+                      pathToNode = graph.runfindpath(
+                          departureValue, destinationValue, 'cost');
+                      print('now cost');
+                    }
+                    pathToTransferNode =
+                        stationInfo.getTransferStations(pathToNode);
+                    print('최단경로 : $pathToNode');
+                    print('환승역만 담긴 최소 경로 : $pathToTransferNode');
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => MyApp()),
