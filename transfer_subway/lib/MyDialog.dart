@@ -218,14 +218,27 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, top: 5),
-                      child: Text(
-                        "$name역 정보 ($stationId)",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Font",
-                          fontWeight: FontWeight.bold,
-                          //color: Colors.white,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "A.K.A $stationId",
+                            style: TextStyle(
+                              fontSize: 10.0, // 글꼴 크기를 조정하여 텍스트를 작게 만듭니다.
+                              fontFamily: "Font", // 폰트
+                              fontWeight: FontWeight.bold, //볼드
+                            ),
+                          ),
+                          Text(
+                            "$name역",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
+                              //color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
