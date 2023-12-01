@@ -830,7 +830,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                             } else if (whatIsNowController == 2) {
                               destinationController.text = _searchList[index];
                             }
-                            whatIsNowController = 0;
                           });
                         },
                         child: Text(
