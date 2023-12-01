@@ -168,13 +168,16 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
   List<String> nearbyShops = []; //호출된 역의 상가
   String infoX = ''; //호출된 역의 가까운 정류장으로 가는 출구
   String infoY = ''; //호출된 역의 가까운 정류장으로 가는 출구로 나와서 가야하는 거리
+  StationInfo sti = StationInfo();
+  Map<String, dynamic>? transtarget = {};
+  List<String> trans = [];
   @override
   void initState() {
     if (widget.keyword != null) {
       // widget.keyword가 null이 아닌 경우의 동작
       _keyword = widget.keyword!;
     } else {
-      // widget.keyword가 null인 경우의 동작
+      // widget.keyword가 null인 경우의 동작. do notthing.
     }
     super.initState();
     print(widget.keyword);
@@ -185,7 +188,9 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
     }
     // 여기서 keyword를 사용하여 초기화를 수행.
     target = st.getStation(stationId);
+    transtarget = sti.getStation(stationId);
     name = target?['name'] ?? [];
+    trans = transtarget?['line'] ?? [];
     nearbyShops = target?['nearbyShops'] ?? [];
     infoX = target?['infoToStation'][0] ?? [];
     infoY = target?['infoToStation'][1] ?? [];
@@ -267,15 +272,33 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          "주변 상가",
-                          // 텍스트 스타일 설정
-                          style: TextStyle(
-                            fontSize: 18.0, // 글꼴 크기
-                            fontFamily: "Font", // 폰트
-                            fontWeight: FontWeight.bold, // 굵게 하고 싶은 경우
-                            color: AppColor.mainColor, // 글씨 색깔
-                          ),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "주변 시설",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "Font",
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.mainColor,
+                              ),
+                            ),
+                            SizedBox(width: 10.0), // 공간 추가
+                            ...trans.map((info) {
+                              return Row(
+                                children: <Widget>[
+                                  Container(
+                                    height: 20.0,
+                                    width: 20.0,
+                                    child: Image.asset(
+                                      'assets/images/$info.png',
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.0), // 리스트들 사이 공간 추가
+                                ],
+                              );
+                            }).toList(),
+                          ],
                         ),
                       ),
                       SizedBox(

@@ -5,340 +5,340 @@ class StationInfo {
   StationInfo()
       : info = {
           '101': {
-            'line': ['1호선', '2호선']
+            'line': ['number-1', 'number-2']
           },
           '102': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '103': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '104': {
-            'line': ['1호선', '4호선']
+            'line': ['number-1', 'number-4']
           },
           '105': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '106': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '107': {
-            'line': ['1호선', '3호선']
+            'line': ['number-1', 'number-3']
           },
           '108': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '109': {
-            'line': ['1호선', '5호선']
+            'line': ['number-1', 'number-5']
           },
           '110': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '111': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '112': {
-            'line': ['1호선', '9호선']
+            'line': ['number-1', 'number-9']
           },
           '113': {
-            'line': ['1호선', '8호선']
+            'line': ['number-1', 'number-8']
           },
           '114': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '115': {
-            'line': ['1호선', '4호선']
+            'line': ['number-1', 'number-4']
           },
           '116': {
-            'line': ['1호선', '6호선']
+            'line': ['number-1', 'number-6']
           },
           '117': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '118': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '119': {
-            'line': ['1호선', '9호선']
+            'line': ['number-1', 'number-9']
           },
           '120': {
-            'line': ['1호선']
+            'line': ['number-1']
           },
           '121': {
-            'line': ['1호선', '6호선']
+            'line': ['number-1', 'number-6']
           },
           '122': {
-            'line': ['1호선', '5호선']
+            'line': ['number-1', 'number-5']
           },
           '123': {
-            'line': ['1호선', '3호선']
+            'line': ['number-1', 'number-3']
           },
           '201': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '202': {
-            'line': ['2호선', '7호선']
+            'line': ['number-2', 'number-7']
           },
           '203': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '204': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '205': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '206': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '207': {
-            'line': ['2호선', '3호선']
+            'line': ['number-2', 'number-3']
           },
           '208': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '209': {
-            'line': ['2호선', '5호선']
+            'line': ['number-2', 'number-5']
           },
           '210': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '211': {
-            'line': ['2호선', '9호선']
+            'line': ['number-2', 'number-9']
           },
           '212': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '213': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '214': {
-            'line': ['2호선', '8호선']
+            'line': ['number-2', 'number-8']
           },
           '215': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '216': {
-            'line': ['2호선', '4호선']
+            'line': ['number-2', 'number-4']
           },
           '217': {
-            'line': ['2호선']
+            'line': ['number-2']
           },
           '301': {
-            'line': ['3호선']
+            'line': ['number-3']
           },
           '302': {
-            'line': ['3호선']
+            'line': ['number-3']
           },
           '303': {
-            'line': ['3호선', '7호선']
+            'line': ['number-3', 'number-7']
           },
           '304': {
-            'line': ['3호선']
+            'line': ['number-3']
           },
           '305': {
-            'line': ['3호선']
+            'line': ['number-3']
           },
           '306': {
-            'line': ['3호선']
+            'line': ['number-3']
           },
           '307': {
-            'line': ['3호선', '4호선']
+            'line': ['number-3', 'number-4']
           },
           '308': {
-            'line': ['3호선']
+            'line': ['number-3']
           },
           '401': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '402': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '403': {
-            'line': ['4호선', '5호선']
+            'line': ['number-4', 'number-5']
           },
           '404': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '405': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '406': {
-            'line': ['4호선', '9호선']
+            'line': ['number-4', 'number-9']
           },
           '407': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '408': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '409': {
-            'line': ['4호선', '8호선']
+            'line': ['number-4', 'number-8']
           },
           '410': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '411': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '412': {
-            'line': ['4호선', '6호선']
+            'line': ['number-4', 'number-6']
           },
           '413': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '414': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '415': {
-            'line': ['4호선']
+            'line': ['number-4']
           },
           '416': {
-            'line': ['4호선', '7호선']
+            'line': ['number-4', 'number-7']
           },
           '417': {
-            'line': ['4호선', '6호선']
+            'line': ['number-4', 'number-6']
           },
           '501': {
-            'line': ['5호선']
+            'line': ['number-5']
           },
           '502': {
-            'line': ['5호선']
+            'line': ['number-5']
           },
           '503': {
-            'line': ['5호선', '7호선']
+            'line': ['number-5', 'number-7']
           },
           '504': {
-            'line': ['5호선']
+            'line': ['number-5']
           },
           '505': {
-            'line': ['5호선']
+            'line': ['number-5']
           },
           '506': {
-            'line': ['5호선']
+            'line': ['number-5']
           },
           '507': {
-            'line': ['5호선']
+            'line': ['number-5']
           },
           '601': {
-            'line': ['6호선', '7호선']
+            'line': ['number-6', 'number-7']
           },
           '602': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '603': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '604': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '605': {
-            'line': ['6호선', '9호선']
+            'line': ['number-6', 'number-9']
           },
           '606': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '607': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '608': {
-            'line': ['6호선', '8호선']
+            'line': ['number-6', 'number-8']
           },
           '609': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '610': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '611': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '612': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '613': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '614': {
-            'line': ['6호선', '7호선']
+            'line': ['number-6', 'number-7']
           },
           '615': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '616': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '617': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '618': {
-            'line': ['6호선', '8호선']
+            'line': ['number-6', 'number-8']
           },
           '619': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '620': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '621': {
-            'line': ['6호선', '9호선']
+            'line': ['number-6', 'number-9']
           },
           '622': {
-            'line': ['6호선']
+            'line': ['number-6']
           },
           '701': {
-            'line': ['7호선']
+            'line': ['number-7']
           },
           '702': {
-            'line': ['7호선', '9호선']
+            'line': ['number-7', 'number-9']
           },
           '703': {
-            'line': ['7호선']
+            'line': ['number-7']
           },
           '704': {
-            'line': ['7호선']
+            'line': ['number-7']
           },
           '705': {
-            'line': ['7호선', '8호선']
+            'line': ['number-7', 'number-8']
           },
           '706': {
-            'line': ['7호선']
+            'line': ['number-7']
           },
           '707': {
-            'line': ['7호선']
+            'line': ['number-7']
           },
           '801': {
-            'line': ['8호선']
+            'line': ['number-8']
           },
           '802': {
-            'line': ['8호선']
+            'line': ['number-8']
           },
           '803': {
-            'line': ['8호선']
+            'line': ['number-8']
           },
           '804': {
-            'line': ['8호선']
+            'line': ['number-8']
           },
           '805': {
-            'line': ['8호선']
+            'line': ['number-8']
           },
           '806': {
-            'line': ['8호선']
+            'line': ['number-8']
           },
           '901': {
-            'line': ['9호선']
+            'line': ['number-9']
           },
           '902': {
-            'line': ['9호선']
+            'line': ['number-9']
           },
           '903': {
-            'line': ['9호선']
+            'line': ['number-9']
           },
           '904': {
-            'line': ['9호선']
+            'line': ['number-9']
           },
           '905': {
-            'line': ['9호선']
+            'line': ['number-9']
           }
         };
 
@@ -370,5 +370,9 @@ class StationInfo {
     }
 
     return transferStations;
+  }
+
+  Map<String, dynamic>? getStation(String key) {
+    return info[key];
   }
 }
