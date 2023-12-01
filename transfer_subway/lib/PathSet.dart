@@ -64,8 +64,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   final departureFocusNode = FocusNode();
   final destinationFocusNode = FocusNode();
   int whatIsNowController = 0;
-  String departureValue = Global().departureValue; //출발역의 Key값. 한글은 불가능 하다.
-  String destinationValue = Global().destinationValue; //도착역의 key값. 한글은 불가능 하다.
+  String departureValue = Global.getdepartureValue(); //출발역의 Key값. 한글은 불가능 하다.
+  String destinationValue =
+      Global.getdestinationValue(); //도착역의 key값. 한글은 불가능 하다.
   _PathSetPageState() {
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
