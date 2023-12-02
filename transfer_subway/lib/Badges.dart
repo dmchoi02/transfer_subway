@@ -2,17 +2,14 @@
 
 import 'imports.dart';
 
-const List<dynamic> badgeContents = 
-  [
-    [Icons.directions_subway, "탐험가", "지금까지 방문한 역 : 60개"],
-    [Icons.sunny, "아침의 달인", "아침에 길찾기를 이용한 횟수 : 45번"],
-    [Icons.looks_3,"3호선의 왕", "3호선을 이용한 횟수 : 42번"],
-    [Icons.sports_esports,"프로게이머", "퍼즐 게임을 바로 성공한 횟수 : 56번"],
-    [Icons.nightlife, "저녁의 달인" , "저녁에 길찾기를 이용한 횟수 : 45번"],
-    [Icons.blur_circular, "환승의 왕", "환승을 이용한 횟수 : 30번"],
-
-  ];
-
+const List<dynamic> badgeContents = [
+  [Icons.directions_subway, "탐험가", "지금까지 방문한 역 : 60개"],
+  [Icons.sunny, "아침의 달인", "아침에 길찾기를 이용한 횟수 : 45번"],
+  [Icons.looks_3, "3호선의 왕", "3호선을 이용한 횟수 : 42번"],
+  [Icons.sports_esports, "프로게이머", "퍼즐 게임을 바로 성공한 횟수 : 56번"],
+  [Icons.nightlife, "저녁의 달인", "저녁에 길찾기를 이용한 횟수 : 45번"],
+  [Icons.blur_circular, "환승의 왕", "환승을 이용한 횟수 : 30번"],
+];
 
 class BadgesPage extends StatefulWidget {
   const BadgesPage({Key? key}) : super(key: key);
@@ -28,7 +25,8 @@ class _BadgesPageState extends State<BadgesPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
-          getMyAppbar(context), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+          getMyAppbar(
+              context), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
           Padding(
             padding: EdgeInsets.only(
               top: 90.0, // 위 패딩
@@ -84,21 +82,21 @@ class _BadgesPageState extends State<BadgesPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 530,
-                        child : ListView.builder(
+                          height: 530,
+                          child: ListView.builder(
                             //padding: EdgeInsets.only(left : 0.7),
                             itemCount: badgeContents.length,
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
                                 child: Card(
-                                  margin: EdgeInsets.fromLTRB(5.0, 6.0, 5.0, 6.0),
+                                  margin:
+                                      EdgeInsets.fromLTRB(5.0, 6.0, 5.0, 6.0),
                                   //color: Colors.white,
                                   child: ListTile(
                                     isThreeLine: true,
-
-                                    leading: Icon(badgeContents[index][0], size:50),
-
+                                    leading:
+                                        Icon(badgeContents[index][0], size: 50),
                                     title: Row(children: <Widget>[
                                       Container(
                                         alignment: Alignment.topLeft,
@@ -110,38 +108,37 @@ class _BadgesPageState extends State<BadgesPage> {
                                       //   child: Text("some text"),
                                       // ),
                                     ]),
-                                    
                                     subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                      Text(badgeContents[index][2]),
-                                      ]
-                                    ),
-                                    
-
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(badgeContents[index][2]),
+                                        ]),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         ClipOval(
                                           child: Material(
-                                            color: AppColor.selectedColor, // Button color
+                                            color: AppColor
+                                                .selectedColor, // Button color
                                             child: InkWell(
-                                              splashColor: Colors.yellow, // Splash color
+                                              splashColor:
+                                                  Colors.yellow, // Splash color
                                               onTap: () {},
-                                              child: SizedBox(width: 40, height: 40, child: Icon(Icons.menu)),
+                                              child: SizedBox(
+                                                  width: 40,
+                                                  height: 40,
+                                                  child: Icon(Icons.menu)),
                                             ),
                                           ),
-                                        )  
+                                        )
                                       ],
                                     ),
-
-
                                   ),
                                 ),
                               );
                             },
-                          )
-                      )
+                          ))
                     ],
                   ),
                 ),

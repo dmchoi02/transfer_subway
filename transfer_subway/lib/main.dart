@@ -40,17 +40,16 @@ const int GMAE_PAGE = 5;
 //     );
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   // shared_preferences 초기화.
   final prefs = await SharedPreferences.getInstance();
-  
+
   // ThemeMode값 초기화. 기본값은 light로 정했습니다.
   ThemeMode themeMode = ThemeMode.light;
-  
+
   // 저장된 테마모드 가져오기.
   final String? savedThemeMode = prefs.getString('themeMode');
-  
+
   // 기존 themeMode 설정을 안해놨을 경우(null) 시작 테마를 light로 지정합니다.
   // savedThemeMode가 null이 아닐 경우 저장된 테마모드에 따라 themeMode를 설정합니다.
   if (savedThemeMode == null) {
@@ -66,7 +65,6 @@ void main() async {
 }
 
 class MyStatelessApp extends StatelessWidget {
-  
   final themeMode;
   const MyStatelessApp({
     Key? key,
@@ -75,26 +73,25 @@ class MyStatelessApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  	// Provider 사용.
+    // Provider 사용.
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-        	// 어플리케이션이 실행되면서 Provider를 적용할 때 불러온 테마모드를 ThemeProvider에 넘겨줍니다.
-            create: (_) => ThemeProvider(initThemeMode: themeMode)),
-      ],
-      builder: (context, _) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          // lib/theme.dart 에서 작성한 테마를 사용합니다.
-          theme: MyThemes.light,
-          darkTheme: MyThemes.dark,
-          
-     	    //ThemeProvider에서 현재 테마 모드를 불러옵니다.
-          themeMode: Provider.of<ThemeProvider>(context).themeMode,
-          home: const MyApp(),
-        );
-      }
-    );
+        providers: [
+          ChangeNotifierProvider(
+              // 어플리케이션이 실행되면서 Provider를 적용할 때 불러온 테마모드를 ThemeProvider에 넘겨줍니다.
+              create: (_) => ThemeProvider(initThemeMode: themeMode)),
+        ],
+        builder: (context, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            // lib/theme.dart 에서 작성한 테마를 사용합니다.
+            theme: MyThemes.light,
+            darkTheme: MyThemes.dark,
+
+            //ThemeProvider에서 현재 테마 모드를 불러옵니다.
+            themeMode: Provider.of<ThemeProvider>(context).themeMode,
+            home: const MyApp(),
+          );
+        });
   }
 }
 
@@ -114,7 +111,7 @@ class _MyAppState extends State<MyApp> {
     double screenHeight = screenSize.height;
     //print(screenWidth); // 현재 가로 사이즈
     //print(screenHeight); // 현재 세로 사이즈
-    Widget onPathview = onPathView();
+    Widget onPathview = Global.getOnPathview();
     // 위에 상태바 없애기
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
@@ -136,6 +133,7 @@ class _MyAppState extends State<MyApp> {
               child: GestureDetector(
                 onTap: () {
                   setState(() {
+                    Global.clearSubWayList(); // 입력한 역 초기화
                     Global.setIsPathSet(false);
                   });
                 },
@@ -162,7 +160,11 @@ class _MyAppState extends State<MyApp> {
                   GestureDetector(
                     onTap: () {
                       // 클릭 시 길찾기 페이지로 이동
-
+                      setState(() {
+                        // 경로 입력 안내 한 다음에 쓰레기토 아이콘 안누르고 경로 검색시
+                        // 경로 입력한 데이터 초기화
+                        Global.clearSubWayList();
+                      });
                       Navigator.push(context, pageRoute(4));
                     },
                     child: Container(

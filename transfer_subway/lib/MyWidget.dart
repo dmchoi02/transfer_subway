@@ -12,7 +12,13 @@ class _onPathViewState extends State<onPathView> {
   List<bool> isBookmarkedList = Global.getIsBookmarkedList();
   bool currentState = false;
 
+  List<double> myheightList = Global.myheightList;
+  // 하위역 보는 클릭 여부
+  List<bool> isClickedSubwayList = Global.isClickedSubwayList;
+  List<int> subwayLowCntList = Global.subwayLowCntList;
+
   //각 역의 하위역 리스트
+  /*
   List<List<String>> subwayLowList = [
     [],
     ["다른역", "다른역", "다른도착역2", "다른출발역", "다른도착역1", "다른도착역2"],
@@ -33,22 +39,17 @@ class _onPathViewState extends State<onPathView> {
     "모란역 513",
     "도착역 542"
   ]; // 출발역 리스트
+  */
+  // -> Global.subWayList
 
-  //하위역 각 높이 50으로 고정하고 setMyHeight()에서 늘어나면 알아서 조정해줌
-  List<double> myheightList = [50, 50, 50, 50]; // 각 역에 대한 높이 리스트
-
-  // 하위역 보는 클릭 여부
-  List<bool> isClickedSubwayList = [false, false, false, false];
-
-  //하위 역의 개수
-  List<int> isSubwayLowCntList = [1, 6 + 1, 3 + 1, 0];
   // 도착역을 제외하고 만약 바로 환승을 한다면 빈배열로 선언하고 cnt는 +1로 적어야함
   // 즉 무조건 마지막만 0이고 나머지는 최소 1이상 존재함
 
+  //하위역 각 높이 50으로 고정하고 setMyHeight()에서 늘어나면 알아서 조정해줌
   void setMyHeight(int index) {
     if (index < myheightList.length) {
       if (myheightList[index] == 50) {
-        myheightList[index] += 24 * subwayLowList[index].length;
+        myheightList[index] += 24 * Global.subwayLowList[index].length;
       } else {
         myheightList[index] = 50;
       }
@@ -56,10 +57,12 @@ class _onPathViewState extends State<onPathView> {
   }
 
   bool isCntZero(int index) {
-    print(index);
-    if (isSubwayLowCntList[index] == 0) {
+    //print(index);
+    if (subwayLowCntList[index] == 0) {
+      //print("트루 반환");
       return true;
     } else {
+      //print("flast 반환");
       return false;
     }
   }
@@ -75,10 +78,17 @@ class _onPathViewState extends State<onPathView> {
           children: [
             Row(
               children: [
-                Image.asset(images + 'number-3.png', width: 25, height: 25),
+                Image.asset(
+                    //수정 필요함
+                    images + 'number-' + Global.subwayNumList[index] + '.png',
+                    width: 25,
+                    height: 25),
                 SizedBox(width: 5),
                 Text(
-                  subWayList[index],
+                  Subways().stations[Global.subWayList[index]]?['name'] +
+                      " " +
+                      Global.subWayList[index],
+                  //Global.subWayList[index].['name'],
                   style: TextStyle(
                     fontSize: 15.0,
                     fontFamily: "Font",
@@ -110,8 +120,7 @@ class _onPathViewState extends State<onPathView> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "31분 " + //여기 시간도 변수로 바꿔야함
-                          isSubwayLowCntList[index].toString() +
+                      (1 + subwayLowCntList[index]).toString() +
                           "개역 이동", //n은 하위역 + 도착역이다 즉 자신의 하위역 개수
                       style: TextStyle(
                         fontSize: 13.0,
@@ -122,10 +131,11 @@ class _onPathViewState extends State<onPathView> {
                     ),
                     Visibility(
                       visible:
-                          !isCntZero(index) && isSubwayLowCntList[index] != 1,
+                          !isCntZero(index) && subwayLowCntList[index] != 0,
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
+                            print("바뀝니다.");
                             isClickedSubwayList[index] =
                                 !isClickedSubwayList[index];
                             setMyHeight(index);
@@ -151,7 +161,7 @@ class _onPathViewState extends State<onPathView> {
                 padding: const EdgeInsets.only(left: 4.0),
                 child: Column(
                   children: List.generate(
-                    subwayLowList[index].length,
+                    Global.subwayLowList[index].length,
                     (stationIndex) => Row(
                       children: [
                         Text(
@@ -165,7 +175,47 @@ class _onPathViewState extends State<onPathView> {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          subwayLowList[index][stationIndex],
+                          (Subways().stations[Global.subwayLowList[index]
+                                      [stationIndex]]?['name'])
+                                  .toString() +
+                              " " +
+                              Global.subwayLowList[index][stationIndex],
+                          style: TextStyle(
+                            fontSize: 13.0,
+                            fontFamily: "Font",
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.mainColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            //하위역이 없는데 현재 index가 도착역이 아닌 경우
+            Visibility(
+              visible: subwayLowCntList[index] == 0,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: Column(
+                  children: List.generate(
+                    Global.subwayLowList[index].length,
+                    (stationIndex) => Row(
+                      children: [
+                        Text(
+                          "ㅣ",
+                          style: TextStyle(
+                            fontSize: 17.0,
+                            fontFamily: "Font",
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.mainColor,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          (1 + subwayLowCntList[index]).toString() +
+                              "개역 이동", //n은 하위역 + 도착역이다 즉 자신의 하위역 개수
                           style: TextStyle(
                             fontSize: 13.0,
                             fontFamily: "Font",
@@ -187,7 +237,12 @@ class _onPathViewState extends State<onPathView> {
 
   @override
   Widget build(BuildContext context) {
+    //print('ok $myheightList'); // ok
+    //print(subwayLowCntList);
+    //print(isClickedSubwayList); //ok
+
     List<Widget> my = getMyWidgets();
+
     return getOnPathView(my);
   }
 
@@ -270,7 +325,7 @@ class _onPathViewState extends State<onPathView> {
               child: Container(
                 width: 350,
                 height: 100,
-                // color: Colors.amber,
+                //color: Colors.amber,
                 child: Row(children: [
                   GestureDetector(
                     onTap: () {
@@ -288,38 +343,46 @@ class _onPathViewState extends State<onPathView> {
                     ),
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 60,
                   ),
-                  Container(
-                    width: 156,
-                    // color: Colors.black,
-                    child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "총 안내",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontFamily: "Font",
-                              fontWeight: FontWeight.bold,
-                              //color: AppColor.blackColor,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Container(
+                      width: 200,
+                      //color: Colors.black,
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "총 안내",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontFamily: "Font",
+                                fontWeight: FontWeight.bold,
+                                //color: AppColor.blackColor,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "예상 시간 : \n거리 : \n비용 :",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontFamily: "Font",
-                              fontWeight: FontWeight.bold,
-                              //color: AppColor.blackColor,
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "예상 시간 : " +
+                                  Global.guideTime +
+                                  "\n거리 : " +
+                                  Global.guideDistance +
+                                  "\n비용 : " +
+                                  Global.guideCost,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: "Font",
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.blackColor,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ]),

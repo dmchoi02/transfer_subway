@@ -49,8 +49,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   TextEditingController departureController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
 
-  List<String> pathToNode = [];
-  List<String> pathToTransferNode = [];
+  List<String> pathToNode = Global.pathToNode;
+  List<String> pathToTransferNode = Global.pathToTransferNode;
 
   StationInfo stationInfo = StationInfo();
 
@@ -346,12 +346,12 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   }
 
   Widget getGuidePath() {
-    print("DD");
-    print("$departureValue");
-    print("$destinationValue");
-    print("DD");
+    //print("DD");
+    //print("$departureValue");
+    //print("$destinationValue");
+    //print("DD");
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
-      print("작업 수행");
+      //print("작업 수행");
       var result_time =
           graph.runDijkstra(departureValue, destinationValue, 'time');
       var result_cost =
@@ -733,19 +733,58 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                       pathToNode = graph.runfindpath(
                           departureValue, destinationValue, 'time');
                       print('now time');
+                      setState(() {
+                        //안내 값 시간으로 세팅
+                        Global.setGuideValue(
+                          result_time[destinationValue]?['time'] ?? 'N/A',
+                          result_time[destinationValue]?['distance'] ?? 'N/A',
+                          result_time[destinationValue]['cost'] ?? 'N/A',
+                        );
+                      });
                     } else if (isGuideClicked[1] == true) {
                       pathToNode = graph.runfindpath(
                           departureValue, destinationValue, 'distance');
                       print('now distance');
+
+                      setState(() {
+                        //안내 값 거리로 세팅
+                        Global.setGuideValue(
+                          result_distance[destinationValue]?['time'] ?? 'N/A',
+                          result_distance[destinationValue]?['distance'] ??
+                              'N/A',
+                          result_distance[destinationValue]?['cost'] ?? 'N/A',
+                        );
+                      });
                     } else if (isGuideClicked[2] == true) {
                       pathToNode = graph.runfindpath(
                           departureValue, destinationValue, 'cost');
                       print('now cost');
+
+                      setState(() {
+                        //안내 값 비용으로 세팅
+                        Global.setGuideValue(
+                          result_cost[destinationValue]?['time'] ?? 'N/A',
+                          result_cost[destinationValue]?['distance'] ?? 'N/A',
+                          result_cost[destinationValue]?['cost'] ?? 'N/A',
+                        );
+                      });
                     }
                     pathToTransferNode =
                         stationInfo.getTransferStations(pathToNode);
                     print('최단경로 : $pathToNode');
                     print('환승역만 담긴 최소 경로 : $pathToTransferNode');
+
+                    setState(() {
+                      // 입력된 경로 데이터들로 onpathview에 표시할 수 있도록 값 세팅
+                      Global.setSubWayList(pathToNode, pathToTransferNode);
+                      Global.setSubWayLowList();
+                      Global.setSubwayLowCntList(Global.subwayLowList);
+                      Global.setSubwayNumList(pathToNode, Global.subWayList);
+                      Global.setMyheightList(
+                          Global.subWayList); // 리스트 개수 만큼 높이 설정
+                      Global.setIsClickedSubwayList(Global.subWayList);
+                    });
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => MyApp()),
@@ -860,7 +899,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     if (focusCnt != 2) {
       FocusScope.of(context).unfocus();
       focusCnt++;
-      print("호출됨됨");
+      //print("호출됨됨");
     }
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor, // 컬러 수정
@@ -917,7 +956,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                     width: 352.0,
                     height: 100.0,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer, //컬러 수정
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primaryContainer, //컬러 수정
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     ),
                     child: Column(

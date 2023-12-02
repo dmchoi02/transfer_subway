@@ -371,4 +371,13 @@ class StationInfo {
 
     return transferStations;
   }
+
+  //라인 개수 세기
+  int getLineCount(String stationId) {
+    if (info.containsKey(stationId) && info[stationId]!['line'] != null) {
+      return info[stationId]!['line'].length;
+    } else {
+      return 0;
+    }
+  }
 }
