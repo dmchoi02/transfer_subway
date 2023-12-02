@@ -40,17 +40,16 @@ const int GMAE_PAGE = 5;
 //     );
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   // shared_preferences 초기화.
   final prefs = await SharedPreferences.getInstance();
-  
+
   // ThemeMode값 초기화. 기본값은 light로 정했습니다.
   ThemeMode themeMode = ThemeMode.light;
-  
+
   // 저장된 테마모드 가져오기.
   final String? savedThemeMode = prefs.getString('themeMode');
-  
+
   // 기존 themeMode 설정을 안해놨을 경우(null) 시작 테마를 light로 지정합니다.
   // savedThemeMode가 null이 아닐 경우 저장된 테마모드에 따라 themeMode를 설정합니다.
   if (savedThemeMode == null) {
@@ -66,7 +65,6 @@ void main() async {
 }
 
 class MyStatelessApp extends StatelessWidget {
-  
   final themeMode;
   const MyStatelessApp({
     Key? key,
@@ -75,26 +73,25 @@ class MyStatelessApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  	// Provider 사용.
+    // Provider 사용.
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-        	// 어플리케이션이 실행되면서 Provider를 적용할 때 불러온 테마모드를 ThemeProvider에 넘겨줍니다.
-            create: (_) => ThemeProvider(initThemeMode: themeMode)),
-      ],
-      builder: (context, _) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          // lib/theme.dart 에서 작성한 테마를 사용합니다.
-          theme: MyThemes.light,
-          darkTheme: MyThemes.dark,
-          
-     	    //ThemeProvider에서 현재 테마 모드를 불러옵니다.
-          themeMode: Provider.of<ThemeProvider>(context).themeMode,
-          home: const MyApp(),
-        );
-      }
-    );
+        providers: [
+          ChangeNotifierProvider(
+              // 어플리케이션이 실행되면서 Provider를 적용할 때 불러온 테마모드를 ThemeProvider에 넘겨줍니다.
+              create: (_) => ThemeProvider(initThemeMode: themeMode)),
+        ],
+        builder: (context, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            // lib/theme.dart 에서 작성한 테마를 사용합니다.
+            theme: MyThemes.light,
+            darkTheme: MyThemes.dark,
+
+            //ThemeProvider에서 현재 테마 모드를 불러옵니다.
+            themeMode: Provider.of<ThemeProvider>(context).themeMode,
+            home: const MyApp(),
+          );
+        });
   }
 }
 
@@ -109,6 +106,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // 사이즈 확인
+    bool noticeIssue = false;
+    String? notice = null;
+    if (noticeIssue == true) {
+      //여기에서 서버가 도입될 시 공지를 가져와 notice에 가져오는 작업을 수행합니다.
+    } else {
+      notice = 'ㅡ';
+    }
     Size screenSize = MediaQuery.of(context).size;
     double screenWidth = screenSize.width;
     double screenHeight = screenSize.height;
@@ -235,11 +239,12 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 15.0),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.topCenter,
                                 child: Text(
-                                  "자연재해로 인해\n3, 6호선 현재 운행 중단",
+                                  "$notice",
                                   // 스타일 설정
                                   style: TextStyle(
                                     fontSize: 15.0, // 글꼴 크기
