@@ -279,7 +279,7 @@ class _onPathViewState extends State<onPathView> {
                       onTap: () {
                         setState(() {
                           currentState = !currentState;
-
+                          isBookmarkedList.insert(0, currentState);
                           // 여기다가 눌렀을 경우 즐겨찾기 리스트에 추가하면됨
                           // 검색기록은 pathset.dart 에서 이미 추가됨
                           // isBookmarkedList.insert(0, currentState);
