@@ -9,6 +9,7 @@ class Global {
   static List<String> searchHistory = [];
   static String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
   static String destinationValue = ''; //도착역의 Key값. 한글은 불가능 하다.
+  static String setnowsearchlist = '';
 
   static bool isPathSet = false; //경로 입력이 됐는지 구분하는 변수
 
@@ -45,12 +46,24 @@ class Global {
     return destinationValue;
   }
 
+  static String getsetnowsearchlist() {
+    return setnowsearchlist;
+  }
+
   static void setCleardepartureValue() {
     departureValue = '';
   }
 
   static void setCleardestinationValue() {
     destinationValue = '';
+  }
+
+  static void setClearsetnowsearchlist() {
+    setnowsearchlist = '';
+  }
+
+  static void setsetnowsearchlist(String s) {
+    setnowsearchlist = s;
   }
 
   static List<String> getSearchList() {
