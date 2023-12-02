@@ -106,6 +106,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // 사이즈 확인
+    bool noticeIssue = false;
+    String? notice = null;
+    if (noticeIssue == true) {
+      //여기에서 서버가 도입될 시 공지를 가져와 notice에 가져오는 작업을 수행합니다.
+    } else {
+      notice = 'ㅡ';
+    }
     Size screenSize = MediaQuery.of(context).size;
     double screenWidth = screenSize.width;
     double screenHeight = screenSize.height;
@@ -237,11 +244,12 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 15.0),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.topCenter,
                                 child: Text(
-                                  "자연재해로 인해\n3, 6호선 현재 운행 중단",
+                                  "$notice",
                                   // 스타일 설정
                                   style: TextStyle(
                                     fontSize: 15.0, // 글꼴 크기

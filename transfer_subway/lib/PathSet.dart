@@ -13,10 +13,10 @@ class PathSetPage extends StatefulWidget {
 
 class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   // 팝업을 표시하는 함수
-  void showPopup(String msg) {
+  Future<void> showPopup(String msg, String stationKey) async {
     // 즐겨찾기인 경우의 팝업
     if (msg == "BookMark") {
-      showDialog(
+      await showDialog(
         context: context,
         builder: (BuildContext context) {
           return MyBookmarkDialog();
@@ -31,10 +31,10 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     }
     //지하철 정보인 경우의 팝업
     else if (msg == "SubwayInfo") {
-      showDialog(
+      await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return MySubwayInfoDialog();
+          return MySubwayInfoDialog(keyword: stationKey); // 'keyword:'를 추가.
         },
       ).then((value) {
         // 팝업이 닫힌 후의 동작
@@ -64,8 +64,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   final departureFocusNode = FocusNode();
   final destinationFocusNode = FocusNode();
   int whatIsNowController = 0;
-  String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
-  String destinationValue = ''; //도착역의 key값. 한글은 불가능 하다.
+  String departureValue = Global.getdepartureValue(); //출발역의 Key값. 한글은 불가능 하다.
+  String destinationValue =
+      Global.getdestinationValue(); //도착역의 key값. 한글은 불가능 하다.
   _PathSetPageState() {
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
@@ -313,8 +314,24 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                   right: 10,
                 ),
                 child: GestureDetector(
-                  onTap: () {
-                    showPopup("BookMark"); // 즐겨찾기 팝업 호출
+                  onTap: () async {
+                    // async 키워드를 추가합니다.
+                    var data = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return MyBookmarkDialog();
+                      }, // 즐겨찾기 팝업 호출
+                    );
+                    // 이제 'data' 변수에는 팝업창에서 반환된 데이터가 있습니다.
+                    if (data != null) {
+                      // 데이터를 받았을 때의 행동을 여기에 작성합니다.
+                      print('데이터 : $data');
+                      departureController.text = data[0];
+                      destinationController.text = data[1];
+                      destinationFocusNode.requestFocus();
+                    } else {
+                      print('데이터 없음.종료키 눌림 예상. 그 외 오류');
+                    }
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -457,7 +474,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : ${result_time[destinationValue]?['time'] ?? 'N/A'}",
+                        "총 예상 시간 : ${result_time[destinationValue]?['time'] ?? 'N/A'} 초",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -852,7 +869,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                             } else if (whatIsNowController == 2) {
                               destinationController.text = _searchList[index];
                             }
-                            whatIsNowController = 0;
                           });
                         },
                         child: Text(
@@ -869,7 +885,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         onTap: () {
                           setState(() {
                             //인포 클릭된 경우 동작
-                            showPopup("SubwayInfo");
+                            String temp = _searchList[index];
+                            showPopup("SubwayInfo", temp);
                           });
                         },
                         child: Icon(

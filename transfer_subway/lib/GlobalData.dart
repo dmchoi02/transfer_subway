@@ -1,12 +1,15 @@
 // 전 페이지에서 공유하는 전역 데이터 페이지
-// 사용할 때는 Global.get함수 or Global.변수 이름
-// static이지만 가급적 함수를 통해 접근하세요
+// 사용할 때는 Global.get함수
+// static이지만 외부에서 접근할 수 없어서 반드시 함수를 통해 접근하세요
 
 import 'imports.dart';
 
 class Global {
   static List<String> _searchList = [];
   static List<String> searchHistory = [];
+  static String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
+  static String destinationValue = ''; //도착역의 Key값. 한글은 불가능 하다.
+
   static bool isPathSet = false; //경로 입력이 됐는지 구분하는 변수
 
 // 지하철 관련 데이터
@@ -33,6 +36,22 @@ class Global {
 // 검색기록들의 즐겨찾기 아이콘에 대한 상태
 // false는 아이콘이 꺼져있는 것을 의미한다.
   static List<bool> isBookmarkedList = [];
+
+  static String getdepartureValue() {
+    return departureValue;
+  }
+
+  static String getdestinationValue() {
+    return destinationValue;
+  }
+
+  static void setCleardepartureValue() {
+    departureValue = '';
+  }
+
+  static void setCleardestinationValue() {
+    destinationValue = '';
+  }
 
   static List<String> getSearchList() {
     return _searchList;
@@ -161,12 +180,12 @@ class Global {
       String flIdxTwo = stationInfo.info[subWayList[0]]?['line'][1]; //752
       String flNextIdxone = stationInfo.info[pathToNode[1]]?['line'][0]; //752
 
-      if (flIdxone[0] == flNextIdxone[0]) {
-        subwayNumList.add(flIdxone[0]);
+      if (flIdxone[7] == flNextIdxone[7]) {
+        subwayNumList.add(flIdxone[7]);
       } else {
         print("여기이ㅣㅇ이");
 
-        subwayNumList.add(flIdxTwo[0]);
+        subwayNumList.add(flIdxTwo[7]);
       }
     } else if (firstCnt == 2 && firstNextCnt == 2) {
       String flIdxone = stationInfo.info[subWayList[0]]?['line'][0]; //514
@@ -174,14 +193,14 @@ class Global {
       String flNextIdxone = stationInfo.info[pathToNode[1]]?['line'][0]; //752
       String flNextIdxtwo = stationInfo.info[pathToNode[1]]?['line'][1]; //814
 
-      if (flIdxone[0] == flNextIdxone[0]) {
-        subwayNumList.add(flIdxone[0]);
-      } else if (flIdxone[0] == flNextIdxtwo[0]) {
-        subwayNumList.add(flIdxone[0]);
+      if (flIdxone[7] == flNextIdxone[7]) {
+        subwayNumList.add(flIdxone[7]);
+      } else if (flIdxone[7] == flNextIdxtwo[7]) {
+        subwayNumList.add(flIdxone[7]);
       } else {
         print("여기이ㅣㅇ이");
 
-        subwayNumList.add(flIdxTwo[0]);
+        subwayNumList.add(flIdxTwo[7]);
       }
     } else {
       subwayNumList.add(subWayList.first[0]);
@@ -207,7 +226,7 @@ class Global {
           } else {
             // 내 다음역이 나와 다를 경우
             String key = StationInfo().info[subWayList[i]]?['line'][1];
-            subwayNumList.add(key[0]);
+            subwayNumList.add(key[7]);
           }
         } else {
           subwayNumList.add(pathToNode[index + 1][0]);
@@ -234,12 +253,12 @@ class Global {
       String edBackIdxone =
           stationInfo.info[reversePathToNode[1]]?['line'][0]; //752
 
-      if (edIdxone[0] == edBackIdxone[0]) {
-        subwayNumList.add(edIdxone[0]);
+      if (edIdxone[7] == edBackIdxone[7]) {
+        subwayNumList.add(edIdxone[7]);
       } else {
         print("여기이ㅣㅇ이");
 
-        subwayNumList.add(edIdxTwo[0]);
+        subwayNumList.add(edIdxTwo[7]);
       }
     } else if (endCnt == 2 && endBackCnt == 2) {
       String edIdxone =
@@ -251,17 +270,17 @@ class Global {
       String edBackIdxTwo =
           stationInfo.info[reversePathToNode[1]]?['line'][1]; //814
 
-      if (edIdxone[0] == edBackIdxone[0]) {
-        subwayNumList.add(edIdxone[0]);
-      } else if (edIdxone[0] == edBackIdxTwo[0]) {
-        subwayNumList.add(edIdxone[0]);
+      if (edIdxone[7] == edBackIdxone[7]) {
+        subwayNumList.add(edIdxone[7]);
+      } else if (edIdxone[7] == edBackIdxTwo[7]) {
+        subwayNumList.add(edIdxone[7]);
       } else {
         print("여기이ㅣㅇ이");
 
-        subwayNumList.add(edIdxTwo[0]);
+        subwayNumList.add(edIdxTwo[7]);
       }
     } else {
-      subwayNumList.add(subWayList.last[0]);
+      subwayNumList.add(subWayList.last[7]);
     }
 
     //리스트의 맨 마지막 원소 처리

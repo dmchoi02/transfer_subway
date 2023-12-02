@@ -10,30 +10,68 @@ class SubwayMapPage extends StatefulWidget {
 }
 
 class _SubwayMapPageState extends State<SubwayMapPage> {
+  String selectedLine = '전체';
+
+  // 선택된 호선 업데이트 메서드
+  void _updateSelectedLine(String newLine) {
+    setState(() {
+      selectedLine = newLine;
+      // TODO: 선택된 호선에 따라 화면 업데이트 처리 추가
+    });
+  }
+
+  // 선택된 호선에 따른 이미지 경로 변환
+  String getImagePath(String selectedLine) {
+    switch (selectedLine) {
+      case '전체':
+        return 'assets/images/subwaymap/노선도 전체.png';
+      case '1호선':
+        return 'assets/images/subwaymap/1호선.png';
+      case '2호선':
+        return 'assets/images/subwaymap/2호선.png';
+      case '3호선':
+        return 'assets/images/subwaymap/3호선.png';
+      case '4호선':
+        return 'assets/images/subwaymap/4호선.png';
+      case '5호선':
+        return 'assets/images/subwaymap/5호선.png';
+      case '6호선':
+        return 'assets/images/subwaymap/6호선.png';
+      case '7호선':
+        return 'assets/images/subwaymap/7호선.png';
+      case '8호선':
+        return 'assets/images/subwaymap/8호선.png';
+      case '9호선':
+        return 'assets/images/subwaymap/9호선.png';
+      default:
+        return ''; // 예외 처리: 선택된 호선이 없거나 알 수 없는 경우
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String imagePath = getImagePath(selectedLine);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
-          getMyAppbar(context), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+          getMyAppbar(context),
           Padding(
             padding: EdgeInsets.only(
-              top: 90.0, // 위 패딩
-              left: 20.0, // 왼쪽 패딩
-              right: 20.0, // 오른쪽 패딩
+              top: 90.0,
+              left: 20.0,
+              right: 20.0,
             ),
             child: Column(
               children: [
                 Container(
                   padding: EdgeInsets.only(
-                    left: 20.0, // 왼쪽 패딩
+                    left: 20.0,
                     right: 20.0,
                   ),
                   width: 352.0,
                   height: 592,
                   decoration: BoxDecoration(
-                    // 모서리 둥글게 만들기
                     color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
@@ -42,15 +80,13 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 5.0, top: 10.0), // 왼쪽, 위 여백 조정
+                          padding: EdgeInsets.only(left: 5.0, top: 10.0),
                           child: Text(
                             "노선도",
                             style: TextStyle(
                               fontSize: 20.0,
                               fontFamily: "Font",
                               fontWeight: FontWeight.bold,
-                              //color: AppColor.blackColor,
                             ),
                           ),
                         ),
@@ -58,16 +94,77 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: EdgeInsets.only(left: 7.0), // 왼쪽 여백 조정
+                          padding: EdgeInsets.only(left: 5.0, top: 2.0),
                           child: Text(
                             "호선을 확인하세요!",
-                            // 스타일 설정
                             style: TextStyle(
-                              fontSize: 15.0, // 글꼴 크기
+                              fontSize: 15.0,
                               fontFamily: "Font",
-                              fontWeight: FontWeight.bold, //굵게 하고 싶은 경우
+                              fontWeight: FontWeight.bold,
                               color: AppColor.mainColor,
                             ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 7.0),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 20.0), // 20 픽셀의 공간을 추가합니다.
+                              DropdownButton<String>(
+                                value: selectedLine,
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    _updateSelectedLine(newValue);
+                                  }
+                                },
+                                items: <String>[
+                                  '전체',
+                                  '1호선',
+                                  '2호선',
+                                  '3호선',
+                                  '4호선',
+                                  '5호선',
+                                  '6호선',
+                                  '7호선',
+                                  '8호선',
+                                  '9호선',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: Color.fromARGB(255, 62, 68,
+                                        107), // 다크모드시 상단 AppBar와 같은 색상
+                                    width: 3, // 윤곽선 두께
+                                  ),
+                                ),
+                                child: SizedBox(
+                                  width: 300.0, // InteractiveViewer 위젯의 폭 제한
+                                  height: 400.0, // InteractiveViewer 위젯의 높이 제한
+                                  child: InteractiveViewer(
+                                    panEnabled: true,
+                                    constrained: false,
+                                    boundaryMargin: EdgeInsets.all(0.0),
+                                    minScale: 0.5,
+                                    maxScale: 4.0,
+                                    child: Image.asset(
+                                      imagePath,
+                                      width: 300.0, //윤곽선 길이 제외
+                                      height: 400.0, //윤곽선 길이 제외
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -80,7 +177,7 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
         ],
       ),
       bottomNavigationBar: BottomNavBar(
-        currentIndex = SUBWAY_MAP_PAGE, // 현재 페이지가 두 번째 페이지이므로 해당 인덱스 선택
+        currentIndex = SUBWAY_MAP_PAGE,
         onItemTapped: (newIndex) {
           if (newIndex != currentIndex) {
             Navigator.push(context, pageRoute(newIndex));
