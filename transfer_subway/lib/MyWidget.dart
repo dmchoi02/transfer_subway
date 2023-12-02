@@ -377,7 +377,6 @@ class _onPathViewState extends State<onPathView> {
                                 fontSize: 14.0,
                                 fontFamily: "Font",
                                 fontWeight: FontWeight.bold,
-                                color: AppColor.blackColor,
                               ),
                             ),
                           ),
