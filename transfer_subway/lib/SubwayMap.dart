@@ -195,9 +195,10 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
       bottomNavigationBar: BottomNavBar(
         currentIndex = SUBWAY_MAP_PAGE,
         onItemTapped: (newIndex) {
-          print('현재 뉴인덱스 $newIndex');
-          print('현재 커런트인덱스 $currentIndex');
+          //print('현재 뉴인덱스 $newIndex');
+          //print('현재 커런트인덱스 $currentIndex');
           if (newIndex != SUBWAY_MAP_PAGE) {
+            currentIndex = newIndex;
             Navigator.push(context, pageRoute(newIndex));
           }
         },

@@ -135,6 +135,8 @@ class _MyAppState extends State<MyApp> {
     } else {
       notice = '현재 3호선은 혼잡이 예상됩니다.';
     }
+
+    //print("현재 화면 인덱스dd $currentIndex");
     //prefs.clear(); //호출하면 기기에 저장된 데이터 초기화
 
     // Size screenSize = MediaQuery.of(context).size;
@@ -198,7 +200,8 @@ class _MyAppState extends State<MyApp> {
                         // 경로 입력한 데이터 초기화
                         Global.clearSubWayList();
                       });
-                      Navigator.push(context, pageRoute(4));
+                      Navigator.push(context, pageRoute(PATH_SET));
+                      currentIndex = PATH_SET;
                     },
                     child: Container(
                       padding: EdgeInsets.only(
@@ -322,6 +325,9 @@ class _MyAppState extends State<MyApp> {
           currentIndex = MY_APP_PAGE,
           onItemTapped: (int newIndex) {
             if (newIndex != MY_APP_PAGE) {
+              //print('현재 뉴인덱스 $newIndex');
+              //print('현재 커런트인덱스 $currentIndex');
+              currentIndex = newIndex;
               Navigator.push(context, pageRoute(newIndex));
             }
           },

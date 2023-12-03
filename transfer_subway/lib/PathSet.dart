@@ -961,7 +961,13 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     // Pigeon code
-
+    print("현재 화면 인덱스 $currentIndex");
+    if (currentIndex == PATH_SET) {
+      // 경로 검색 페이지로 들어오면 초기화
+      // 이전 페이지로 돌아가도 기록 안남음
+      Global.setIsPathSet(false);
+    }
+    //Global.setIsPathSet(false);
     if (focusCnt != 2) {
       FocusScope.of(context).unfocus();
       focusCnt++;
@@ -1114,6 +1120,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                     if (chk == false) {
                                       whatIsNowController = 2;
                                     }
+                                    currentIndex = MY_APP_PAGE;
                                   },
                                   onTap: () {
                                     //먼저 선수조치로 적용

@@ -142,6 +142,8 @@ class _SettingsPageState extends State<SettingsPage> {
         currentIndex = SETTINGS_PAGE, // 현재 페이지가 두 번째 페이지이므로 해당 인덱스 선택
         onItemTapped: (newIndex) {
           if (newIndex != SETTINGS_PAGE) {
+            currentIndex = newIndex;
+
             Navigator.push(context, pageRoute(newIndex));
           }
         },

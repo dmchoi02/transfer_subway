@@ -182,13 +182,16 @@ class _BadgesPageState extends State<BadgesPage> {
         ],
       ),
       bottomNavigationBar: BottomNavBar(
+        currentIndex = BADGES_PAGE, // 현재 페이지가 두 번째 페이지이므로 해당 인덱스 선택
         onItemTapped: (newIndex) {
           if (newIndex != BADGES_PAGE) {
+            //print('현재 뉴인덱스 $newIndex');
+            //print('현재 커런트인덱스 $currentIndex');
+            currentIndex = newIndex;
             Navigator.push(context, pageRoute(newIndex));
           }
         },
         currentIndex: BADGES_PAGE,
-        currentIndex = BADGES_PAGE, // 현재 페이지가 두 번째 페이지이므로 해당 인덱스 선택
       ),
     );
   }
