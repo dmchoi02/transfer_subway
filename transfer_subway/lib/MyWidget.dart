@@ -549,11 +549,12 @@ Widget getMyAppbar(BuildContext context) {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
-          child: Icon(
-            Icons.cloudy_snowing,
-            size: 32,
-            color: Colors.white,
-          ),
+          // child: Icon(
+          //   Icons.cloudy_snowing,
+          //   size: 32,
+          //   color: Colors.white,
+          // ),
+          child: MyWeather()
         ),
         Expanded(
           child: Container(
@@ -562,7 +563,7 @@ Widget getMyAppbar(BuildContext context) {
               child: Stack(
                 children: [
                   Positioned(
-                    left: 75, // 텍스트를 왼쪽으로 픽셀 이동
+                    left: 55, // 텍스트를 왼쪽으로 픽셀 이동
                     top: 38,
                     child: Text(
                       "Hello, 환승철",
