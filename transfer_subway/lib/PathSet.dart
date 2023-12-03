@@ -954,7 +954,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     // Pigeon code
 
-    Global.setIsPathSet(false); //화면을 그리는 상태에서는 경로 설정이 안되어 있음
     if (focusCnt != 2) {
       FocusScope.of(context).unfocus();
       focusCnt++;
