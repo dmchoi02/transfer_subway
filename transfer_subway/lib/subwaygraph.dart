@@ -508,11 +508,14 @@ class SubwayGraph {
             '621': {'time': 250, 'distance': 650, 'cost': 650}
           },
         };
+
+  // SubwayGraph 클래스의 Dijkstra 알고리즘을 실행하는 함수
   Map<String, dynamic> runDijkstra(
       String startStation, String endStation, String weightType) {
     return Dijkstra.run(this, startStation, endStation, weightType);
   }
 
+  // SubwayGraph 클래스의 findShortestPath 알고리즘을 실행하는 함수
   List<String> runfindpath(
       String startStation, String endStation, String weightType) {
     return Dijkstra.findShortestPath(
@@ -520,14 +523,17 @@ class SubwayGraph {
   }
 }
 
+// Dijkstra 알고리즘을 구현한 클래스
 class Dijkstra {
   static Map<String, dynamic> run(
       SubwayGraph subway, String startNode, String endNode, String weightType) {
+    // 그래프 및 거리, 이전 노드, 방문된 노드 초기화
     var graph = subway.adjacencyList;
     var distances = <String, Map<String, dynamic>>{};
     var predecessors = <String, String>{};
     var visitedNodes = <String>{};
 
+    // 초기 거리 설정
     for (var node in graph.keys) {
       distances[node] = node == startNode
           ? {'time': 0, 'distance': 0, 'cost': 0}
@@ -580,6 +586,7 @@ class Dijkstra {
     return shortestPath;
   }
 
+  // 최단 경로를 찾기 위한 함수
   static List<String> _getPath(Map<String, String> predecessors, String node) {
     var path = <String>[];
     while (predecessors.containsKey(node)) {
@@ -590,6 +597,7 @@ class Dijkstra {
     return path;
   }
 
+  // 방문하지 않은 노드 중 가장 가까운 노드를 찾는 함수
   static String _getClosestNode(
       Map<String, dynamic> distances, Set<String> visited, String weightType) {
     String closestNode = '';
@@ -606,6 +614,7 @@ class Dijkstra {
     return closestNode;
   }
 
+  // 최단 경로를 찾기 위한 내부 함수
   static List<String> findShortestPath(
       Map<String, Map<String, Map<String, int>>> graph,
       String startNode,
@@ -638,12 +647,14 @@ class Dijkstra {
     return _getPath2(predecessors, startNode, endNode);
   }
 
+  // 방문하지 않은 노드 중 가장 가까운 노드를 찾는 내부 함수
   static String _getClosestNode2(
       Map<String, int> distances, Set<String> unvisitedNodes) {
     return unvisitedNodes.reduce((closestNode, node) =>
         distances[node]! < distances[closestNode]! ? node : closestNode);
   }
 
+  // 최단 경로를 찾기 위한 내부 함수
   static List<String> _getPath2(
       Map<String, String> predecessors, String startNode, String endNode) {
     var path = <String>[];
