@@ -2,11 +2,19 @@
 // 사용할 때는 Global.get함수
 // static이지만 외부에서 접근할 수 없어서 반드시 함수를 통해 접근하세요
 
+import 'dart:ffi';
+import 'dart:convert';
 import 'imports.dart';
 
 class Global {
   static List<String> _searchList = [];
   static List<String> searchHistory = [];
+
+  // 검색기록들의 즐겨찾기 아이콘에 대한 상태
+  // false는 아이콘이 꺼져있는 것을 의미한다.
+  static List<bool> isBookmarkedList = [];
+
+  // static List<String> searchHistory = prefs.getStringList('searchHistory') ?? [];
   static String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
   static String destinationValue = ''; //도착역의 Key값. 한글은 불가능 하다.
 
@@ -31,11 +39,6 @@ class Global {
 
   // 위젯 변수
   static Widget onPathview = onPathView();
-
-  //
-// 검색기록들의 즐겨찾기 아이콘에 대한 상태
-// false는 아이콘이 꺼져있는 것을 의미한다.
-  static List<bool> isBookmarkedList = [];
 
   static String getdepartureValue() {
     return departureValue;
@@ -83,6 +86,30 @@ class Global {
 
   static Widget getOnPathview() {
     return onPathview;
+  }
+
+// 필요한 데이터를 저장
+  // 검색 기록 저장
+  static saveSearchHistoryPrefs(List<String> value) async {
+    final prefs = await SharedPreferences.getInstance();
+    // key값은 "themeMode", 저장하는 value값은 String 타입의 "light" or "dark" or "system" 입니다.
+    await prefs.setStringList("searchHistory", value);
+  }
+
+  // 북마크 확인하는 리스트
+  static saveIsBookmarkedListPrefs(List<bool> value) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> stringList =
+        value.map((boolValue) => boolValue.toString()).toList();
+    // key값은 "themeMode", 저장하는 value값은 String 타입의 "light" or "dark" or "system" 입니다.
+    await prefs.setStringList('isBookmarkedList', stringList);
+  }
+
+// 칭호 카운트 저장
+  static saveBadgesCntPrefs(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    // key값은 "themeMode", 저장하는 value값은 String 타입의 "light" or "dark" or "system" 입니다.
+    await prefs.setString("themeMode", value);
   }
 
 // 지하철 관련 함수들

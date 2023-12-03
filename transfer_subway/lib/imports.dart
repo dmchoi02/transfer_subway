@@ -14,7 +14,6 @@ export 'PathSet.dart'; // 길 입력 페이지
 export 'SubwayMap.dart'; // 노선도 페이지
 export 'Badges.dart'; // 칭호 페이지
 export 'Settings.dart'; //설정 페이지
-export 'Game.dart'; //게임 페이지
 export 'MyWidget.dart'; // 여러번 사용되는 or 직접 만든 위젯은 여기다 모아 놓는다
 export 'MyToast.dart'; // 사용자에게 메시지를 띄울때 사용하는 페이지
 export 'MyDialog.dart'; // 팝업창

@@ -16,7 +16,8 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
-          getMyAppbar(context), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
+          getMyAppbar(
+              context), //직접 만든 Appbar 호출, 기존에 flutter Appbar 사용시 현재 화면을 구현하기 어려우므로 appbar를 위젯으로 만듬
           Padding(
             padding: EdgeInsets.only(
               top: 90.0, // 위 패딩
@@ -26,80 +27,88 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(
-                    left: 20.0, // 왼쪽 패딩
-                    right: 20.0,
-                  ),
-                  width: 352.0,
-                  height: 592,
-                  decoration: BoxDecoration(
-                    // 모서리 둥글게 만들기
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  ),
-                  child :ListView(
-                        children : <Widget>[
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 5.0, top: 10.0), // 왼쪽, 위 여백 조정
-                              child: Text(
-                                "설정",
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Font",
-                                  fontWeight: FontWeight.bold,
-                                  
-                                ),
-                              ),
+                    padding: EdgeInsets.only(
+                      left: 20.0, // 왼쪽 패딩
+                      right: 20.0,
+                    ),
+                    width: 352.0,
+                    height: 592,
+                    decoration: BoxDecoration(
+                      // 모서리 둥글게 만들기
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    ),
+                    child: ListView(children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 5.0, top: 10.0), // 왼쪽, 위 여백 조정
+                          child: Text(
+                            "설정",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          ListTile(
-                            leading: Text("다크모드"),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min, 
-                              children: [
-                                IconButton(
-                                    onPressed: (){
-                                      final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-                                      themeProvider.setThemeMode(ThemeMode.light);
-                                    },
-                                    color: Theme.of(context).colorScheme.primary,
-                                    icon: Icon(Icons.light_mode,)
-                                ),
-                                
-                                IconButton(
-                                  onPressed: (){
-                                    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-                                    themeProvider.setThemeMode(ThemeMode.dark);
-                                  },
-                                  color: Theme.of(context).colorScheme.secondary,
-                                  icon: Icon(Icons.dark_mode)
-                                ),
-                              ]
+                        ),
+                      ),
+                      ListTile(
+                          leading: Text(
+                            "다크모드",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Font",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing:
+                              Row(mainAxisSize: MainAxisSize.min, children: [
+                            IconButton(
+                                onPressed: () {
+                                  final themeProvider =
+                                      Provider.of<ThemeProvider>(context,
+                                          listen: false);
+                                  themeProvider.setThemeMode(ThemeMode.light);
+                                },
+                                color: Theme.of(context).colorScheme.primary,
+                                icon: Icon(
+                                  Icons.light_mode,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  final themeProvider =
+                                      Provider.of<ThemeProvider>(context,
+                                          listen: false);
+                                  themeProvider.setThemeMode(ThemeMode.dark);
+                                },
+                                color: Theme.of(context).colorScheme.secondary,
+                                icon: Icon(Icons.dark_mode)),
+                          ])),
+                      ListTile(
+                        leading: Text(
+                          "언어설정",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontFamily: "Font",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        trailing: PopupMenuButton(itemBuilder: (context) {
+                          return [
+                            PopupMenuItem(
+                              value: 'korean',
+                              child: Text('한국어'),
+                            ),
+                            PopupMenuItem(
+                              value: 'english',
+                              child: Text('English'),
                             )
-                          ),
-                          ListTile(
-                            leading: Text("언어설정"),
-                            trailing: PopupMenuButton(
-                              itemBuilder: (context){
-                                return[
-                                  PopupMenuItem(
-                                    value: 'korean',
-                                    child: Text('한국어'),
-                                  ),
-                                  PopupMenuItem(
-                                    value: 'english',
-                                    child: Text('English'),
-                                  )
-                                ];
-                              }
-                            ),
-                          )
-                        ]
+                          ];
+                        }),
                       )
-                ),
+                    ])),
               ],
             ),
           ),
@@ -112,6 +121,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Navigator.push(context, pageRoute(newIndex));
           }
         },
+        currentIndex: SETTINGS_PAGE,
       ),
     );
   }

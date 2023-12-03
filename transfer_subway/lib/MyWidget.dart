@@ -271,7 +271,7 @@ class _onPathViewState extends State<onPathView> {
                     ),
                   ),
                   SizedBox(
-                    width: 180,
+                    width: 185,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -280,6 +280,7 @@ class _onPathViewState extends State<onPathView> {
                         setState(() {
                           currentState = !currentState;
                           isBookmarkedList.insert(0, currentState);
+                          Global.saveIsBookmarkedListPrefs(isBookmarkedList);
                           // 여기다가 눌렀을 경우 즐겨찾기 리스트에 추가하면됨
                           // 검색기록은 pathset.dart 에서 이미 추가됨
                           // isBookmarkedList.insert(0, currentState);
@@ -317,7 +318,7 @@ class _onPathViewState extends State<onPathView> {
             ),
           ),
 
-          // 길 안내 정보, 게임 버튼
+          // 길 안내 정보
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: Align(
@@ -327,28 +328,13 @@ class _onPathViewState extends State<onPathView> {
                 height: 100,
                 //color: Colors.amber,
                 child: Row(children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        // 게임 페이지로 이동
-                      });
-                    },
-                    child: Container(
-                      alignment: Alignment.bottomLeft,
-                      child: Icon(
-                        Icons.sports_esports_outlined,
-                        size: 45,
-                        color: AppColor.mainColor,
-                      ),
-                    ),
-                  ),
                   SizedBox(
-                    width: 60,
+                    width: 80,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: Container(
-                      width: 200,
+                      width: 230,
                       //color: Colors.black,
                       child: Column(
                         children: [
@@ -357,7 +343,7 @@ class _onPathViewState extends State<onPathView> {
                             child: Text(
                               "총 안내",
                               style: TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 18.0,
                                 fontFamily: "Font",
                                 fontWeight: FontWeight.bold,
                                 //color: AppColor.blackColor,
@@ -446,6 +432,7 @@ class BottomNavBar extends StatelessWidget {
     int i, {
     //required this.selectedIndex,
     required this.onItemTapped,
+    required int currentIndex,
   });
 
   final List<BottomNavigationBarItem> items = [
@@ -514,8 +501,6 @@ PageRouteBuilder pageRoute(int newIndex, [int? backIndex]) {
         return SettingsPage();
       } else if (newIndex == PATH_SET) {
         return PathSetPage();
-      } else if (newIndex == GMAE_PAGE) {
-        return GamePage();
       } else {
         return SizedBox(); //else로 들어오는 경우는 없지만 반드시 return 해야하므로 빈 위젯을 돌려준다
       }
@@ -561,7 +546,7 @@ Widget getMyAppbar(BuildContext context) {
               child: Stack(
                 children: [
                   Positioned(
-                    left: 85, // 텍스트를 왼쪽으로 픽셀 이동
+                    left: 75, // 텍스트를 왼쪽으로 픽셀 이동
                     top: 38,
                     child: Text(
                       "Hello, 환승철",

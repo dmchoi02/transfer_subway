@@ -26,6 +26,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
         setState(() {
           // 검색 기록을 다시 가져옴
           searchHistory = Global.getSearchHistory();
+
+          //현재 즐겨찾기 내용을 기기에 저장
+          Global.saveIsBookmarkedListPrefs(Global.getIsBookmarkedList());
         });
       });
     }
@@ -63,6 +66,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
       Global.getSearchList(); //이렇게 사용하면 필요한 경우 다른 페이지에서도 모두 사용 가능
   final departureFocusNode = FocusNode();
   final destinationFocusNode = FocusNode();
+
   int whatIsNowController = 0;
   String departureValue = Global.getdepartureValue(); //출발역의 Key값. 한글은 불가능 하다.
   String destinationValue =
@@ -109,6 +113,10 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
         isBookmarkedList.insert(0, false);
         // 검색어를 검색 기록에 추가
         searchHistory.insert(0, query);
+        // 검색기록을 기기에 저장
+        Global.saveSearchHistoryPrefs(Global.getSearchHistory());
+        print("검색 기록 저장 완료");
+        Global.saveIsBookmarkedListPrefs(isBookmarkedList);
       }
     }
 
@@ -247,60 +255,70 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                 itemExtent: 40,
                 itemCount: searchHistory.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            print("Text clicked at index $index");
-                            // query를 ' --> ' 문자열로 분리하여 departureValue와 destinationValue를 가져옵니다.
-                            List<String> values =
-                                searchHistory[index].split(' --> ');
-                            departureController.text = values[0];
-                            destinationController.text = values[1];
-                            departureValue = subways.getKeyFromName(values[0]);
-                            destinationValue =
-                                subways.getKeyFromName(values[1]);
-                            destinationFocusNode.requestFocus();
-                          },
-                          child: Text(
-                            searchHistory[index],
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontFamily: "Font",
-                              fontWeight: FontWeight.bold,
+                  print(searchHistory.length);
+                  print('didx $index');
+                  print('searchHis $searchHistory');
+                  if (searchHistory != null && index < searchHistory.length) {
+                    return ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              print("Text clicked at index $index");
+                              // query를 ' --> ' 문자열로 분리하여 departureValue와 destinationValue를 가져옵니다.
+                              List<String> values =
+                                  searchHistory[index].split(' --> ');
+                              departureController.text = values[0];
+                              destinationController.text = values[1];
+                              departureValue =
+                                  subways.getKeyFromName(values[0]);
+                              destinationValue =
+                                  subways.getKeyFromName(values[1]);
+                              destinationFocusNode.requestFocus();
+                            },
+                            child: Text(
+                              searchHistory[index],
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontFamily: "Font",
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.mainColor,
+                              ),
+                            ),
+                          ),
+                          //SizedBox(width: 140),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isBookmarkedList[index] =
+                                    !isBookmarkedList[index];
+                                Global.saveIsBookmarkedListPrefs(
+                                    isBookmarkedList);
+                              });
+                              if (isBookmarkedList[index]) {
+                                print("Add to bookmarks at index $index");
+                              } else {
+                                print("Remove from bookmarks at index $index");
+                              }
+                            },
+                            child: Icon(
+                              isBookmarkedList[index]
+                                  ? Icons.bookmarks
+                                  : Icons.bookmarks_outlined,
+                              size: 32,
                               color: AppColor.mainColor,
                             ),
                           ),
-                        ),
-                        //SizedBox(width: 140),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isBookmarkedList[index] =
-                                  !isBookmarkedList[index];
-                            });
-                            if (isBookmarkedList[index]) {
-                              print("Add to bookmarks at index $index");
-                            } else {
-                              print("Remove from bookmarks at index $index");
-                            }
-                          },
-                          child: Icon(
-                            isBookmarkedList[index]
-                                ? Icons.bookmarks
-                                : Icons.bookmarks_outlined,
-                            size: 32,
-                            color: AppColor.mainColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      //print("ListTile clicked at index $index");
-                    },
-                  );
+                        ],
+                      ),
+                      onTap: () {
+                        //print("ListTile clicked at index $index");
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
             ),
@@ -436,6 +454,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                 width: 352,
                 height: 130,
                 decoration: BoxDecoration(
+                  // 모서리 둥글게 만들기
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   border: Border.all(
                     color: isGuideClicked[0]
                         ? AppColor.selectedColor
@@ -536,6 +557,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                 width: 352,
                 height: 130,
                 decoration: BoxDecoration(
+                  // 모서리 둥글게 만들기
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   border: Border.all(
                     color: isGuideClicked[1]
                         ? AppColor.selectedColor
@@ -636,6 +660,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                 width: 352,
                 height: 130,
                 decoration: BoxDecoration(
+                  // 모서리 둥글게 만들기
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   border: Border.all(
                     color: isGuideClicked[2]
                         ? AppColor.selectedColor
@@ -946,10 +973,10 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                     },
                     child: Visibility(
                       visible: onPathOrPathInput,
-                      child: Icon(
-                        Icons.delete_forever,
-                        size: 35,
-                        color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
+                        child: Image.asset(images + 'reset.png',
+                            width: 28, height: 28),
                       ),
                     ),
                   ),

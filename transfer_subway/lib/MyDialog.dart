@@ -10,7 +10,7 @@ class MyBookmarkDialog extends StatefulWidget {
 }
 
 class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
-  List<String> searchHistory = Global.getSearchHistory(); // 추후 수정해야함
+  List<String> searchHistory = Global.getSearchHistory();
   List<bool> isBookmarkedList = Global.getIsBookmarkedList();
   String departureValue = Global.getdepartureValue();
   String destinationValue = Global.getdestinationValue();
@@ -20,6 +20,9 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
   Widget build(BuildContext context) {
     // 즐겨찾기된 항목만 필터링하여 새로운 리스트를 만듭니다.
     List<String> bookmarkedItems = [];
+
+    print(searchHistory.length);
+
     for (int i = 0; i < searchHistory.length; i++) {
       if (isBookmarkedList[i]) {
         bookmarkedItems.add(searchHistory[i]);
@@ -61,7 +64,7 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
                           fontSize: 20.0,
                           fontFamily: "Font",
                           fontWeight: FontWeight.bold,
-                          //color: Colors.white,
+                          color: Colors.white, //다크모드 관계없이 흰색 고정
                         ),
                       ),
                     ),
@@ -70,7 +73,7 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
                       child: IconButton(
                         icon: Icon(Icons.close),
                         iconSize: 32,
-                        //color: Colors.white,
+                        color: Colors.white, //다크모드 관계없이 흰색 고정
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -120,6 +123,10 @@ class _MyBookmarkDialogState extends State<MyBookmarkDialog> {
                             setState(() {
                               isBookmarkedList[originalIndex] =
                                   !isBookmarkedList[originalIndex];
+
+                              //기기에 데이터 저장
+                              Global.saveIsBookmarkedListPrefs(
+                                  isBookmarkedList);
                             });
                             if (isBookmarkedList[originalIndex]) {
                               print("Add to bookmarks at index $originalIndex");
@@ -235,6 +242,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                               fontSize: 10.0,
                               fontFamily: "Font",
                               fontWeight: FontWeight.bold,
+                              color: Colors.white, //다크모드 관계없이 흰색 고정
                             ),
                           ),
                           Text(
@@ -243,7 +251,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                               fontSize: 20.0,
                               fontFamily: "Font",
                               fontWeight: FontWeight.bold,
-                              //color: Colors.white,
+                              color: Colors.white, //다크모드 관계없이 흰색 고정
                             ),
                           ),
                         ],
@@ -254,7 +262,7 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                       child: IconButton(
                         icon: Icon(Icons.close),
                         iconSize: 32,
-                        //color: Colors.white,
+                        color: Colors.white, //다크모드 관계없이 흰색 고정
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -285,17 +293,20 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                             ),
                             SizedBox(width: 10.0), // 공간 추가
                             ...trans.map((info) {
-                              return Row(
-                                children: <Widget>[
-                                  Container(
-                                    height: 20.0,
-                                    width: 20.0,
-                                    child: Image.asset(
-                                      'assets/images/$info.png',
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 2.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 20.0,
+                                      width: 20.0,
+                                      child: Image.asset(
+                                        'assets/images/$info.png',
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 10.0), // 리스트들 사이 공간 추가
-                                ],
+                                    SizedBox(width: 10.0), // 리스트들 사이 공간 추가
+                                  ],
+                                ),
                               );
                             }).toList(),
                           ],

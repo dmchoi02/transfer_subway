@@ -39,10 +39,12 @@ const int GMAE_PAGE = 5;
 //       ),
 //     );
 
+late SharedPreferences prefs;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // shared_preferences 초기화.
-  final prefs = await SharedPreferences.getInstance();
+  prefs = await SharedPreferences.getInstance();
 
   // ThemeMode값 초기화. 기본값은 light로 정했습니다.
   ThemeMode themeMode = ThemeMode.light;
@@ -61,7 +63,9 @@ void main() async {
   }
 
 // 설정된, 또는 불러온 테마모드를 MyApp에 넘겨줍니다.
-  runApp(MyStatelessApp(themeMode: themeMode));
+  runApp(MyStatelessApp(
+    themeMode: themeMode,
+  ));
 }
 
 class MyStatelessApp extends StatelessWidget {
@@ -77,8 +81,9 @@ class MyStatelessApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              // 어플리케이션이 실행되면서 Provider를 적용할 때 불러온 테마모드를 ThemeProvider에 넘겨줍니다.
-              create: (_) => ThemeProvider(initThemeMode: themeMode)),
+            // 어플리케이션이 실행되면서 Provider를 적용할 때 불러온 테마모드를 ThemeProvider에 넘겨줍니다.
+            create: (_) => ThemeProvider(initThemeMode: themeMode),
+          ),
         ],
         builder: (context, _) {
           return MaterialApp(
@@ -103,6 +108,30 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late Future<SharedPreferences> prefsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    prefsFuture = SharedPreferences.getInstance();
+    _loadData();
+  }
+
+// SharedPreferences를 사용하여 데이터 불러오기
+  _loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? loadedData = prefs.getStringList('searchHistory');
+    List<String>? loadedStringList = prefs.getStringList('isBookmarkedList');
+    List<bool> loadedBoolList = loadedStringList
+            ?.map((stringValue) =>
+                stringValue.toLowerCase() == 'true' ? true : false)
+            .toList() ??
+        [];
+
+    Global.searchHistory = loadedData ?? [];
+    Global.isBookmarkedList = loadedBoolList ?? [];
+  }
+
   @override
   Widget build(BuildContext context) {
     // 사이즈 확인
@@ -111,14 +140,19 @@ class _MyAppState extends State<MyApp> {
     if (noticeIssue == true) {
       //여기에서 서버가 도입될 시 공지를 가져와 notice에 가져오는 작업을 수행합니다.
     } else {
-      notice = 'ㅡ';
+      notice = '3호선은 현재 혼잡이 예상됩니다.';
     }
-    Size screenSize = MediaQuery.of(context).size;
-    double screenWidth = screenSize.width;
-    double screenHeight = screenSize.height;
+    //prefs.clear(); //호출하면 기기에 저장된 데이터 초기화
+
+    // Size screenSize = MediaQuery.of(context).size;
+    // double screenWidth = screenSize.width;
+    // double screenHeight = screenSize.height;
     //print(screenWidth); // 현재 가로 사이즈
     //print(screenHeight); // 현재 세로 사이즈
     Widget onPathview = Global.getOnPathview();
+    print("현재 길 안내는");
+    print(Global.getIsPathSet());
+
     // 위에 상태바 없애기
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
@@ -146,10 +180,10 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Visibility(
                   visible: Global.getIsPathSet(),
-                  child: Icon(
-                    Icons.delete_forever,
-                    size: 35,
-                    color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 5.0),
+                    child: Image.asset(images + 'reset.png',
+                        width: 28, height: 28),
                   ),
                 ),
               ),
@@ -202,8 +236,11 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                           ),
-                          Image.asset(images + 'search.png',
-                              width: 28, height: 28), // 이미지 불러오기
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: Image.asset(images + 'search.png',
+                                width: 28, height: 28),
+                          ), // 이미지 불러오기
                         ],
                       ),
                     ),
@@ -296,6 +333,7 @@ class _MyAppState extends State<MyApp> {
               Navigator.push(context, pageRoute(newIndex));
             }
           },
+          currentIndex: MY_APP_PAGE,
         ),
       ),
     );

@@ -113,53 +113,69 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
                           child: Column(
                             children: [
                               SizedBox(height: 20.0), // 20 픽셀의 공간을 추가합니다.
-                              DropdownButton<String>(
-                                value: selectedLine,
-                                onChanged: (String? newValue) {
-                                  if (newValue != null) {
-                                    _updateSelectedLine(newValue);
-                                  }
-                                },
-                                items: <String>[
-                                  '전체',
-                                  '1호선',
-                                  '2호선',
-                                  '3호선',
-                                  '4호선',
-                                  '5호선',
-                                  '6호선',
-                                  '7호선',
-                                  '8호선',
-                                  '9호선',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    color: Color.fromARGB(255, 62, 68,
-                                        107), // 다크모드시 상단 AppBar와 같은 색상
-                                    width: 3, // 윤곽선 두께
-                                  ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 235.0),
+                                child: DropdownButton<String>(
+                                  value: selectedLine,
+                                  onChanged: (String? newValue) {
+                                    if (newValue != null) {
+                                      _updateSelectedLine(newValue);
+                                    }
+                                  },
+                                  items: <String>[
+                                    '전체',
+                                    '1호선',
+                                    '2호선',
+                                    '3호선',
+                                    '4호선',
+                                    '5호선',
+                                    '6호선',
+                                    '7호선',
+                                    '8호선',
+                                    '9호선',
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
                                 ),
-                                child: SizedBox(
-                                  width: 300.0, // InteractiveViewer 위젯의 폭 제한
-                                  height: 400.0, // InteractiveViewer 위젯의 높이 제한
-                                  child: InteractiveViewer(
-                                    panEnabled: true,
-                                    constrained: false,
-                                    boundaryMargin: EdgeInsets.all(0.0),
-                                    minScale: 0.5,
-                                    maxScale: 4.0,
-                                    child: Image.asset(
-                                      imagePath,
-                                      width: 300.0, //윤곽선 길이 제외
-                                      height: 400.0, //윤곽선 길이 제외
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10.0),
+                                child: Container(
+                                  width: 320,
+                                  height: 420,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 62, 68,
+                                          107), // 다크모드시 상단 AppBar와 같은 색상
+                                      width: 1, // 윤곽선 두께
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      width:
+                                          300.0, // InteractiveViewer 위젯의 폭 제한
+                                      height:
+                                          400.0, // InteractiveViewer 위젯의 높이 제한
+                                      child: InteractiveViewer(
+                                        panEnabled: true,
+                                        constrained: false,
+                                        boundaryMargin: EdgeInsets.all(0.0),
+                                        minScale: 0.5,
+                                        maxScale: 4.0,
+                                        child: Image.asset(
+                                          imagePath,
+                                          width: 300.0, //윤곽선 길이 제외
+                                          height: 400.0, //윤곽선 길이 제외
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -183,6 +199,7 @@ class _SubwayMapPageState extends State<SubwayMapPage> {
             Navigator.push(context, pageRoute(newIndex));
           }
         },
+        currentIndex: SUBWAY_MAP_PAGE,
       ),
     );
   }
