@@ -122,9 +122,17 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
 
     // 출발지와 도착지 값이 비어있지 않으면 포커스를 해제합니다.
     if (departureValue.isNotEmpty && destinationValue.isNotEmpty) {
-      if (departureValue != destinationValue) {
+      //print("출발과 도착이 유효한지 확인");
+      //print(subways.doesMatchingStationExist(departureValue));
+      //print(subways.doesMatchingStationExist(destinationValue));
+
+      if (!subways.doesMatchingStationExist(departureValue) ||
+          !subways.doesMatchingStationExist(destinationValue)) {
+        //print("유효하지 않음");
+        myShowToast(context, '유효하지 않는 역이 존재합니다! \n 확인해 주세요!');
+      } else if (departureValue != destinationValue) {
         FocusScope.of(context).unfocus(); // 두개의 값이 입력되었으므로 키보드 창이 사라짐
-        print("호출됨");
+        //print("호출됨");
         okInputPath = true;
         onPathOrPathInput = true;
         String temp =
@@ -1101,7 +1109,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                     whatIsNowController = 0;
                                   },
                                   onTap: () {
-                                    //먼저 선수조치로 0 적용
+                                    //먼저 선수조치로 적용
                                     whatIsNowController = 2;
                                   },
                                 ),
@@ -1128,10 +1136,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                   ),
 
                   //3번째 행
-                  //getSearchHistory(),
-                  //getGuidePath(),
-                  //getAutoCompletion(),
-
                   Visibility(
                     visible: !departureController.text.isNotEmpty &&
                         !destinationController.text.isNotEmpty &&
@@ -1148,24 +1152,12 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                     visible: FocusScope.of(context).hasFocus && !okInputPath,
                     child: getAutoCompletion(),
                   ),
-
-                  ////
                 ],
               ),
             ),
           ],
         ),
       ),
-      /* 나중에 변경
-      bottomNavigationBar: BottomNavBar(
-        currentIndex = currentIndex,
-        onItemTapped: (int newIndex) {
-          if (newIndex != currentIndex) {
-            Navigator.push(context, pageRoute(newIndex));
-          }
-        },
-      ),
-      */
     );
   }
 }

@@ -641,4 +641,14 @@ class Subways {
       return '';
     }
   }
+
+  bool doesMatchingStationExist(String query) {
+    if (_isNumeric(query)) {
+      // 숫자로 이루어진 문자열인 경우
+      return stations.keys.any((key) => key == query);
+    } else {
+      // 텍스트인 경우
+      return stations.values.any((station) => station['name'] == query);
+    }
+  }
 }
