@@ -22,6 +22,5 @@ export "GlobalData.dart"; // 전역 데이터 관리
 export 'package:transfer_subway/Theme.dart'; // 테마 커스텀
 export 'package:transfer_subway/ThemeProvider.dart'; // 테마 provider
 export 'package:shared_preferences/shared_preferences.dart'; // shared_preference 기기 내부에 데이터 저장하는 패키지 - 다크모드 관련
-export 'package:provider/provider.dart'; //provider 패키지 - 다크모드 관련
-
-export 'package:transfer_subway/Weather.dart';
+export 'package:provider/provider.dart'; // provider 패키지 - 다크모드 관련
+export 'package:transfer_subway/Weather.dart'; // 날씨 기능

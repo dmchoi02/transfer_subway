@@ -1,6 +1,6 @@
 // 전 페이지에서 공유하는 전역 데이터 페이지
 // 사용할 때는 Global.get함수
-// static이지만 외부에서 접근할 수 없어서 반드시 함수를 통해 접근하세요
+// 함수를 통해 접근하세요
 
 import 'dart:ffi';
 import 'dart:convert';
@@ -14,7 +14,6 @@ class Global {
   // false는 아이콘이 꺼져있는 것을 의미한다.
   static List<bool> isBookmarkedList = [];
 
-  // static List<String> searchHistory = prefs.getStringList('searchHistory') ?? [];
   static String departureValue = ''; //출발역의 Key값. 한글은 불가능 하다.
   static String destinationValue = ''; //도착역의 Key값. 한글은 불가능 하다.
   static String setnowsearchlist = '';
@@ -41,67 +40,83 @@ class Global {
   // 위젯 변수
   static Widget onPathview = onPathView();
 
+//Functions
+
+  // 출발지 값 반환
   static String getdepartureValue() {
     return departureValue;
   }
 
+  // 도착지 값 반환
   static String getdestinationValue() {
     return destinationValue;
   }
 
+  // 현재 검색 리스트 값 반환
   static String getsetnowsearchlist() {
     return setnowsearchlist;
   }
 
+  // 출발지 값을 초기화
   static void setCleardepartureValue() {
     departureValue = '';
   }
 
+  // 도착지 값을 초기화
   static void setCleardestinationValue() {
     destinationValue = '';
   }
 
+  // 현재 검색 리스트 값을 초기화
   static void setClearsetnowsearchlist() {
     setnowsearchlist = '';
   }
 
+  // 현재 검색 리스트 값을 설정
   static void setsetnowsearchlist(String s) {
     setnowsearchlist = s;
   }
 
+  // 검색 리스트 반환
   static List<String> getSearchList() {
     return _searchList;
   }
 
+  // 검색 리스트를 초기화
   static void setClearSearchList() {
     _searchList = [];
   }
 
+  // 검색 기록 반환
   static List<String> getSearchHistory() {
     return searchHistory;
   }
 
+  // 검색 기록을 초기화
   static void setClearSearchHistory() {
     searchHistory = [];
   }
 
+  // 북마크 여부 리스트 반환
   static List<bool> getIsBookmarkedList() {
     return isBookmarkedList;
   }
 
+  // 경로 설정 여부 반환
   static bool getIsPathSet() {
     return isPathSet;
   }
 
+  // 경로 설정 여부를 설정
   static void setIsPathSet(bool val) {
     isPathSet = val;
   }
 
+  // 경로 뷰(Widget) 반환
   static Widget getOnPathview() {
     return onPathview;
   }
 
-// 필요한 데이터를 저장
   // 검색 기록 저장
   static saveSearchHistoryPrefs(List<String> value) async {
     final prefs = await SharedPreferences.getInstance();
@@ -109,7 +124,7 @@ class Global {
     await prefs.setStringList("searchHistory", value);
   }
 
-  // 북마크 확인하는 리스트
+  // 북마크 확인 리스트 저장
   static saveIsBookmarkedListPrefs(List<bool> value) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> stringList =
@@ -125,8 +140,7 @@ class Global {
     await prefs.setString("themeMode", value);
   }
 
-// 지하철 관련 함수들
-  // 출발역, 환승역, 도착역을 포함한 대표 경로 세팅
+  // 출발역, 환승역, 도착역을 포함한 대표 경로 설정
   static void setSubWayList(
       List<String> _pathToNode, List<String> _pathToTransferNode) {
     // pathToTransferNode 리스트의 각 원소를 subWayList에 추가
@@ -147,6 +161,7 @@ class Global {
     print(subWayList);
   }
 
+  // 지하철 관련 값 초기화
   static void clearSubWayList() {
     print(
         "pathToNode, pathToTransferNode, subWayList subwayLowList , 안내 value 초기화");
@@ -168,7 +183,7 @@ class Global {
     //print(subwayLowList);
   }
 
-  //역의 하위 역들을 찾아냄
+  // 주요 역의 하위 역들을 찾아내어 설정
   static void setSubWayLowList() {
     if (isPathSet) {
       List<String> list1 = pathToNode;
@@ -194,8 +209,8 @@ class Global {
     }
   }
 
+  // 리스트의 길이만큼 반복하면서 높이 값을 추가
   static void setMyheightList(List<String> subWayList) {
-    //myheightList = [];
     // 매개변수로 들어온 리스트의 길이만큼 반복하면서 50씩 값을 추가
     for (int i = 0; i < subWayList.length; i++) {
       myheightList.add(50); // 50씩 추가하고 싶은 값으로 수정 가능
@@ -203,7 +218,7 @@ class Global {
     // 이제 myheightList에는 매개변수로 들어온 리스트의 길이만큼 50씩 값이 추가된 상태
   }
 
-// 각 메인 역의 아이콘 번호 설정
+  // 각 메인 역의 아이콘 번호 설정
   static void setSubwayNumList(
       List<String> pathToNode, List<String> subWayList) {
     StationInfo stationInfo = StationInfo();
@@ -277,6 +292,7 @@ class Global {
       }
     }
 
+    // 리스트의 맨 마지막 원소 처리
     List<String> reversePathToNode = pathToNode.reversed.toList();
     int endCnt = stationInfo.getLineCount(reversePathToNode[0]);
     int endBackCnt = stationInfo.getLineCount(reversePathToNode[1]);
@@ -286,12 +302,9 @@ class Global {
     } else if (endCnt == 1 && endBackCnt == 2) {
       subwayNumList.add(reversePathToNode.first[0]);
     } else if (endCnt == 2 && endBackCnt == 1) {
-      String edIdxone =
-          stationInfo.info[reversePathToNode[0]]?['line'][0]; //514
-      String edIdxTwo =
-          stationInfo.info[reversePathToNode[0]]?['line'][1]; //752
-      String edBackIdxone =
-          stationInfo.info[reversePathToNode[1]]?['line'][0]; //752
+      String edIdxone = stationInfo.info[reversePathToNode[0]]?['line'][0];
+      String edIdxTwo = stationInfo.info[reversePathToNode[0]]?['line'][1];
+      String edBackIdxone = stationInfo.info[reversePathToNode[1]]?['line'][0];
 
       if (edIdxone[7] == edBackIdxone[7]) {
         subwayNumList.add(edIdxone[7]);
@@ -301,14 +314,10 @@ class Global {
         subwayNumList.add(edIdxTwo[7]);
       }
     } else if (endCnt == 2 && endBackCnt == 2) {
-      String edIdxone =
-          stationInfo.info[reversePathToNode[0]]?['line'][0]; //514
-      String edIdxTwo =
-          stationInfo.info[reversePathToNode[0]]?['line'][1]; //752
-      String edBackIdxone =
-          stationInfo.info[reversePathToNode[1]]?['line'][0]; //752
-      String edBackIdxTwo =
-          stationInfo.info[reversePathToNode[1]]?['line'][1]; //814
+      String edIdxone = stationInfo.info[reversePathToNode[0]]?['line'][0];
+      String edIdxTwo = stationInfo.info[reversePathToNode[0]]?['line'][1];
+      String edBackIdxone = stationInfo.info[reversePathToNode[1]]?['line'][0];
+      String edBackIdxTwo = stationInfo.info[reversePathToNode[1]]?['line'][1];
 
       if (edIdxone[7] == edBackIdxone[7]) {
         subwayNumList.add(edIdxone[7]);
@@ -323,12 +332,11 @@ class Global {
       subwayNumList.add(subWayList.last[7]);
     }
 
-    //리스트의 맨 마지막 원소 처리
     //subwayNumList.add(subWayList.last[0]);
     print('앞자리 수 $subwayNumList');
   }
 
-// 매개변수로 들어온 리스트의 길이만큼 반복하면서 false 값을 추가
+  // 매개변수로 들어온 리스트의 길이만큼 반복하면서 false 값을 추가
   static void setIsClickedSubwayList(List<String> subWayList) {
     //isClickedSubwayList = [];
     for (int i = 0; i < subWayList.length; i++) {
@@ -336,7 +344,7 @@ class Global {
     }
   }
 
-  //하위 역의 개수
+  // 하위 역의 개수 설정
   static void setSubwayLowCntList(List<List<String>> inputList) {
     subwayLowCntList = [];
     print('input $inputList');
@@ -356,7 +364,7 @@ class Global {
     print("ddd $subwayLowCntList");
   }
 
-  //세팅하면서 값도 보기편하게 변경
+  // 시간, 거리, 비용 값 설정
   static void setGuideValue(
       int _guideTime, int _guideDistance, int _guideCost) {
     guideTime = convertToFormat(_guideTime.toString(), 'time');
@@ -364,7 +372,7 @@ class Global {
     guideCost = convertToFormat(_guideCost.toString(), 'cost');
   }
 
-  //시간,거리,비용 스트링 보기 편하게 하는 함수
+  // 시간, 거리, 비용을 보기 편한 형식으로 변환하는 함수
   static String convertToFormat(String inputString, String format) {
     if (inputString == "N/A") {
       //print("호출돔");

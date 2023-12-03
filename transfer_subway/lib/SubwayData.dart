@@ -597,14 +597,17 @@ class Subways {
           }
         };
 
+  // 역 이름을 반환
   List<String> getStationNames() {
     return stations.values.map((station) => station['name'] as String).toList();
   }
 
+  // 역 번호를 반환
   List<String> getStationNumbers() {
     return stations.keys.toList();
   }
 
+  // 자동완성을 위한 역 번호 또는 이름과 매칭
   List<String> getMatchingStations(String query) {
     if (_isNumeric(query)) {
       // 숫자로 이루어진 문자열인 경우
@@ -618,6 +621,7 @@ class Subways {
     }
   }
 
+  // 주어진 문자열이 숫자로 이루어져 있는지 여부를 판단하는 함수
   bool _isNumeric(String s) {
     if (s == null) {
       return false;
@@ -625,10 +629,12 @@ class Subways {
     return double.tryParse(s) != null;
   }
 
+  // 주어진 키에 해당하는 역(Station)의 정보를 반환하는 함수
   Map<String, dynamic>? getStation(String key) {
     return stations[key];
   }
 
+  // 역 이름에 해당하는 키를 검색하여 반환하는 함수
   String getKeyFromName(String stationName) {
     if (_isNumeric(stationName) == true) {
       return stationName;
@@ -642,6 +648,7 @@ class Subways {
     }
   }
 
+  // 역이 유효한지 확인
   bool doesMatchingStationExist(String query) {
     if (_isNumeric(query)) {
       // 숫자로 이루어진 문자열인 경우

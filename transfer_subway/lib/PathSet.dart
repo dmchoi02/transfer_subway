@@ -91,7 +91,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   bool onPathOrPathInput = false;
   int focusCnt = 0;
 
-  // 출발지와 도착지 값을 저장하고 화면에서 포커스를 해제합니다.
+  // 출발지와 도착지 값을 저장하고 화면에서 포커스를 해제하는 함수.
   void _saveValues() {
     if (_isNumeric(departureController.text) == true &&
         _isNumeric(destinationController.text) == true) {
@@ -149,7 +149,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     }
   }
 
-  //해당 텍스트가 숫자인지 이름인지 확인
+  // 해당 텍스트가 숫자인지 이름인지 확인
   bool _isNumeric(String s) {
     if (s == null) {
       return false;
@@ -177,34 +177,6 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
 
   List<bool> isBookmarkedList = Global.getIsBookmarkedList();
   List<String> searchHistory = Global.getSearchHistory();
-  /*
-  List<bool> isBookmarkedList = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-  
-  // 검색기록들
-  List<String> searchHistory = [
-    '158 -> 343',
-    '검색 기록 2',
-    '검색 기록 3',
-    '158 -> 343',
-    '158 -> 343',
-    '검색 기록 2',
-    '검색 기록 3',
-    '158 -> 343',
-    '검색 기록 3',
-    '158 -> 343',
-  ];
-  */
 
   // 거리 안내 클릭 여부
   // 차례대로 최소 (시간, 거리, 비용)을 의미함.

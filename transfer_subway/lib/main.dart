@@ -5,7 +5,7 @@ import 'imports.dart';
 // size는 조정하지 마세용 (추후에 디자인 수정 예정)
 //
 // 안드로이드 에뮬레이터 실행시 1080x2240 5.6인치로 설정
-// 변수 이름은 상수를 제외하고 모두 낙타 표기법(Camel Case) 사용 ex. printImage, printAll
+// 변수 이름은 상수를 제외하고 모두 낙타 표기법(Camel Case) 사용 ex. printImage, printAll, _printAll
 
 // 기본 컬러 모음집 사용할 때는 ex. AppColor.mainColor
 class AppColor {
@@ -31,13 +31,6 @@ const int BADGES_PAGE = 2;
 const int SETTINGS_PAGE = 3;
 const int PATH_SET = 4;
 const int GMAE_PAGE = 5;
-
-// void main() => runApp(
-//       MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         home: MyApp(),
-//       ),
-//     );
 
 late SharedPreferences prefs;
 
@@ -150,7 +143,6 @@ class _MyAppState extends State<MyApp> {
     //print(screenWidth); // 현재 가로 사이즈
     //print(screenHeight); // 현재 세로 사이즈
     Widget onPathview = Global.getOnPathview();
-    //print("현재 길 안내는");
     //print(Global.getIsPathSet());
 
     // 위에 상태바 없애기

@@ -14,6 +14,7 @@ class _onPathViewState extends State<onPathView> {
   List<String> searchHistory = Global.getSearchHistory();
   String _setnowsearchlist = Global.getsetnowsearchlist();
   List<double> myheightList = Global.myheightList;
+
   // 하위역 보는 클릭 여부
   List<bool> isClickedSubwayList = Global.isClickedSubwayList;
   List<int> subwayLowCntList = Global.subwayLowCntList;
@@ -31,35 +32,8 @@ class _onPathViewState extends State<onPathView> {
       print('$_setnowsearchlist 가 없습니다. false로 설정합니다.');
     }
   }
-  //각 역의 하위역 리스트
-  /*
-  List<List<String>> subwayLowList = [
-    [],
-    ["다른역", "다른역", "다른도착역2", "다른출발역", "다른도착역1", "다른도착역2"],
-    ["다른", "다른1", "다른역2"],
-    [],
-    //도착역은 하위역이 없으므로 빈 배열
-    // 도착역을 제외하고 만약 바로 환승을 한다면 빈배열로 선언하고 cnt는 1로 적어야함
-    // 여러 하위역 리스트를 추가할 수 있습니다.
-  ];
 
-  //[환승하는 예시 만들어봤어요]
-  //312 에서 413으로 환승
-  //413 -> 6번 이동해서 513으로 환승
-  //513 -> 3번 이동해서 542로 환승
-  List<String> subWayList = [
-    "모란역 312",
-    "다른출발역 413",
-    "모란역 513",
-    "도착역 542"
-  ]; // 출발역 리스트
-  */
-  // -> Global.subWayList
-
-  // 도착역을 제외하고 만약 바로 환승을 한다면 빈배열로 선언하고 cnt는 +1로 적어야함
-  // 즉 무조건 마지막만 0이고 나머지는 최소 1이상 존재함
-
-  //하위역 각 높이 50으로 고정하고 setMyHeight()에서 늘어나면 알아서 조정해줌
+  // 하위역 각 높이 50으로 고정하고 setMyHeight()에서 늘어나면 알아서 조정해줌
   void setMyHeight(int index) {
     if (index < myheightList.length) {
       if (myheightList[index] == 50) {
@@ -70,6 +44,7 @@ class _onPathViewState extends State<onPathView> {
     }
   }
 
+  // 하위역의 개수가 0인지 확인하는 함수
   bool isCntZero(int index) {
     //print(index);
     if (subwayLowCntList[index] == 0) {
@@ -81,6 +56,7 @@ class _onPathViewState extends State<onPathView> {
     }
   }
 
+  // 안내 역들에 대한 위젯
   List<Widget> getMyWidgets() {
     return List.generate(
       myheightList.length,
@@ -149,7 +125,7 @@ class _onPathViewState extends State<onPathView> {
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            print("바뀝니다.");
+                            //print("바뀝니다.");
                             isClickedSubwayList[index] =
                                 !isClickedSubwayList[index];
                             setMyHeight(index);
@@ -251,15 +227,12 @@ class _onPathViewState extends State<onPathView> {
 
   @override
   Widget build(BuildContext context) {
-    //print('ok $myheightList'); // ok
-    //print(subwayLowCntList);
-    //print(isClickedSubwayList); //ok
-
     List<Widget> my = getMyWidgets();
 
     return getOnPathView(my);
   }
 
+  // 안내하는 경로를 보여주는 위젯
   Widget getOnPathView(List<Widget> my) {
     return Container(
       padding: EdgeInsets.only(
@@ -548,14 +521,13 @@ Widget getMyAppbar(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          // child: Icon(
-          //   Icons.cloudy_snowing,
-          //   size: 32,
-          //   color: Colors.white,
-          // ),
-          child: MyWeather()
-        ),
+            padding: const EdgeInsets.only(left: 10.0),
+            // child: Icon(
+            //   Icons.cloudy_snowing,
+            //   size: 32,
+            //   color: Colors.white,
+            // ),
+            child: MyWeather()),
         Expanded(
           child: Container(
             child: Align(
