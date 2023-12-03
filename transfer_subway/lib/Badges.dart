@@ -3,12 +3,12 @@
 import 'imports.dart';
 
 const List<dynamic> badgeContents = [
-  [Icons.directions_subway, "탐험가", "지금까지 방문한 역 : 60개"],
-  [Icons.sunny, "아침의 달인", "아침에 길찾기를 이용한 횟수 : 45번"],
-  [Icons.looks_3, "3호선의 왕", "3호선을 이용한 횟수 : 42번"],
-  [Icons.sports_esports, "프로게이머", "퍼즐 게임을 바로 성공한 횟수 : 56번"],
-  [Icons.nightlife, "저녁의 달인", "저녁에 길찾기를 이용한 횟수 : 45번"],
-  [Icons.blur_circular, "환승의 왕", "환승을 이용한 횟수 : 30번"],
+  [Icons.directions_subway, "탐험가", "지금까지 \n방문한 역 : 60개"],
+  [Icons.sunny, "아침의 달인", "아침에 길찾기를 \n이용한 횟수 : 45번"],
+  [Icons.looks_3, "3호선의 왕", "3호선을 이용한 \n횟수 : 42번"],
+  [Icons.sports_esports, "프로게이머", "퍼즐 게임을 바로 \n성공한 횟수 : 56번"],
+  [Icons.nightlife, "저녁의 달인", "저녁에 길찾기를 \n이용한 횟수 : 45번"],
+  [Icons.blur_circular, "환승의 왕", "환승을 이용한 \n횟수 : 30번"],
 ];
 
 class BadgesPage extends StatefulWidget {
@@ -21,6 +21,9 @@ class BadgesPage extends StatefulWidget {
 class _BadgesPageState extends State<BadgesPage> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    ThemeMode currentThemeMode = themeProvider.themeMode;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
@@ -90,17 +93,36 @@ class _BadgesPageState extends State<BadgesPage> {
                               return Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
                                 child: Card(
+                                  color: (currentThemeMode == ThemeMode.dark)
+                                      ? Color.fromRGBO(46, 46, 46, 1)
+                                      : Colors.white,
                                   margin:
                                       EdgeInsets.fromLTRB(5.0, 6.0, 5.0, 6.0),
                                   //color: Colors.white,
                                   child: ListTile(
                                     isThreeLine: true,
-                                    leading:
-                                        Icon(badgeContents[index][0], size: 50),
+                                    leading: Icon(
+                                      badgeContents[index][0],
+                                      size: 50,
+                                      color:
+                                          (currentThemeMode == ThemeMode.dark)
+                                              ? Colors.white
+                                              : AppColor.blackColor,
+                                    ),
                                     title: Row(children: <Widget>[
                                       Container(
                                         alignment: Alignment.topLeft,
-                                        child: Text(badgeContents[index][1]),
+                                        child: Text(
+                                          badgeContents[index][1],
+                                          style: TextStyle(
+                                            fontFamily: "Font",
+                                            fontWeight: FontWeight.bold,
+                                            color: (currentThemeMode ==
+                                                    ThemeMode.dark)
+                                                ? Colors.white
+                                                : AppColor.blackColor,
+                                          ),
+                                        ),
                                       ),
                                       // Spacer(),
                                       // Container(
@@ -112,15 +134,27 @@ class _BadgesPageState extends State<BadgesPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text(badgeContents[index][2]),
+                                          Text(
+                                            badgeContents[index][2],
+                                            style: TextStyle(
+                                              fontFamily: "Font",
+                                              fontWeight: FontWeight.bold,
+                                              color: (currentThemeMode ==
+                                                      ThemeMode.dark)
+                                                  ? Colors.white
+                                                  : AppColor.mainColor,
+                                            ),
+                                          ),
                                         ]),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         ClipOval(
                                           child: Material(
-                                            color: AppColor
-                                                .selectedColor, // Button color
+                                            color: (currentThemeMode ==
+                                                    ThemeMode.dark)
+                                                ? Color.fromRGBO(46, 46, 46, 1)
+                                                : Colors.white, // Button color
                                             child: InkWell(
                                               splashColor:
                                                   Colors.yellow, // Splash color
@@ -149,7 +183,7 @@ class _BadgesPageState extends State<BadgesPage> {
       ),
       bottomNavigationBar: BottomNavBar(
         onItemTapped: (newIndex) {
-          if (newIndex != currentIndex) {
+          if (newIndex != BADGES_PAGE) {
             Navigator.push(context, pageRoute(newIndex));
           }
         },

@@ -140,7 +140,7 @@ class _MyAppState extends State<MyApp> {
     if (noticeIssue == true) {
       //여기에서 서버가 도입될 시 공지를 가져와 notice에 가져오는 작업을 수행합니다.
     } else {
-      notice = '3호선은 현재 혼잡이 예상됩니다.';
+      notice = '현재 3호선은 혼잡이 예상됩니다.';
     }
     //prefs.clear(); //호출하면 기기에 저장된 데이터 초기화
 
@@ -150,8 +150,8 @@ class _MyAppState extends State<MyApp> {
     //print(screenWidth); // 현재 가로 사이즈
     //print(screenHeight); // 현재 세로 사이즈
     Widget onPathview = Global.getOnPathview();
-    print("현재 길 안내는");
-    print(Global.getIsPathSet());
+    //print("현재 길 안내는");
+    //print(Global.getIsPathSet());
 
     // 위에 상태바 없애기
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -329,7 +329,7 @@ class _MyAppState extends State<MyApp> {
         bottomNavigationBar: BottomNavBar(
           currentIndex = MY_APP_PAGE,
           onItemTapped: (int newIndex) {
-            if (newIndex != currentIndex) {
+            if (newIndex != MY_APP_PAGE) {
               Navigator.push(context, pageRoute(newIndex));
             }
           },

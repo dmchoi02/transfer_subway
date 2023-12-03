@@ -317,8 +317,19 @@ class _MySubwayInfoDialogState extends State<MySubwayInfoDialog> {
                       ),
                       Row(
                         children: nearbyShops
-                            .map((item) => Image.asset(images + '$item.png',
-                                width: 60, height: 60))
+                            .map(
+                              (item) => Row(
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    width: 60,
+                                    child: Image.asset(images + '$item.png',
+                                        width: 60, height: 60),
+                                  ),
+                                  SizedBox(width: 20), // 이미지 사이 간격
+                                ],
+                              ),
+                            )
                             .toList(),
                       ),
                       SizedBox(

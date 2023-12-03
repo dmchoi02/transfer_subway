@@ -12,6 +12,8 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    ThemeMode currentThemeMode = themeProvider.themeMode;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
@@ -61,6 +63,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               fontSize: 15.0,
                               fontFamily: "Font",
                               fontWeight: FontWeight.bold,
+                              color: (currentThemeMode == ThemeMode.dark)
+                                  ? Colors.white
+                                  : AppColor.mainColor,
                             ),
                           ),
                           trailing:
@@ -93,17 +98,36 @@ class _SettingsPageState extends State<SettingsPage> {
                             fontSize: 15.0,
                             fontFamily: "Font",
                             fontWeight: FontWeight.bold,
+                            color: (currentThemeMode == ThemeMode.dark)
+                                ? Colors.white
+                                : AppColor.mainColor,
                           ),
                         ),
                         trailing: PopupMenuButton(itemBuilder: (context) {
                           return [
                             PopupMenuItem(
                               value: 'korean',
-                              child: Text('한국어'),
+                              child: Text(
+                                '한국어',
+                                style: TextStyle(
+                                  fontFamily: "Font",
+                                  color: (currentThemeMode == ThemeMode.dark)
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                              ),
                             ),
                             PopupMenuItem(
                               value: 'english',
-                              child: Text('English'),
+                              child: Text(
+                                'English',
+                                style: TextStyle(
+                                  fontFamily: "Font",
+                                  color: (currentThemeMode == ThemeMode.dark)
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                              ),
                             )
                           ];
                         }),
@@ -117,7 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
       bottomNavigationBar: BottomNavBar(
         currentIndex = SETTINGS_PAGE, // 현재 페이지가 두 번째 페이지이므로 해당 인덱스 선택
         onItemTapped: (newIndex) {
-          if (newIndex != currentIndex) {
+          if (newIndex != SETTINGS_PAGE) {
             Navigator.push(context, pageRoute(newIndex));
           }
         },

@@ -122,13 +122,20 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
 
     // 출발지와 도착지 값이 비어있지 않으면 포커스를 해제합니다.
     if (departureValue.isNotEmpty && destinationValue.isNotEmpty) {
-      FocusScope.of(context).unfocus(); // 두개의 값이 입력되었으므로 키보드 창이 사라짐
-      print("호출됨");
-      okInputPath = true;
-      onPathOrPathInput = true;
-      String Temp =
-          departureController.text + ' --> ' + destinationController.text;
-      onSearch(Temp);
+      if (departureValue != destinationValue) {
+        FocusScope.of(context).unfocus(); // 두개의 값이 입력되었으므로 키보드 창이 사라짐
+        print("호출됨");
+        okInputPath = true;
+        onPathOrPathInput = true;
+        String temp =
+            departureController.text + ' --> ' + destinationController.text;
+        Global.setsetnowsearchlist(temp);
+        onSearch(temp);
+      } else {
+        print(departureValue.isNotEmpty);
+        print(destinationValue.isNotEmpty);
+        myShowToast(context, '출발역과 도착역이 같습니다! \n 확인해 주세요!');
+      }
     } else {
       myShowToast(context, '모든 경로를 입력해주세요!'); // 하나라도 입력 안된 경우 메시지 출력
     }
@@ -218,7 +225,10 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
       //print("작업 수행");
       // 여기서 필요한 비동기 작업을 수행합니다.
-      Future.delayed(Duration(seconds: 2), () {});
+      Future.delayed(Duration(seconds: 2), () {
+        isBookmarkedList = Global.getIsBookmarkedList();
+        print('is book $isBookmarkedList');
+      });
       return Container(
         padding: EdgeInsets.only(
           left: 20.0,
@@ -255,9 +265,9 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                 itemExtent: 40,
                 itemCount: searchHistory.length,
                 itemBuilder: (context, index) {
-                  print(searchHistory.length);
-                  print('didx $index');
-                  print('searchHis $searchHistory');
+                  //print(searchHistory.length);
+                  //print('didx $index');
+                  //print('searchHis $searchHistory');
                   if (searchHistory != null && index < searchHistory.length) {
                     return ListTile(
                       title: Row(
@@ -348,6 +358,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                       destinationController.text = data[1];
                       destinationFocusNode.requestFocus();
                     } else {
+                      setState(() {});
                       print('데이터 없음.종료키 눌림 예상. 그 외 오류');
                     }
                   },
@@ -495,7 +506,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : ${result_time[destinationValue]?['time'] ?? 'N/A'} 초",
+                        "총 예상 시간 : ${Global.convertToFormat((result_time[destinationValue]?['time'] ?? 'N/A').toString(), 'time')}",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -513,7 +524,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "거리 : ${(result_time[destinationValue]?['distance']) ?? 'N/A'} km",
+                        "거리 : ${Global.convertToFormat((result_time[destinationValue]?['distance'] ?? 'N/A').toString(), 'distance')}",
+
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -531,7 +543,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "비용 : ${result_time[destinationValue]?['cost'] ?? 'N/A'} 원",
+                        "비용 : ${Global.convertToFormat((result_time[destinationValue]?['cost'] ?? 'N/A').toString(), 'cost')}",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -598,7 +610,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : ${result_distance[destinationValue]?['time'] ?? 'N/A'} 초",
+                        "총 예상 시간 : ${Global.convertToFormat((result_distance[destinationValue]?['time'] ?? 'N/A').toString(), 'time')}",
+
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -616,7 +629,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "거리 : ${result_distance[destinationValue]?['distance'] ?? 'N/A'} km",
+                        "거리 : ${Global.convertToFormat((result_distance[destinationValue]?['distance'] ?? 'N/A').toString(), 'distance')}",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -634,7 +647,8 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "비용 : ${result_distance[destinationValue]?['cost'] ?? 'N/A'} 원",
+                        "비용 : ${Global.convertToFormat((result_distance[destinationValue]?['cost'] ?? 'N/A').toString(), 'cost')}",
+
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -701,7 +715,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "총 예상 시간 : ${result_cost[destinationValue]?['time'] ?? 'N/A'} 초",
+                        "총 예상 시간 : ${Global.convertToFormat((result_cost[destinationValue]?['time'] ?? 'N/A').toString(), 'time')}",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -719,7 +733,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "거리 : ${result_cost[destinationValue]?['distance'] ?? 'N/A'} km",
+                        "거리 : ${Global.convertToFormat((result_cost[destinationValue]?['distance'] ?? 'N/A').toString(), 'distance')}",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -737,7 +751,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                         left: 20,
                       ),
                       child: Text(
-                        "비용 : ${result_cost[destinationValue]?['cost'] ?? 'N/A'} 원",
+                        "비용 : ${Global.convertToFormat((result_cost[destinationValue]?['cost'] ?? 'N/A').toString(), 'cost')}",
                         // 스타일 설정
                         style: TextStyle(
                           fontSize: 15.0, // 글꼴 크기
@@ -939,6 +953,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     // Pigeon code
+
     Global.setIsPathSet(false); //화면을 그리는 상태에서는 경로 설정이 안되어 있음
     if (focusCnt != 2) {
       FocusScope.of(context).unfocus();

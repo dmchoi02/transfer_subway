@@ -11,12 +11,26 @@ class onPathView extends StatefulWidget {
 class _onPathViewState extends State<onPathView> {
   List<bool> isBookmarkedList = Global.getIsBookmarkedList();
   bool currentState = false;
-
+  List<String> searchHistory = Global.getSearchHistory();
+  String _setnowsearchlist = Global.getsetnowsearchlist();
   List<double> myheightList = Global.myheightList;
   // 하위역 보는 클릭 여부
   List<bool> isClickedSubwayList = Global.isClickedSubwayList;
   List<int> subwayLowCntList = Global.subwayLowCntList;
+  int x = 0; //인덱스값의 간이 주소
 
+  void initState() {
+    super.initState();
+
+    // initState에서 추가적인 작업을 수행합니다.
+    print('생성');
+    x = searchHistory.indexOf(_setnowsearchlist);
+    if (x != -1) {
+      currentState = isBookmarkedList[x];
+    } else {
+      print('$_setnowsearchlist 가 없습니다. false로 설정합니다.');
+    }
+  }
   //각 역의 하위역 리스트
   /*
   List<List<String>> subwayLowList = [
@@ -279,8 +293,10 @@ class _onPathViewState extends State<onPathView> {
                       onTap: () {
                         setState(() {
                           currentState = !currentState;
-                          isBookmarkedList.insert(0, currentState);
+                          //isBookmarkedList[x] = currentState;
+                          Global.isBookmarkedList[x] = currentState;
                           Global.saveIsBookmarkedListPrefs(isBookmarkedList);
+                          print('is widget book $isBookmarkedList');
                           // 여기다가 눌렀을 경우 즐겨찾기 리스트에 추가하면됨
                           // 검색기록은 pathset.dart 에서 이미 추가됨
                           // isBookmarkedList.insert(0, currentState);
