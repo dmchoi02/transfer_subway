@@ -92,7 +92,7 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
   int focusCnt = 0;
 
   // 출발지와 도착지 값을 저장하고 화면에서 포커스를 해제하는 함수.
-  void _saveValues() {
+  bool _saveValues() {
     if (_isNumeric(departureController.text) == true &&
         _isNumeric(destinationController.text) == true) {
       departureValue = departureController.text;
@@ -117,19 +117,42 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
         Global.saveSearchHistoryPrefs(Global.getSearchHistory());
         print("검색 기록 저장 완료");
         Global.saveIsBookmarkedListPrefs(isBookmarkedList);
+      } else {
+        print("최근 검색 기록에 존재함");
+        // 최근 검색 기록에 있는 경우
+        // 해당 인덱스와 북마크 상태를 가져온다.
+        int index = searchHistory.indexOf(query);
+        bool state = isBookmarkedList[index];
+
+        // 기존 리스트에서 삭제
+        isBookmarkedList.removeAt(index);
+        searchHistory.removeAt(index);
+        // 맨 앞으로 다시 땡긴다
+        isBookmarkedList.insert(0, state);
+        searchHistory.insert(0, query);
+
+        // 검색기록을 기기에 저장
+        Global.saveSearchHistoryPrefs(Global.getSearchHistory());
+        print("검색 기록 저장 완료");
+        Global.saveIsBookmarkedListPrefs(isBookmarkedList);
       }
     }
 
     // 출발지와 도착지 값이 비어있지 않으면 포커스를 해제합니다.
-    if (departureValue.isNotEmpty && destinationValue.isNotEmpty) {
+    if (departureController.text.isNotEmpty &&
+            destinationController.text.isNotEmpty ||
+        departureValue.isNotEmpty && destinationValue.isNotEmpty) {
       //print("출발과 도착이 유효한지 확인");
-      //print(subways.doesMatchingStationExist(departureValue));
-      //print(subways.doesMatchingStationExist(destinationValue));
+      //print(departureController.text);
+      //print(destinationController.text);
 
       if (!subways.doesMatchingStationExist(departureValue) ||
           !subways.doesMatchingStationExist(destinationValue)) {
         //print("유효하지 않음");
         myShowToast(context, '유효하지 않는 역이 존재합니다! \n 확인해 주세요!');
+        //departureController.clear();
+        //destinationController.clear();
+        return false;
       } else if (departureValue != destinationValue) {
         FocusScope.of(context).unfocus(); // 두개의 값이 입력되었으므로 키보드 창이 사라짐
         //print("호출됨");
@@ -139,13 +162,18 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
             departureController.text + ' --> ' + destinationController.text;
         Global.setsetnowsearchlist(temp);
         onSearch(temp);
+        return true;
       } else {
         print(departureValue.isNotEmpty);
         print(destinationValue.isNotEmpty);
         myShowToast(context, '출발역과 도착역이 같습니다! \n 확인해 주세요!');
+        return false;
       }
     } else {
       myShowToast(context, '모든 경로를 입력해주세요!'); // 하나라도 입력 안된 경우 메시지 출력
+      print(departureController.text);
+      print(destinationController.text);
+      return false;
     }
   }
 
@@ -1025,9 +1053,13 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                   },
                                   onEditingComplete: () {
                                     // 사용자가 "확인" 버튼을 누르면 호출될 콜백
-                                    _saveValues();
+                                    bool chk = _saveValues();
                                     // 확인 후에 WhatIsNowController 값을 0으로 되돌리기
                                     whatIsNowController = 0;
+
+                                    if (chk == false) {
+                                      whatIsNowController = 1;
+                                    }
                                   },
                                   onTap: () {
                                     // TextField가 탭될 때 WhatIsNowController 값을 1로 설정
@@ -1076,9 +1108,12 @@ class _PathSetPageState extends State<PathSetPage> with WidgetsBindingObserver {
                                   },
                                   onEditingComplete: () {
                                     // 사용자가 "확인" 버튼을 누르면 호출될 콜백
-                                    _saveValues();
+                                    bool chk = _saveValues();
                                     // 확인 후에 WhatIsNowController 값을 0으로 되돌리기 (입력 전 상태로)
                                     whatIsNowController = 0;
+                                    if (chk == false) {
+                                      whatIsNowController = 2;
+                                    }
                                   },
                                   onTap: () {
                                     //먼저 선수조치로 적용
